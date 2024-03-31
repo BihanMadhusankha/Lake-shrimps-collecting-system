@@ -1,30 +1,31 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const bcrypt = require('bcryptjs'); // For password hashing
-const pool = require('./config/dbconfig'); // Assuming this is your database connection
+ const bcrypt = require('bcryptjs'); // For password hashing
+const db = require('../config/dbconfig');
 
-const app = express();
+const ap = express();
 
-app.use(cors());
-app.use(bodyParser.json());
+ap.use(cors());
+ap.use(bodyParser.json());
 
 // Define SQL query string for inserting new collector data
 const INSERT_COLLECTOR_SQL = `
-  INSERT INTO collectersignup (firstname, lastname, nicCollecter, emailCollecter, ferry, lake, password, mobileNo)
+  INSERT INTO  collectersignup (firstname, lastname, nicCollecter, emailCollecter, ferry, lake, hashedPassword, mobileNo)
   VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 `;
 
 // Function to handle collector creation route (corrected as a function)
 async function createCollector(req, res) {
-  const { firstname, lastname, nicCollecter, emailCollecter, ferry, lake, conformPassword, mobileNo } = req.body;
+  const { firstname, lastname, nicCollecter, emailCollecter, ferry, lake, hashedPassword, mobileNo } = req.body;
+  console.log('Recieved collector : ',{ firstname, lastname, nicCollecter, emailCollecter, ferry, lake, hashedPassword, mobileNo })
 
   try {
     // Hash password using bcrypt (install bcryptjs first: npm install bcryptjs)
-    const hashedPassword = await bcrypt.hash(conformPassword, 10); // Adjust salt rounds as needed
+     const hashedPassword = await bcrypt.hash(hashedPassword, 10); // Adjust salt rounds as needed
 
     // Execute SQL query with prepared statement to prevent SQL injection
-    const [result] = await pool.execute(INSERT_COLLECTOR_SQL, [
+    const [result] = await db.execute(INSERT_COLLECTOR_SQL, [
       firstname,
       lastname,
       nicCollecter,
@@ -47,11 +48,9 @@ async function createCollector(req, res) {
 }
 
 // Register the route handler for POST requests to '/api/collectors'
-app.post('/api/collectors', createCollector);
+ap.post('/', async (req, res) => {
+  console.log('Recieved POST request for /signup');
+  createCollector(req, res);
+});
 
-// ... other routes for your application ...
-
-// Start the server (assuming you have a port defined)
-// app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-
-module.exports = app; // Export the app instance for testing (optional)
+module.exports = ap; 
