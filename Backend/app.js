@@ -1,23 +1,21 @@
 const express = require('express');
-const cors = require('cors');
-const { json } = require('body-parser') ;
-const customerRouter = require('./routes/customer');
-const signupRouter = require('./routes/signup');
-// import { Jwt } from 'jsonwebtoken';
-// import cookieParser from 'cookie-parser';
+const errorHandler = require('./midleware/errorhandler');
+const connectDB = require('./config/dbconfig');
+const dotenv = require('dotenv').config();
 
+connectDB();
 const app = express();
 
-app.use(json());
-app.use(cors());
+const PORT = process.env.PORT || 5000;
 
-app.use('/Customer', customerRouter);
+app.use(express.json());
 
-app.use('/signup', signupRouter);
+app.use('/api/customers', require("./routes/customerRouter"));
+app.use('/api/users', require("./routes/signup"));
+
+app.use(errorHandler);
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`)
+});
 
 
-
-const PORT = 3000;
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-
-module.exports = app; 

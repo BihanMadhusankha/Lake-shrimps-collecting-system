@@ -13,7 +13,7 @@ function Navigation() {
 
                         <div className='d-flex flex-lg-row'>
                             <Link to="/signup" className="btn btn-outline-success me-2" id="signUpbtn">Signup</Link>
-                            <Link to="/signup" className="btn btn-outline-success me-2" id="signUpbtn">Signin</Link>
+                            <Link to="/login" className="btn btn-outline-success me-2" id="signUpbtn">Login</Link>
                         </div>
                     </form>
                 </div>

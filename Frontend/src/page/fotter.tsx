@@ -1,6 +1,4 @@
 import * as React from 'react';
-
-
 import { } from 'bootstrap/dist/css/bootstrap.min.css';
 
 function Foter() {
