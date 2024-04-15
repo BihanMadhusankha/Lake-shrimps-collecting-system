@@ -4,11 +4,10 @@ const validateToken = require('../midleware/validationTokenHandler');
 
 const router = express.Router();
 
-router.post('/register', registerUser);
+ router.post('/', registerUser)  // Route for user registration
+router.post('/login', loginUser); // Route for user login
+router.get('/current', validateToken, currentUser); // Route to get current user info
 
-router.post('/login', loginUser);
-
-router.get('/current',validateToken ,currentUser);
 
 // router.post('/logout', (req, res) => {
 //   res.json({

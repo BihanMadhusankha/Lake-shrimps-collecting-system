@@ -3,18 +3,17 @@ const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
 
-
 //@desc Register a user 
-//@route GET /api/user/register
+//@route POST /api/signup/
 //@access public
 const registerUser = asyncHandler(async (req, res) => {
+    
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
         res.status(400);
         throw new Error("All fields are mandatory");
     }
-
     const userAvailable = await User.findOne({ email });
     if (userAvailable) {
         res.status(400);
@@ -28,7 +27,8 @@ const registerUser = asyncHandler(async (req, res) => {
         username,
         email,
         password: hashedPassword
-    });
+    })
+
     console.log(`User created: ${user}`);
     if (user) {
         res.status(201).json({

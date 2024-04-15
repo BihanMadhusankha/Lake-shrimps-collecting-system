@@ -1,7 +1,7 @@
 import * as React from 'react';
 import homeImg from '../assets/home.jpg';
 import Navigation from './nav';
-import Lakes from './lakes';
+// import Lakes from './lakes';
 
 
 function Landing() {
@@ -39,7 +39,7 @@ function Landing() {
                     </div>
                 </div>
             </div>
-            <Lakes/>
+            {/* <Lakes/> */}
         </div>
 
     )

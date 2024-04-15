@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import {Routes, Route } from 'react-router-dom';
 import './App.css';
 import Signup from './page/signup';
 import Landing from './page/landing'; 
@@ -11,9 +11,9 @@ function App() {
   return (
     <div className='App'>
       <Routes>
-        <Route path="/" element={<Landing />} /> 
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/api" element={<Landing />} /> 
+        <Route path="/api/signup" element={<Signup />} />
+        <Route path="/api/login" element={<Login />} />
       </Routes>
 
       <Footer /> 

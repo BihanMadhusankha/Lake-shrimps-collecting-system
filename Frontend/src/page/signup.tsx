@@ -1,96 +1,89 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import React from 'react';
-function Signup() {
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
+function Signup() {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const [email, setEmail] = useState();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    axios.post('http://localhost:5001/api/signup/', { username, email, password })
+      .then((result) => console.log(result.data))
+      .catch((error) => console.log(error));
+  };
+  
 
   return (
+    <div className='container'>
+      <form
+        className="row g-3 w-75 m-5 "
+        onSubmit={handleSubmit}
+      >
+        <h1 className="h3 mb-3 fw-normal mt-3 ">Please sign up</h1>
 
-    <div>
-      <form className="row g-3 w-75 m-5  ">
-      <h1 className="h3 mb-3 fw-normal mt-3 ">Please sign up</h1>
+        <div className="col-md-4">
+          <label htmlFor="username" className="form-label">
+            First name
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            name="username"
+            placeholder='First Name'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
 
         <div className="col-md-4">
-          <label htmlFor="validationDefault01" className="form-label">First name</label>
-          <input type="text" className="form-control" id="validationDefault01" placeholder='First Name' required />
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+            name="email"
+            placeholder='Email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
         </div>
+
         <div className="col-md-4">
-          <label htmlFor="validationDefault02" className="form-label">Last name</label>
-          <input type="text" className="form-control" id="validationDefault02" placeholder='Last Name' required />
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            name="password"
+            placeholder='Password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </div>
-        <div className="col-md-4">
-          <label htmlFor="validationDefaultUsername" className="form-label">Username</label>
-          <div className="input-group">
-            <span className="input-group-text" id="inputGroupPrepend2">@</span>
-            <input type="text" className="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" required />
-          </div>
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="validationDefault03" className="form-label">City</label>
-          <input type="text" className="form-control" id="validationDefault03" required />
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="validationDefault04" className="form-label">State</label>
-          <select className="form-select" id="validationDefault04" required>
-            <option selected disabled value="">Choose...</option>
-            <option>...</option>
-          </select>
-        </div>
-        <div className="col-md-3">
-          <label htmlFor="validationDefault05" className="form-label">Zip</label>
-          <input type="text" className="form-control" id="validationDefault05" required />
-        </div>
+
         <div className="col-12">
-          <div className="form-check">
-            <input className="form-check-input" type="checkbox" value="" id="invalidCheck2" required />
-              <label className="form-check-label" htmlFor="invalidCheck2">
-                Agree to terms and conditions
-              </label>
-          </div>
+          <button className="btn btn-primary" type="submit">
+            Submit form
+          </button>
         </div>
-        <div className="col-12">
-          <button className="btn btn-primary" type="submit">Submit form</button>
-        </div>
-        <p>you have another account? <a href="#">Sign in </a></p>
+
       </form>
+      <p>you have another account? <Link to="/login">Sign in </Link></p>
     </div>
-
   );
 }
+
 export default Signup;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
