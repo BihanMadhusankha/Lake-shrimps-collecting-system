@@ -8,12 +8,13 @@ connectDB();
 const app = express();
 
 const PORT = process.env.PORT || 5000;
-
+// app.use(cookieParser())
 app.use(express.json());
-app.use(cors({ origin: '*' })); // Replace with your frontend origin
+app.use(cors({ origin: '*'}));
+// Replace with your frontend origin
 
 // app.use('/api/customers', require("./routes/customerRouter"));
-app.use('/api/signup', require("./routes/signup"));  // Correct path
+app.use('/SSABS/user/', require("./routes/signup"));  // Correct path
 
 app.use(errorHandler);
 app.listen(PORT, () => {

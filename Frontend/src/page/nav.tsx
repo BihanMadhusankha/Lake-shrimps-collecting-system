@@ -12,8 +12,8 @@ function Navigation() {
                         <button className="btn btn-outline-dark me-5" type="submit">Search</button>
 
                         <div className='d-flex flex-lg-row'>
-                            <Link to="/api/signup/" className="btn btn-outline-success me-2" id="signUpbtn">Signup</Link>
-                            <Link to="/api/login" className="btn btn-outline-success me-2" id="signUpbtn">Login</Link>
+                            <Link to="/SSABS/user/signup/" className="btn btn-outline-success me-2" id="signUpbtn">Signup</Link>
+                            <Link to="/SSABS/user/login" className="btn btn-outline-success me-2" id="signUpbtn">Login</Link>
                         </div>
                     </form>
                 </div>

@@ -8,9 +8,19 @@ const JWT = require('jsonwebtoken');
 //@access public
 const registerUser = asyncHandler(async (req, res) => {
     
-    const { username, email, password } = req.body;
+    const { firstname,
+        lastname,
+        role,
+        email,
+        birthday,
+        gender,
+        phone,
+        nic,
+        state,
+        password,
+        confirmPassword, } = req.body;
 
-    if (!username || !email || !password) {
+    if (!firstname|| !lastname || !role || !email || !birthday || !gender || !phone || !nic || !state || !password || !confirmPassword) {
         res.status(400);
         throw new Error("All fields are mandatory");
     }
@@ -21,12 +31,20 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(confirmPassword, 10);
 
     const user = await User.create({
-        username,
+        firstname,
+        lastname,
+        role,
         email,
-        password: hashedPassword
+        birthday,
+        gender,
+        phone,
+        nic,
+        state,
+        password,
+        confirmPassword : hashedPassword,
     })
 
     console.log(`User created: ${user}`);
@@ -50,23 +68,25 @@ const registerUser = asyncHandler(async (req, res) => {
 //@access public
 const loginUser = asyncHandler(async (req, res) => {
 
-    const { email, password } = req.body;
-    if (!email || !password) {
+    const { email, confirmPassword } = req.body;
+    if (!email || !confirmPassword) {
         res.status(400);
         throw new Error("All fields are mandatory");
     }
 
     const user = await User.findOne({ email });
     //compair password 
-    if (user && (await bcrypt.compare(password, user.password))) {
+    if (user && (await bcrypt.compare(confirmPassword, user.confirmPassword))) {
         const accessToken = JWT.sign({
             user: {
-                username: user.username,
+                firstname: user.firstname,
                 email: user.email,
                 id: user.id
             }
         }, process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '15m' });
+            { expiresIn: '1m' });
+            // res.cookie(accessToken)
+            console.log(accessToken);
         res.status(200).json({ accessToken });
     }
     else {

@@ -11,9 +11,9 @@ function App() {
   return (
     <div className='App'>
       <Routes>
-        <Route path="/api" element={<Landing />} /> 
-        <Route path="/api/signup" element={<Signup />} />
-        <Route path="/api/login" element={<Login />} />
+        <Route path="/" element={<Landing />} /> 
+        <Route path="/SSABS/user/signup/" element={<Signup />} />
+        <Route path="/SSABS/user/login" element={<Login />} />
       </Routes>
 
       <Footer /> 
