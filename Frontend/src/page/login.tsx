@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Login() {
-  const [confirmPassword, setPassword] = useState("");
+  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
@@ -13,7 +13,8 @@ function Login() {
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5001/SSABS/user/login', { email, confirmPassword });
+      const response = await axios.post('http://localhost:5001/SSABS/user/login', { email, password });
+      console.log(response);
       if (response.data) {
         navigate('/');
       } else {
@@ -56,10 +57,10 @@ function Login() {
           <input
             type="password"
             className="form-control"
-            id="confirmPassword"
-            name="confirmPassword"
-            placeholder='Password'
-            value={confirmPassword}
+            id="password"
+            name="password"
+            placeholder='password'
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />

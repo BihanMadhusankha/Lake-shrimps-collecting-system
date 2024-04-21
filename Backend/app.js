@@ -4,19 +4,20 @@ const connectDB = require('./config/dbconfig');
 const dotenv = require('dotenv').config();
 const cors = require('cors');
 
+// Database connection (assuming asynchronous)
 connectDB();
+
 const app = express();
 
 const PORT = process.env.PORT || 5000;
-// app.use(cookieParser())
 app.use(express.json());
-app.use(cors({ origin: '*'}));
-// Replace with your frontend origin
+app.use(cors({ origin: '*' })); // Consider more specific origins for production
 
-// app.use('/api/customers', require("./routes/customerRouter"));
-app.use('/SSABS/user/', require("./routes/signup"));  // Correct path
+// Mount signup route handler
+app.use('/SSABS/user/', require('./routes/signup'));
 
 app.use(errorHandler);
+
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`)
+  console.log(`Server listening on port ${PORT}`);
 });

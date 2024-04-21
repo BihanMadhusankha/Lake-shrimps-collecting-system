@@ -4,79 +4,50 @@ const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
 
 //@desc Register a user 
-//@route POST /api/signup/
+//@route POST /SSABS/user/signup/
 //@access public
 const registerUser = asyncHandler(async (req, res) => {
-    
-    const { firstname,
-        lastname,
-        role,
-        email,
-        birthday,
-        gender,
-        phone,
-        nic,
-        state,
-        password,
-        confirmPassword, } = req.body;
+    try {
+        const { firstname,
+            lastname,
+            role,
+            email,
+            birthday,
+            gender,
+            phone,
+            nic,
+            state,
+            password,
+            cpassword,
+        } = req.body;
 
-    if (!firstname|| !lastname || !role || !email || !birthday || !gender || !phone || !nic || !state || !password || !confirmPassword) {
-        res.status(400);
-        throw new Error("All fields are mandatory");
-    }
-    const userAvailable = await User.findOne({ email });
-    if (userAvailable) {
-        res.status(400);
-        throw new Error("User already registered");
-    }
+        if (!firstname || !lastname || !role || !email || !birthday || !gender || !phone || !nic || !state || !password || !cpassword) {
+            res.status(400);
+            throw new Error("All fields are mandatory");
+        }
+        const userAvailable = await User.findOne({ email });
+        if (userAvailable) {
+            res.status(400);
+            throw new Error("User already registered");
+        }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(confirmPassword, 10);
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedCPassword = await bcrypt.hash(cpassword, 10);
 
-    const user = await User.create({
-        firstname,
-        lastname,
-        role,
-        email,
-        birthday,
-        gender,
-        phone,
-        nic,
-        state,
-        password,
-        confirmPassword : hashedPassword,
-    })
-
-    console.log(`User created: ${user}`);
-    if (user) {
-        res.status(201).json({
-            _id: user.id,
-            email: user.email
+        const user = await User.create({
+            firstname,
+            lastname,
+            role,
+            email,
+            birthday,
+            gender,
+            phone,
+            nic,
+            state,
+            password: hashedPassword,
+            cpassword: hashedCPassword,
         })
-    }
-    else {
-        res.status(400);
-        throw new Error("User data is not valid");
-    }
-    res.json({
-        message: "Register the user"
-    })
-});
-
-//@desc login a user 
-//@route POST /api/user/login
-//@access public
-const loginUser = asyncHandler(async (req, res) => {
-
-    const { email, confirmPassword } = req.body;
-    if (!email || !confirmPassword) {
-        res.status(400);
-        throw new Error("All fields are mandatory");
-    }
-
-    const user = await User.findOne({ email });
-    //compair password 
-    if (user && (await bcrypt.compare(confirmPassword, user.confirmPassword))) {
         const accessToken = JWT.sign({
             user: {
                 firstname: user.firstname,
@@ -85,13 +56,76 @@ const loginUser = asyncHandler(async (req, res) => {
             }
         }, process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '1m' });
-            // res.cookie(accessToken)
-            console.log(accessToken);
-        res.status(200).json({ accessToken });
+        if (user) {
+            res.status(201).json({
+                status: 'success',
+                message: 'User created successfully',
+                accessToken,
+                user: {
+                    firstname: user.firstname,
+                    email: user.email,
+                    id: user.id
+                },
+            })
+        }
+    }
+    catch {
+        res.status(400);
+        throw new Error("User data is not valid");
+    }
+
+
+});
+
+//@desc login a user 
+//@route POST /api/user/login
+//@access public
+const loginUser = asyncHandler(async (req, res,next) => {
+    try{
+        
+    const { email, password } = req.body;
+    if (!email || !password) {
+        res.status(400);
+        throw new Error("All fields are mandatory");
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+        res.status(404);
+        throw new Error("User not found");
+    }
+    //compair password 
+    if (user && (await bcrypt.compare(password, user.password))) {
+        const accessToken = JWT.sign({ 
+            user: {
+                firstname: user.firstname,
+                email: user.email,
+                id: user.id
+            }
+        }, process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: '1m' });
+        
+        res.status(200).json({
+            status: 'success',
+            message: 'Loged in successfully',
+            accessToken,
+            user: {
+            
+                firstname: user.firstname,
+                email: user.email,
+                _id: user.id,
+                role: user.role,
+                
+            }
+        });
     }
     else {
         res.status(401);
         throw new Error("email or password is not valid");
+    }
+    }
+    catch{
+        next(error);
     }
 })
 

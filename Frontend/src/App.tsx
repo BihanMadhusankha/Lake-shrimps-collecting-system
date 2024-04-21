@@ -6,6 +6,7 @@ import Landing from './page/landing';
 // import About from './about/about'; 
 import Footer from './page/fotter';
 import Login from './page/login';
+import Dashboard from './page/dashboard';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Landing />} /> 
         <Route path="/SSABS/user/signup/" element={<Signup />} />
         <Route path="/SSABS/user/login" element={<Login />} />
+        <Route path="/SSABS/user/dashboard" element={<Dashboard />} />
       </Routes>
 
       <Footer /> 

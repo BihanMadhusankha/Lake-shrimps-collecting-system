@@ -1,74 +1,52 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-     firstname: {
-          type: String,
-          required: true,
-          unique: [true,"Pleace add first name"],
- 
-      },
-      lastname: {
-          type: String,
-          required: true,
-          unique: [true,"Pleace add last name"],
+    firstname: {
+        type: String,
+        required: [true, "Please add a First Name"]
+    },
+    lastname: {
+        type: String,
+        required: [true, "Please add a Last Name"]
+    },
+    role: {
+        type: String,
+        required: [true, "Please add a Role"]
+    },
+    email: {
+        type: String,
+        required: [true, "Please add unique Email"],
+        unique: [true, "Email already exists"]
+    },
+    birthday: {
+        type: Date,
+        required: [true, "Please add Birthday"]
+    },
+    gender: {
+        type: String,
+        required: [true, "Please add Gender"]
+    },
+    phone: {
+        type: String,
+        required: [true, "Please add unique Phone Number"]
+    },
+    nic: {
+        type: String,
+        required: [true, "Please add unique NIC"]
+    },
+    state: {
+        type: String,
+        required: [true, "Please add unique State"]
+    },
+    password: {
+        type: String,
+        required: [true, "Please add Password"]
+    },
+    cpassword:{
+        type: String,
+        required: [true, "Please add Confirm Password"]}
+}, {
+    timestamps: true
+});
 
-      },
-      role: {
-          type: String,
-          required: true,
-          unique: [true,"Pleace select your role"],
-
-      },
-      email: {
-          type: String,
-          required: true,
-          unique: [true,"Pleace add unique email"],
-
-      },
-      birthday: {
-          type: Date,
-          required: true,
-          unique: [true,"Pleace add birthday"]
-
-      },
-      gender: {
-          type: String,
-          required: true,
-          unique: [true,"Pleace select gender"],
-
-      },
-      phone: {
-          type: String,
-          required: true,
-          unique: [true,"Pleace add phone number"],
-
-      },
-      nic: {
-          type: String,
-          required: true,
-          unique: [true,"Pleace add nic"],
-
-      },
-      state: {
-          type: String,
-          required: true,
-          unique: [true,"Pleace select state"],
-
-      },
-      password: {
-          type: String,
-          required: true,
-          unique: [true,"Pleace add unique password"],
-
-      },
-      confirmPassword: {
-          type: String,
-          required: true,
-          unique: [true,"Pleace checking password"],
-
-      }
-    },{
-         timestamps: true
-    });
-
-    module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema);
