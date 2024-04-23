@@ -3,17 +3,17 @@ const errorHandler = require('./midleware/errorhandler');
 const connectDB = require('./config/dbconfig');
 const dotenv = require('dotenv').config();
 const cors = require('cors');
-
-// Database connection (assuming asynchronous)
+const cookieParser = require('cookie-parser');
 connectDB();
 
 const app = express();
 
 const PORT = process.env.PORT || 5000;
 app.use(express.json());
-app.use(cors({ origin: '*' })); // Consider more specific origins for production
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
+app.use(cors({ origin: '*' })); 
 
-// Mount signup route handler
 app.use('/SSABS/user/', require('./routes/signup'));
 
 app.use(errorHandler);

@@ -22,8 +22,10 @@ const registerUser = asyncHandler(async (req, res) => {
         } = req.body;
 
         if (!firstname || !lastname || !role || !email || !birthday || !gender || !phone || !nic || !state || !password || !cpassword) {
-            res.status(400);
-            throw new Error("All fields are mandatory");
+           return res.json({
+            status: 'error',
+            message: 'All fields are mandatory'
+           })
         }
         const userAvailable = await User.findOne({ email });
         if (userAvailable) {
@@ -95,50 +97,71 @@ const loginUser = asyncHandler(async (req, res,next) => {
         throw new Error("User not found");
     }
     //compair password 
-    if (user && (await bcrypt.compare(password, user.password))) {
-        const accessToken = JWT.sign({ 
-            user: {
-                firstname: user.firstname,
-                email: user.email,
-                id: user.id
-            }
-        }, process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '1m' });
-        
-        res.status(200).json({
-            status: 'success',
-            message: 'Loged in successfully',
-            accessToken,
-            user: {
-            
-                firstname: user.firstname,
-                email: user.email,
-                _id: user.id,
-                role: user.role,
-                
-            }
+    if (user) {
+        const accessToken = JWT.sign({
+          user: {
+            firstname: user.firstname,
+            email: user.email,
+            id: user.id
+          }
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: '1m' });
+  
+        // Set cookie with access token (adjust options as needed)
+        res.cookie('accessToken', accessToken, {
+          httpOnly: true, // Prevent client-side access
+          secure: true,   // Use only with HTTPS (if applicable)
+          maxAge: 60 * 1000, // Expires in 1 minute (adjust as needed)
         });
+  
+        res.status(200).json({
+          status: 'success',
+          message: 'User login successfully',
+          accessToken,
+          user: {
+            firstname: user.firstname,
+            email: user.email,
+            id: user.id
+          },
+        });
+      }
+    } catch {
+      res.status(400);
+      throw new Error("User data is not valid");
     }
-    else {
-        res.status(401);
-        throw new Error("email or password is not valid");
-    }
-    }
-    catch{
-        next(error);
-    }
-})
+  });
 
-//@desc current user info
-//@route POST /api/user/current
+//@desc profile user info
+//@route GET 
 //@access private
-const currentUser = asyncHandler(async (req, res) => {
-    res.json(req.user)
+const getProfile = asyncHandler(async (req, res) => {
+    try {
+      const userId = req.user.id; // Access user ID from decoded JWT
+  
+      // Replace with your actual logic to fetch user data from the database
+      const user = await db.User.findByPk(userId); // Assuming a User model
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      res.json({ user });
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      res.status(500).json({ message: 'Internal server error' }); // Handle internal errors
+    }
+  });
+
+const logout = asyncHandler(async (req, res) => {
+    res.clearCookie('accessToken');
+    res.json({message: 'User logged out successfully'})
 });
 
 
 module.exports = {
     loginUser: loginUser,
     registerUser: registerUser,
-    currentUser: currentUser
+    getProfile: getProfile,
+    logout: logout
 }

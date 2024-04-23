@@ -1,11 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import React ,{useState}from 'react';
-import { Link} from 'react-router-dom';
-// import axios from 'axios';
+import { Link, useNavigate} from 'react-router-dom';
+import axios from 'axios';
 import { Button, Card, Flex, Form, Input,  Typography } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import loginImage from '../assets/cartoon-t-shirt-drawing-photography-shrimps-png-clipart.jpg'
+import toast from 'react-hot-toast';
 
 function Login() {
   const [data, setData] = useState(({
@@ -13,9 +14,29 @@ function Login() {
     password: ''
   }))
 
-  const handleLogin = async (e: { preventDefault: () => string; }) => {
-    e.preventDefault();
-   
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+
+    const { email, password } = data;
+
+    try {
+      const response = await axios.post('http://localhost:5001/SSABS/user/login', {
+        
+        email,
+        password,
+      });
+      if (response.data) { // Assuming successful signup
+        setData(response.data);
+        toast.success('Login successful');
+        navigate('/SSABS/user/current'); // Navigate to login page
+      } else {
+        toast.error(response.data.error); // Handle server-side errors
+      }
+    } catch (error) {
+      toast.error('An unexpected error occurred. Please try again later.'); // User-friendly error message
+    }
   };
 
   return (
@@ -25,7 +46,7 @@ function Login() {
           <Typography.Title level={3}  className='title'>Sign In</Typography.Title>
           <Typography.Text type='secondary' strong className='slogan'>Unlock your account!</Typography.Text>
 
-          <Form layout='vertical' onFinish={handleLogin}>
+          <Form layout='vertical' onSubmitCapture={handleLogin}>
               
               <FormItem 
                 label='Email'
@@ -47,20 +68,12 @@ function Login() {
               >
                 <Input.Password placeholder='Enter your Password' size='large' value={data.password} onChange={(e)=> setData({...data,password:e.target.value})}></Input.Password>
               </FormItem>
-              
-
-                {/* {
-                  error && (
-                    <Alert description={errorMessage} type="error" showIcon closable className='alert'/>
-                  )
-                } */}
 
               <FormItem>
                 <Button 
-                // type={`${loading} ? '' : primary`} 
+                 type="primary" 
                 htmlType='submit' size='large' className='btn'>
-                  {/* {loading ? 
-                  <Spin/> : 'Sign In'} */}
+                 Sign In 
                   
                   </Button>
               </FormItem>
