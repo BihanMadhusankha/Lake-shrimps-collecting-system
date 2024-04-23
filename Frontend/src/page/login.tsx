@@ -1,82 +1,81 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React ,{useState}from 'react';
+import { Link} from 'react-router-dom';
+// import axios from 'axios';
+import { Button, Card, Flex, Form, Input,  Typography } from 'antd';
+import FormItem from 'antd/es/form/FormItem';
+import loginImage from '../assets/cartoon-t-shirt-drawing-photography-shrimps-png-clipart.jpg'
 
 function Login() {
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [data, setData] = useState(({
+    email: '',
+    password: ''
+  }))
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleLogin = async (e: { preventDefault: () => string; }) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5001/SSABS/user/login', { email, password });
-      console.log(response);
-      if (response.data) {
-        navigate('/');
-      } else {
-        setErrorMessage('Signup failed. Please check your details.');
-      }
-    } catch (error) {
-      console.error('Signup error:', error);
-      setErrorMessage('An unexpected error occurred. Please try again later.');
-    }
+   
   };
 
   return (
-    <div className='container'>
-      <form
-        className="row g-3 w-75 m-5 "
-        onSubmit={handleSubmit}
-      >
-        <h1 className="h3 mb-3 fw-normal mt-3 ">Please sign in</h1>
+    <Card className='form-container col-12 ' align-items-center >
+      <Flex gap="large">
+        <Flex vertical flex={1}>
+          <Typography.Title level={3}  className='title'>Sign In</Typography.Title>
+          <Typography.Text type='secondary' strong className='slogan'>Unlock your account!</Typography.Text>
 
-        <div className="col-md-4">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            name="email"
-            placeholder='Email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
+          <Form layout='vertical' onFinish={handleLogin}>
+              
+              <FormItem 
+                label='Email'
+                name='email'
+                rules={[{ required: true, message: 'Please input your email!' }
+                  ,{
+                    type: 'email',
+                    message: 'The input is not valid E-mail!',
+                  }
+                ]}
+              >
+                <Input placeholder='Enter your Email' size='large' value={data.email} onChange={(e)=> setData({...data,email:e.target.value})}></Input>
+              </FormItem>
+              
+              <FormItem 
+                label='Password'
+                name='password'
+                rules={[{ required: true, message: 'Please input your password!' }]}
+              >
+                <Input.Password placeholder='Enter your Password' size='large' value={data.password} onChange={(e)=> setData({...data,password:e.target.value})}></Input.Password>
+              </FormItem>
+              
 
-        <div className="col-md-4">
-          <label htmlFor="Confirm Password" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="password"
-            name="password"
-            placeholder='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+                {/* {
+                  error && (
+                    <Alert description={errorMessage} type="error" showIcon closable className='alert'/>
+                  )
+                } */}
 
-        <div className="col-12">
-          <button className="btn btn-primary" type="submit">
-            Submit form
-          </button>
-        </div>
-
-      </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-      <p>you have not another account? <Link to="/SSABS/user/signup">Sign in </Link></p>
-    </div>
+              <FormItem>
+                <Button 
+                // type={`${loading} ? '' : primary`} 
+                htmlType='submit' size='large' className='btn'>
+                  {/* {loading ? 
+                  <Spin/> : 'Sign In'} */}
+                  
+                  </Button>
+              </FormItem>
+              <FormItem>
+                <Link to="/SSABS/user/signup">
+                <Button  className='btn' size='large'>Create an Account</Button>
+                </Link>
+              </FormItem>
+          </Form>
+        </Flex>
+        <Flex flex={1.5}>
+          <img src={loginImage} alt="Register Img" className='auth-img'/>
+        </Flex>
+      </Flex>
+    </Card>
   );
 }
 
