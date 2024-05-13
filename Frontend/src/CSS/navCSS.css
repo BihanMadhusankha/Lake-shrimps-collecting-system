@@ -1,0 +1,13 @@
+.login-buttons {
+    display: flex;
+  align-items: center; /* Optional: Center buttons vertically */
+  /* Calculate width based on button width and margin */
+  width: calc(2 * (100px + 1rem) - 1rem); /* Assuming button width: 100px, margin: 1rem */
+  /* Calculate height based on button height and padding */
+  height: calc(1.5rem + 2 * 0.5rem); /* Height based on content size */
+  }
+
+  .landing{
+    margin-top: 10px;
+    background-image: url('../assets/home.jpg');
+  }

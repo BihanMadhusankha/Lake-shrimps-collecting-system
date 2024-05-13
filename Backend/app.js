@@ -3,15 +3,13 @@ const errorHandler = require('./midleware/errorhandler');
 const connectDB = require('./config/dbconfig');
 const dotenv = require('dotenv').config();
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
 connectDB();
 
 const app = express();
 
 const PORT = process.env.PORT || 5000;
 app.use(express.json());
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: false }));
+
 app.use(cors({ origin: '*' })); 
 
 app.use('/SSABS/user/', require('./routes/signup'));

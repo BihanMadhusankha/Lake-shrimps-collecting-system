@@ -2,6 +2,8 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
+const mongoose = require('mongoose'); // Assuming Mongoose for MongoDB
+
 
 //@desc Register a user 
 //@route POST /SSABS/user/signup/
@@ -12,20 +14,15 @@ const registerUser = asyncHandler(async (req, res) => {
             lastname,
             role,
             email,
-            birthday,
-            gender,
             phone,
             nic,
-            state,
             password,
             cpassword,
         } = req.body;
 
-        if (!firstname || !lastname || !role || !email || !birthday || !gender || !phone || !nic || !state || !password || !cpassword) {
-           return res.json({
-            status: 'error',
-            message: 'All fields are mandatory'
-           })
+        if (!firstname || !lastname || !role || !email || !phone || !nic ||  !password || !cpassword) {
+            res.status(400);
+            throw new Error("All fields are mandatory");
         }
         const userAvailable = await User.findOne({ email });
         if (userAvailable) {
@@ -42,27 +39,16 @@ const registerUser = asyncHandler(async (req, res) => {
             lastname,
             role,
             email,
-            birthday,
-            gender,
             phone,
             nic,
-            state,
             password: hashedPassword,
             cpassword: hashedCPassword,
         })
-        const accessToken = JWT.sign({
-            user: {
-                firstname: user.firstname,
-                email: user.email,
-                id: user.id
-            }
-        }, process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '1m' });
+        
         if (user) {
             res.status(201).json({
                 status: 'success',
                 message: 'User created successfully',
-                accessToken,
                 user: {
                     firstname: user.firstname,
                     email: user.email,
@@ -97,71 +83,78 @@ const loginUser = asyncHandler(async (req, res,next) => {
         throw new Error("User not found");
     }
     //compair password 
-    if (user) {
-        const accessToken = JWT.sign({
-          user: {
-            firstname: user.firstname,
-            email: user.email,
-            id: user.id
-          }
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '1m' });
-  
-        // Set cookie with access token (adjust options as needed)
-        res.cookie('accessToken', accessToken, {
-          httpOnly: true, // Prevent client-side access
-          secure: true,   // Use only with HTTPS (if applicable)
-          maxAge: 60 * 1000, // Expires in 1 minute (adjust as needed)
-        });
-  
+    if (user && (await bcrypt.compare(password, user.password))) {
+        const accessToken = JWT.sign({ 
+            user: {
+                firstname: user.firstname,
+                email: user.email,
+                id: user.id
+            }
+        }, process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: '1m' });
+        
         res.status(200).json({
-          status: 'success',
-          message: 'User login successfully',
-          accessToken,
-          user: {
-            firstname: user.firstname,
-            email: user.email,
-            id: user.id
-          },
+            status: 'success',
+            message: 'Loged in successfully',
+            accessToken,
+            user: {
+            
+                firstname: user.firstname,
+                email: user.email,
+                _id: user.id,
+                role: user.role,
+                
+            }
         });
-      }
-    } catch {
-      res.status(400);
-      throw new Error("User data is not valid");
     }
-  });
-
-//@desc profile user info
-//@route GET 
+    else {
+        res.status(401);
+        throw new Error("email or password is not valid");
+    }
+    }
+    catch{
+        next(error);
+    }
+})
+  //@desc refresh user info
+//@route post 
 //@access private
-const getProfile = asyncHandler(async (req, res) => {
+const refreshToken = asyncHandler(async (req, res) => {
     try {
-      const userId = req.user.id; // Access user ID from decoded JWT
+      const refreshToken = req.body.refreshToken;
   
-      // Replace with your actual logic to fetch user data from the database
-      const user = await db.User.findByPk(userId); // Assuming a User model
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+      // Replace with your logic to validate the refresh token (e.g., verify in database)
+      if (!refreshToken || !isValidRefreshToken(refreshToken)) { // Replace with your validation logic
+        return res.status(401).json({ message: 'Invalid refresh token' });
       }
   
-      res.json({ user });
+      // Replace with your logic to retrieve user data from the refresh token (e.g., user ID)
+      const userId = getUserIdFromRefreshToken(refreshToken); // Replace with your logic
+  
+      // Issue a new access token using user ID and your secret key
+      const newAccessToken = jwt.sign({ userId }, 'your_secret_key', { expiresIn: '30m' }); // Replace with your expiration time
+  
+      res.json({ accessToken: newAccessToken });
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error('Error refreshing token:', error);
       res.status(500).json({ message: 'Internal server error' }); // Handle internal errors
     }
   });
+  
+  const logout = asyncHandler(async (req, res) => {
+      // res.clearCookie('accessToken');
+      res.json({message: 'User logged out successfully'})
+  });
+  
+  
+  module.exports = {
+      loginUser: loginUser,
+      registerUser: registerUser,
+      logout: logout,
+     
+  }
 
-const logout = asyncHandler(async (req, res) => {
-    res.clearCookie('accessToken');
-    res.json({message: 'User logged out successfully'})
-});
-
-
-module.exports = {
-    loginUser: loginUser,
-    registerUser: registerUser,
-    getProfile: getProfile,
-    logout: logout
-}
+  
+  
+  
+ 

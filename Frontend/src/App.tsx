@@ -1,23 +1,24 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import Signup from './page/signup'; // Corrected path to Signup
-import Landing from './page/landing'; // Corrected path to Landing
-import Login from './page/login'; // Corrected';
+import Signup from './page/signup'; 
+import Landing from './page/landing'; 
+import Login from './page/login';
 import Footer from './page/fotter';
-// import Dashboard from './page/dashboard';
+ import Dashboard from './Admin/dashboard';
+ import AdminHome from './Admin/AdminHome';
 import { Toaster } from 'react-hot-toast';
-import CurrentUsers from './page/currentUsers';
 
 function App() {
   return (
     <div className="App">
-        <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
+        <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/SSABS/user/signup/" element={<Signup />} />
           <Route path="/SSABS/user/login" element={<Login />} />
-          <Route path="/SSABS/user/current" element={<CurrentUsers />} />
+          <Route path="/SSABS/user/dashboard" element={<Dashboard />} />
+          <Route path="/SSABS/user/adminhome" element={<AdminHome />} />
 
         </Routes>
 
