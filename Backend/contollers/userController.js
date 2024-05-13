@@ -116,30 +116,7 @@ const loginUser = asyncHandler(async (req, res,next) => {
         next(error);
     }
 })
-  //@desc refresh user info
-//@route post 
-//@access private
-const refreshToken = asyncHandler(async (req, res) => {
-    try {
-      const refreshToken = req.body.refreshToken;
-  
-      // Replace with your logic to validate the refresh token (e.g., verify in database)
-      if (!refreshToken || !isValidRefreshToken(refreshToken)) { // Replace with your validation logic
-        return res.status(401).json({ message: 'Invalid refresh token' });
-      }
-  
-      // Replace with your logic to retrieve user data from the refresh token (e.g., user ID)
-      const userId = getUserIdFromRefreshToken(refreshToken); // Replace with your logic
-  
-      // Issue a new access token using user ID and your secret key
-      const newAccessToken = jwt.sign({ userId }, 'your_secret_key', { expiresIn: '30m' }); // Replace with your expiration time
-  
-      res.json({ accessToken: newAccessToken });
-    } catch (error) {
-      console.error('Error refreshing token:', error);
-      res.status(500).json({ message: 'Internal server error' }); // Handle internal errors
-    }
-  });
+
   
   const logout = asyncHandler(async (req, res) => {
       // res.clearCookie('accessToken');

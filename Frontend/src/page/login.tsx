@@ -37,9 +37,9 @@ function Login() {
         toast.success('Login successful');
 
         if (response.data.user.role === 'admin') {
-          navigate('/SSABS/admin/dashboard'); // Redirect to admin dashboard
+          navigate('/SSABS/admin/adminhome'); // Redirect to admin dashboard
         } else {
-          navigate('/SSABS/user/adminhome'); // Redirect to user dashboard
+          navigate('/SSABS/user/userhome'); // Redirect to user dashboard
         }
         
       } else {

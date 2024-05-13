@@ -13,12 +13,12 @@ function UserNavigation() {
                         </a>
 
                         <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                            <Link to={'/SSABS/user/adminhome'}><li>
+                            <Link to={'/SSABS/user/userhome'}><li>
                                 <a href="#" className="nav-link px-2 text-white">Home</a>
                             </li></Link>
-                            <li><a href="#" className="nav-link px-2 text-white">Sellers</a></li>
-                            <li><a href="#" className="nav-link px-2 text-white">Drivers</a></li>
-                            <li><a href="#" className="nav-link px-2 text-white">Con.Creaters</a></li>
+                            <Link to={'/SSABS/user/userhome/selerPage'}><li><a href="#" className="nav-link px-2 text-white">Sellers</a></li></Link>
+                            <Link to={'/SSABS/user/userhome/vehicaleowner'}><li><a href="#" className="nav-link px-2 text-white">Vehi.Owner</a></li></Link>
+                            <Link to={'/SSABS/user/userhome/con.creaters'}><li><a href="#" className="nav-link px-2 text-white">Con.Creaters</a></li></Link>
                         </ul>
 
                         <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -30,7 +30,9 @@ function UserNavigation() {
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" className="rounded-circle"/>
                             </a>
                             <ul className="dropdown-menu text-small">
-                                <li><a className="dropdown-item" href="#">Profile</a></li>
+                                <Link to={'/SSABS/user/userhome/profile'}><li><a className="dropdown-item" href="#">Profile</a></li></Link>
+                                <li><a className="dropdown-item" href="#">Setting</a></li>
+                                <li><hr className="dropdown-divider"/></li>
                                 <Link to={'/SSABS/user/login'}><li><a className="dropdown-item" href="#">Sign out</a></li></Link>
                             </ul>
                         </div>

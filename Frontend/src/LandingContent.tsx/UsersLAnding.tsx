@@ -1,5 +1,6 @@
 import React from 'react'
 import homeImg from '../assets/home.jpg';
+import { Link } from 'react-router-dom';
 
 export default function UsersLAnding() {
   return (
@@ -21,15 +22,34 @@ export default function UsersLAnding() {
       </div>
 
       <div className="mt-4">
-    <h1 className='d-flex justify-content-center'>Users Category</h1>
-    <div className='mt-3'>
-    <h4>Seler</h4>
-        <h4>Content Creaters</h4>
-        <h4>Vehicale Owners</h4>
-    </div>
-        
+        <h1 className='d-flex justify-content-center'>Users Category</h1>
+        <div className='mt-3 d-flex flex-row justify-content-between mt-5    '>
+         
+            <div className='cardT card col-3 '>
+              <div className="card-body d-flex justify-content-center">
+                <h4 className="card-title"></h4>
+                <Link to={'/SSABS/user/userhome/selerPage'}><h4 className="card-title">Sellers</h4></Link>
+              </div>
+            </div>
+          
+            <div className='cardT card col-3 '>
+              <div className="card-body d-flex   justify-content-center">
+              <Link to={'/SSABS/user/userhome/vehicaleowner'}><h4 className="card-title">Vehicale Owners</h4></Link>
+              </div>
+            </div>
+          
+          
+            <div className='cardT card col-3 '>
+              <div className="card-body d-flex justify-content-center">
+                <Link to={'/SSABS/user/userhome/con.creaters'}><h4 className="card-title">Content Creaters</h4></Link>
+              </div>
+            </div>
+          
 
-</div>
+        </div>
+
+
+      </div>
 
     </div>
   )

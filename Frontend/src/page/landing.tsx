@@ -9,7 +9,7 @@ function Landing() {
         <div>
             <Navigation />
             <UsersLAnding/>
-            {/* <Lakes/> */}
+            
         </div>
 
     )
