@@ -8,16 +8,13 @@
 }
 
 body{
-    display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     background: #f8f8f8;
 }
 
-.form-container{
-    width:1000px
-}
+
 .title,
 .slogan{
     text-align: center;
