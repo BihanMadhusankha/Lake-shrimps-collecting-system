@@ -6,6 +6,7 @@ export default function contentCreaterPage() {
     <div>
       <UserNavigation/>
       <h1>Content Creater Page</h1>
+      <h1>Shiwantha prasad</h1>
       </div>
   )
 }
