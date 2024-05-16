@@ -7,6 +7,8 @@ export default function contentCreaterPage() {
       <UserNavigation/>
       <h1>Content Creater Page</h1>
       <h1>Shiwantha prasad</h1>
+      <h1>sanuri</h1>
+
       </div>
   )
 }
