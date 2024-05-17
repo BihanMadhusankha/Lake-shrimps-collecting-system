@@ -30,7 +30,7 @@ export default function environment() {
                 <br></br>
                 <Row>
                     <Col >
-                     <Button variant="primary">Marine</Button>{' '}
+                     <Button variant="primary">Marine</Button>{''}
                     </Col>
 
                     <Col>
