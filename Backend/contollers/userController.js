@@ -117,6 +117,20 @@ const loginUser = asyncHandler(async (req, res,next) => {
     }
 })
 
+const getUserProfile = async (req, res) => {
+    try {
+      const user = await User.findById(req.user._id).select('-password'); // Exclude password from response
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      console.log(req.user._id)
+      res.json(user);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  };
   
   const logout = asyncHandler(async (req, res) => {
       // res.clearCookie('accessToken');
@@ -128,6 +142,7 @@ const loginUser = asyncHandler(async (req, res,next) => {
       loginUser: loginUser,
       registerUser: registerUser,
       logout: logout,
+      getUserProfile: getUserProfile
      
   }
 
