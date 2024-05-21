@@ -7,6 +7,7 @@ import Shrimp3 from "../assets/Shrimp3.jpg";
 import Shrimp4 from "../assets/Shrimp4.jpg";
 import React from 'react';
 import UserNavigation from '../Navigations/userNav';
+import './places.css';
 
 
 
@@ -15,66 +16,75 @@ function Places(){
         <Form>
             <UserNavigation></UserNavigation>
             <br></br>
+            <br></br>
              <Form.Group className="mb-3" controlId="formBasic">
                 <Row>
                     <Col xs={4} style={{display: 'flex', justifyContent: 'center'}}>
-                    <Image src={Shrimp1} rounded style={{width:"200px",height:"200px"}}/>
+                    <Image src={Shrimp1} className='image'/>
                     </Col>
 
                     <Col >
-                     <Button variant="primary">More</Button>{' '}
+                     <Button className="button2"  variant="primary">More</Button>{' '}
                     </Col>
 
                     <Col>
-                    <Image src={Shrimp2} rounded style={{width:"200px",height:"200px"}}/>
+                    <Image src={Shrimp2} className='image'/>
                     </Col>
 
                     <Col >
-                     <Button variant="primary">More</Button>{' '}
+                     <Button className="button2" variant="primary">More</Button>{' '}
                     </Col>    
                 </Row>
                 <Row>
                 <Col>
+                <div className='description1'>
                     <h6>Pavatkulam-Vavuniya</h6>
                     <h6>20kg</h6>
                     <h6>02/05/2024</h6>
+                    </div>
                 </Col>
 
                 <Col>
+                <div className='description2'>
                     <h6>Kandalama-Dambulla</h6>
                     <h6>25kg</h6>
                     <h6>02/05/2024</h6>
+                    </div>
                 </Col>
                 </Row>
                 <br></br>
                 <Row>
                 <Col xs={4} style={{display: 'flex', justifyContent: 'center'}}>
-                    <Image src={Shrimp3} rounded style={{width:"200px",height:"200px"}}/>
+                    <Image src={Shrimp3} className='image'/>
                     </Col>
 
                     <Col >
-                     <Button variant="primary">More</Button>{' '}
+                     <Button className='button2' variant="primary">More</Button>{' '}
                     </Col>
 
                     <Col>
-                    <Image src={Shrimp4} rounded style={{width:"200px",height:"200px"}}/>
+                    <Image src={Shrimp4} className='image'/>
                     </Col>
 
                     <Col >
-                     <Button variant="primary">More</Button>{' '}
+                     <Button className='button2' variant="primary">More</Button>{' '}
                     </Col>   
                 </Row>
                 <Row>
                 <Col>
+                <div className='description1'>
                     <h6>Minneriya-Dambulla</h6>
                     <h6>20kg</h6>
                     <h6>02/05/2024</h6>
+                    </div>
                 </Col>
 
                 <Col>
+                <div className='description2'>
                     <h6>Kurunegala-Kurunegala</h6>
                     <h6>25kg</h6>
                     <h6>02/05/2024</h6>
+                    </div>
                 </Col>
                 </Row>
                 </Form.Group>

@@ -18,6 +18,11 @@ import 'aos/dist/aos.js';
 import 'aos/dist/aos.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
+import EnvironmentPage from './stock&category/environment';
+import DetailsPage from './stock&category/details';
+import HarvestPage from './stock&category/harvest';
+import HistoryPage from './stock&category/history';
+import PlacesPage from './stock&category/places';
 
 function App() {
   useEffect(()=>{
@@ -47,6 +52,11 @@ function App() {
           <Route path='/SSABS/user/userhome/vehicaleowner' element={<VehicaleOwnerPage/>}/>
           <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage/>}/>
           <Route path='/SSABS/user/userhome/profile' element={<ProfilePage/>}/>
+          <Route path='/SSABS/user/userhome/environment' element={<EnvironmentPage/>}/>
+          <Route path='/SSABS/user/userhome/details' element={<DetailsPage/>}/>
+          <Route path='/SSABS/user/userhome/harvest' element={<HarvestPage/>}/>
+          <Route path='/SSABS/user/userhome/history' element={<HistoryPage/>}/>
+          <Route path='/SSABS/user/userhome/places' element={<PlacesPage/>}/>
           
         </Routes>
       <Footer />

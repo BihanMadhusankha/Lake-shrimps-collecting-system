@@ -1,0 +1,30 @@
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 40px;
+   
+  }
+  
+  .image-container img {
+    flex: 1 1 100%; /* Make images take full width on smaller screens */
+    max-width: 200px;
+    height: 200px;
+    border-radius: 20px;  
+  }
+  
+  @media (min-width: 768px) {
+    .image-container img {
+      flex: 1 1 33%; /* Three images per row on medium and large screens */
+    }
+  }
+
+  .button1{
+    width: 200px;
+    margin-left: 80px;
+  }
+
+ 
+    
+
+
+  
