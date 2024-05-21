@@ -1,10 +1,9 @@
 import React from 'react';
-import '../CSS/UserForm.css';
 import PrawnsImage from './../assets/prawn1.jpg';
 import UserNavigation from '../Navigations/userNav';
 
 
-const UserForm: React.FC = () => {
+const VehicaleUserForm: React.FC = () => {
   return (
     <div>
       <UserNavigation/>
@@ -32,4 +31,4 @@ const UserForm: React.FC = () => {
   );
 };
 
-export default UserForm;
+export default VehicaleUserForm;

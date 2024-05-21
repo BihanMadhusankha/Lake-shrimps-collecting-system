@@ -24,6 +24,10 @@ import DetailsPage from './stock&category/details';
 import HarvestPage from './stock&category/harvest';
 import HistoryPage from './stock&category/history';
 import PlacesPage from './stock&category/places';
+import VehicaleDetails from './delivery/VehicleDetails'
+import VehicleList from './delivery/VehicleList'
+import VehicaleUserForm from './delivery/VehicaleUserForm'
+import RegForm from './delivery/RegForm'
 
 function App() {
   useEffect(() => {
@@ -59,7 +63,10 @@ function App() {
           <Route path='/SSABS/user/userhome/harvest' element={<HarvestPage/>}/>
           <Route path='/SSABS/user/userhome/history' element={<HistoryPage/>}/>
           <Route path='/SSABS/user/userhome/places' element={<PlacesPage/>}/>
-          
+          <Route path='/SSABS/user/userhome/VehicaleDetails' element={<VehicaleDetails/>}/>
+          <Route path='/SSABS/user/userhome/VehicleList' element={<VehicleList/>}/>
+          <Route path='/SSABS/user/userhome/VehicaleUserForm' element={<VehicaleUserForm/>}/>
+          <Route path='/SSABS/user/userhome/RegForm' element={<RegForm/>}/>
       </Routes>
       <Footer />
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  MDBContainer,
+ 
   MDBCol,
   MDBRow,
 } from 'mdb-react-ui-kit';

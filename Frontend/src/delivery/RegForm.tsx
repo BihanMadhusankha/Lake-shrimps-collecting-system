@@ -1,5 +1,4 @@
 import React from 'react';
-import '../CSS/RegForm.css';
 import PrawnImage from './../assets/prawn.jpg';
 
 
