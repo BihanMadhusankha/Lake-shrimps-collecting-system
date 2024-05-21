@@ -1,0 +1,22 @@
+.card {
+    /* Styles for the card container */
+    display: inline-block;
+    margin: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .card-link {
+    /* Styles for the anchor tag within the card */
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .card-icon {
+    /* Styles for the icon within the card */
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  

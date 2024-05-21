@@ -6,6 +6,8 @@ import FormItem from 'antd/es/form/FormItem';
 import registerImage from '../assets/pngegg (7).png';
 import { toast } from 'react-hot-toast';
 const sriLankaNICRegex = /^[0-9]{9}[vVxX]$/;
+import './signup.css'
+import Navigation from '../Navigations/userNav';
 
 const Signup = () => {
   const [data, setData] = useState({
@@ -75,7 +77,10 @@ const validatePassword = (rule:string, value:string) => {
  
   return (
 
-    <Card className='form-container col-12 ' align-items-center >
+    <div className=' '>
+      <Navigation />
+
+      <Card className='form-container col-12 d-flex justify-content-center ' align-items-center >
       <Flex gap="large">
         <Flex vertical flex={1}>
           <Typography.Title level={3} className='title'>Create an Account</Typography.Title>
@@ -142,8 +147,6 @@ const validatePassword = (rule:string, value:string) => {
             >
               <Input placeholder='Enter your Email' size='large' value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })}></Input>
             </FormItem>
-           
-           
             <FormItem
               label='Phone'
               name='phone'
@@ -221,6 +224,7 @@ const validatePassword = (rule:string, value:string) => {
         </Flex>
       </Flex>
     </Card>
+    </div>
 
   );
 }

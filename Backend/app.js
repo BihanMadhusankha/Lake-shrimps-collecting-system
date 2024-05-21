@@ -13,6 +13,8 @@ app.use(express.json());
 app.use(cors({ origin: '*' })); 
 
 app.use('/SSABS/user/', require('./routes/signup'));
+app.use('/SSABS/admin/', require('./routes/admin.js'));
+
 
 app.use(errorHandler);
 

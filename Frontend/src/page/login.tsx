@@ -20,7 +20,7 @@ function Login() {
   const { setToken } = useContext(AuthContext);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
 
     const { email, password } = data;
 
@@ -37,13 +37,12 @@ function Login() {
         toast.success('Login successful');
 
         if (response.data.user.role === 'admin') {
-          navigate('/SSABS/admin/adminhome'); // Redirect to admin dashboard
+          navigate('/SSABS/admin/adminhome');
         } else {
-          navigate('/SSABS/user/userhome'); // Redirect to user dashboard
+          navigate('/SSABS/user/userhome');
         }
-        
       } else {
-        toast.error(response.data.error); // Handle server-side errors
+        toast.error(response.data.error);
       }
     } catch (error) {
       toast.error('An unexpected error occurred. Please try again later.');

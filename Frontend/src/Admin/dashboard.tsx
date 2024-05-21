@@ -1,257 +1,129 @@
-import React from 'react'
-import UserNavigation from '../Navigations/AdminNAvigation'
+import React, { useState, useEffect } from 'react';
+import Sidebar from './Sidebar'; // Import Sidebar component
+import '../CSS/dash.css'; // Assuming your existing CSS for the table
+import AdminNavigation from '../Navigations/AdminNAvigation';
+import Card from './adminCard'; // Import Card component (if created)
 
-export default function dashboard() {
+
+// Interface for user data (replace with your actual data structure)
+interface User {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  role: string;
+  // ... other user properties as needed
+}
+
+interface NavigationLink {
+  path: string; // Path for the link
+  label: string; // Text displayed on the link
+}
+
+const Dashboard: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(false); // Track loading state
+  const [error, setError] = useState<string | null>(null); // Track any errors
+
+  const navigationLinks: NavigationLink[] = [
+    { path: '/users', label: 'Users' },
+
+  ];
+  // Fetch data (replace with your actual API endpoint)
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setIsLoading(true); // Set loading state to true
+      setError(null); // Clear any previous errors
+
+      try {
+        const response = await fetch('http://localhost:5001/SSABS/admin/dashboard'); // Replace with your actual API endpoint
+        const data: User[] = await response.json(); // Type cast the response data
+
+        setUsers(data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        setError('Failed to load user data. Please try again later.');
+      } finally {
+        setIsLoading(false); // Set loading state to false regardless of success or failure
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  // Function to handle user deletion (replace with actual API call)
+  const handleDeleteUser = async (userId: string) => {
+    try {
+      const response = await fetch(`http://localhost:5001/SSABS/admin/dashboard/${userId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setUsers(users.filter((user) => user._id !== userId)); // Update local state
+      } else {
+        console.error('Error deleting user:', await response.text());
+        // Handle deletion error appropriately (e.g., display an error message to the user)
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      // Handle network or other errors appropriately
+    }
+  };
+
   return (
-    <div>
-     <UserNavigation/>
+    <div className="dashboard d-flex flex-column">
+      <AdminNavigation />
+      <h2 className="d-flex justify-content-center m-3">Admin Dashboard</h2>
 
-      <div className="container-fluid">
-        <div className="row">
-          <div className="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
-            <div className="offcanvas-md offcanvas-end bg-body-tertiary" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
-              <div className="offcanvas-header">
-                <h5 className="offcanvas-title" id="sidebarMenuLabel">Company name</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
-              </div>
-              <div className="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
-                <ul className="nav flex-column">
-                  <li className="nav-item">
-                    <a className="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
-                      {/* <svg class="bi"><use xlink:href="#house-fill" /></svg> */}
-                      Dashboard
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link d-flex align-items-center gap-2" href="#">
-                      {/* <svg class="bi"><use xlink:href="#file-earmark" /></svg> */}
-                      Orders
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link d-flex align-items-center gap-2" href="#">
-                      {/* <svg class="bi"><use xlink:href="#cart" /></svg> */}
-                      Products
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link d-flex align-items-center gap-2" href="#">
-                      {/* <svg class="bi"><use xlink:href="#people" /></svg> */}
-                      Customers
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link d-flex align-items-center gap-2" href="#">
-                      {/* <svg class="bi"><use xlink:href="#graph-up" /></svg> */}
-                      Reports
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link d-flex align-items-center gap-2" href="#">
-                      {/* <svg class="bi"><use xlink:href="#puzzle" /></svg> */}
-                      Integrations
-                    </a>
-                  </li>
-                </ul>
-
-                <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
-                  <span>Saved reports</span>
-                  <a className="link-secondary" href="#" aria-label="Add a new report">
-                    {/* <svg class="bi"><use xlink:href="#plus-circle" /></svg> */}
-                  </a>
-                </h6>
-                <ul className="nav flex-column mb-auto">
-                  <li className="nav-item">
-                    <a className="nav-link d-flex align-items-center gap-2" href="#">
-                      {/* <svg class="bi"><use xlink:href="#file-earmark-text" /></svg> */}
-                      Current month
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link d-flex align-items-center gap-2" href="#">
-                      {/* <svg class="bi"><use xlink:href="#file-earmark-text" /></svg> */}
-                      Last quarter
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link d-flex align-items-center gap-2" href="#">
-                      {/* <svg class="bi"><use xlink:href="#file-earmark-text" /></svg> */}
-                      Social engagement
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link d-flex align-items-center gap-2" href="#">
-                      {/* <svg class="bi"><use xlink:href="#file-earmark-text" /></svg> */}
-                      Year-end sale
-                    </a>
-                  </li>
-                </ul>
-
-                <hr className="my-3"/>
-
-                  <ul className="nav flex-column mb-auto">
-                    <li className="nav-item">
-                      <a className="nav-link d-flex align-items-center gap-2" href="#">
-                        Settings
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link d-flex align-items-center gap-2" href="#">
-                        Sign out
-                      </a>
-                    </li>
-                  </ul>
-              </div>
-            </div>
+      <div>
+        <div className=' d-flex  flex-row'>
+          <Sidebar />
+          <div className="cards-container col-3 me-auto "> {/* Wrap cards in a container */}
+            {navigationLinks.map((link) => (
+              <Card key={link.path} path={link.path} label={link.label} />
+            ))}
           </div>
 
-          <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h1 className="h2">Dashboard</h1>
-              <div className="btn-toolbar mb-2 mb-md-0">
-                <div className="btn-group me-2">
-                  <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
-                  <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
-                </div>
-                <button type="button" className="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
-                  This week
-                </button>
-              </div>
-            </div>
-
-            <canvas className="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-
-            <h2>Section title</h2>
-            <div className="table-responsive small">
-              <table className="table table-striped table-sm">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                    <th scope="col">Header</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1,001</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td>placeholder</td>
-                    <td>text</td>
-                  </tr>
-                  <tr>
-                    <td>1,002</td>
-                    <td>placeholder</td>
-                    <td>irrelevant</td>
-                    <td>visual</td>
-                    <td>layout</td>
-                  </tr>
-                  <tr>
-                    <td>1,003</td>
-                    <td>data</td>
-                    <td>rich</td>
-                    <td>dashboard</td>
-                    <td>tabular</td>
-                  </tr>
-                  <tr>
-                    <td>1,003</td>
-                    <td>information</td>
-                    <td>placeholder</td>
-                    <td>illustrative</td>
-                    <td>data</td>
-                  </tr>
-                  <tr>
-                    <td>1,004</td>
-                    <td>text</td>
-                    <td>random</td>
-                    <td>layout</td>
-                    <td>dashboard</td>
-                  </tr>
-                  <tr>
-                    <td>1,005</td>
-                    <td>dashboard</td>
-                    <td>irrelevant</td>
-                    <td>text</td>
-                    <td>placeholder</td>
-                  </tr>
-                  <tr>
-                    <td>1,006</td>
-                    <td>dashboard</td>
-                    <td>illustrative</td>
-                    <td>rich</td>
-                    <td>data</td>
-                  </tr>
-                  <tr>
-                    <td>1,007</td>
-                    <td>placeholder</td>
-                    <td>tabular</td>
-                    <td>information</td>
-                    <td>irrelevant</td>
-                  </tr>
-                  <tr>
-                    <td>1,008</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td>placeholder</td>
-                    <td>text</td>
-                  </tr>
-                  <tr>
-                    <td>1,009</td>
-                    <td>placeholder</td>
-                    <td>irrelevant</td>
-                    <td>visual</td>
-                    <td>layout</td>
-                  </tr>
-                  <tr>
-                    <td>1,010</td>
-                    <td>data</td>
-                    <td>rich</td>
-                    <td>dashboard</td>
-                    <td>tabular</td>
-                  </tr>
-                  <tr>
-                    <td>1,011</td>
-                    <td>information</td>
-                    <td>placeholder</td>
-                    <td>illustrative</td>
-                    <td>data</td>
-                  </tr>
-                  <tr>
-                    <td>1,012</td>
-                    <td>text</td>
-                    <td>placeholder</td>
-                    <td>layout</td>
-                    <td>dashboard</td>
-                  </tr>
-                  <tr>
-                    <td>1,013</td>
-                    <td>dashboard</td>
-                    <td>irrelevant</td>
-                    <td>text</td>
-                    <td>visual</td>
-                  </tr>
-                  <tr>
-                    <td>1,014</td>
-                    <td>dashboard</td>
-                    <td>illustrative</td>
-                    <td>rich</td>
-                    <td>data</td>
-                  </tr>
-                  <tr>
-                    <td>1,015</td>
-                    <td>random</td>
-                    <td>tabular</td>
-                    <td>information</td>
-                    <td>text</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </main>
         </div>
+        {isLoading ? (
+          <p>Loading user data...</p>
+        ) : error ? (
+          <p className="error-message">{error}</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Role</th>
+                <th>Actions</th> {/* Add a new header for the delete button */}
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user._id}>
+                  <td>{user.firstname}</td>
+                  <td>{user.lastname}</td>
+                  <td>{user.role}</td>
+                  <td>
+                    <button className='button' onClick={() => handleDeleteUser(user._id)}>
+                      Delete
+                    </button>
+                  </td> {/* Add a table cell for the delete button */}
+                </tr>
+              ))}
+              {users.length === 0 && !error && (
+                <tr>
+                  <td colSpan="4" style={{ textAlign: 'center' }}>
+                    No users found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default Dashboard;

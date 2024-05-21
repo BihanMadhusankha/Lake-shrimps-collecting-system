@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const multer = require('multer'); // for file upload
 
 const userSchema = new mongoose.Schema({
     firstname: {
@@ -35,9 +36,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please add Confirm Password"]
     },
+    profilePicture: {
+        type: String,
+      },
    
 }, {
     timestamps: true
 });
+
+
 
 module.exports = mongoose.model('User', userSchema);
