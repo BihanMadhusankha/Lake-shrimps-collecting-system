@@ -14,6 +14,10 @@ import VehicaleOwnerPage from './page/vehicaleOwnerPage';
 import ShrimpColorMonitoring from './page/byColor'
 import UserProfile from './Users/profile';
 import { Toaster } from 'react-hot-toast';
+import RegForm from './delivery/RegForm';
+import VehicleList from './delivery/VehicleList';
+import VehicleDetails from './delivery/VehicleDetails'
+import UserForm from './delivery/UserForm';
 import AOS from 'aos';
 import 'aos/dist/aos.js';
 import 'aos/dist/aos.css';
@@ -41,28 +45,23 @@ function App() {
 
   return (
     <div className="App">
-      <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/SSABS/user/signup/" element={<Signup />} />
-        <Route path="/SSABS/user/login" element={<Login />} />
-        <Route path="/SSABS/admin/dashboard" element={<Dashboard />} />
-        <Route path="/SSABS/admin/adminhome" element={<AdminHome />} />
-        <Route path="/SSABS/user/userhome" element={<UserHome />} />
-        <Route path='/SSABS/user/userhome/selerPage' element={<SelerPage />} />
-        <Route path='/SSABS/user/userhome/vehicaleowner' element={<VehicaleOwnerPage />} />
-        {/* <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} /> */}
-        <Route path='/SSABS/user/userhome/profile' element={<UserProfile />} />
-        <Route path='/SSABS/user/userhome/byColor' element={<ShrimpColorMonitoring />} />
-          <Route path='/SSABS/user/userhome/environment' element={<EnvironmentPage/>}/>
-          <Route path='/SSABS/user/userhome/details' element={<DetailsPage/>}/>
-          <Route path='/SSABS/user/userhome/harvest' element={<HarvestPage/>}/>
-          <Route path='/SSABS/user/userhome/history' element={<HistoryPage/>}/>
-          <Route path='/SSABS/user/userhome/places' element={<PlacesPage/>}/>
-          
-      </Routes>
+        <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/SSABS/user/signup/" element={<Signup />} />
+          <Route path="/SSABS/user/login" element={<Login />} />
+          <Route path="/SSABS/admin/dashboard" element={<Dashboard />} />
+          <Route path="/SSABS/admin/adminhome" element={<AdminHome />} />
+          <Route path="/SSABS/user/userhome" element={<UserHome />} />
+          <Route path='/SSABS/user/userhome/selerPage' element={<SelerPage/>}/>
+          <Route path='/SSABS/user/userhome/vehicaleowner' element={<VehicaleOwnerPage/>}/>
+          <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage/>}/>
+          <Route path='/SSABS/user/userhome/profile' element={<ProfilePage/>}/>
+
+        </Routes>
       <Footer />
     </div>
   );
 }
+
 export default App;
