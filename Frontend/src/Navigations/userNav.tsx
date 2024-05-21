@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import '../CSS/navCSS.css'
+import { Button } from 'antd';
 
 function UserNavigation() {
     return (
@@ -33,7 +34,9 @@ function UserNavigation() {
                                 <Link to={'/SSABS/user/userhome/profile'}><li><a className="dropdown-item" href="#">Profile</a></li></Link>
                                 <li><a className="dropdown-item" href="#">Setting</a></li>
                                 <li><hr className="dropdown-divider"/></li>
-                                <Link to={'/SSABS/user/login'}><li><a className="dropdown-item" href="#">Sign out</a></li></Link>
+                                <Link to={'/SSABS/user/login'}><li><Button onClick={()=>{
+                                    localStorage.removeItem('accessToken')
+                                }}><a className="dropdown-item" href="#">Sign out</a></Button></li></Link>
                             </ul>
                         </div>
                     </div>

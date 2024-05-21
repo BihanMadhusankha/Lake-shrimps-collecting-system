@@ -6,6 +6,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import '../CSS/navCSS.css'
 import Aos from 'aos'; // Animation library
 import 'aos/dist/aos.css';
+
 const Card = ({ title, linkTo, image }) => {
   return (
     <div className="card m-2 text-center">
@@ -31,7 +32,7 @@ const ShrimpCategory = ({ title, description, animation }) => {
     >
       <h3>{title}</h3>
       <p>{description}</p>
-      <Link to="/explore-shrimp" className="btn btn-primary">Explore Now</Link>
+      <Link to="/SSABS/user/userhome/byColor" className="btn btn-primary">Explore Now</Link>
     </div>
   );
 };
@@ -41,6 +42,7 @@ export default function UsersLAnding() {
     { title: 'Sellers', linkTo: '/SSABS/user/userhome/selerPage' },
     { title: 'Vehicale Owners', linkTo: '/SSABS/user/userhome/vehicaleowner' },
     { title: 'Content Creators', linkTo: '/SSABS/user/userhome/con.creaters' },
+
   ];
 
   const aboutCompany = `

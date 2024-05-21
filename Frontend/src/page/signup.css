@@ -1,0 +1,153 @@
+/* Base styles */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center form vertically */
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff; /* Light background */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.2s ease-in-out;
+    max-width: 80%;
+    margin: 100px;
+    
+  }
+  
+  .title, .slogan {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    
+  }
+  
+  .slogan {
+    font-size: 16px;
+    color: #ccc;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+
+  }
+  
+  .btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #007bff; /* Blue primary button */
+    color: #fff; /* White text for primary button */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    transition: transform 0.2s ease-in-out;
+
+  }
+  
+  .btn.primary {
+    background-color: #007bff; /* Blue primary button */
+    color: #fff; /* White text for primary button */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    transition: transform 0.2s ease-in-out;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+   
+  }
+  
+  .btn:hover {
+    opacity: 0.8;
+    transform: scale(1.02);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.3s ease-in-out;
+    background-color: #007bff; /* Blue primary button */
+    color: #fff; /* White text for primary button */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .form-container {
+      flex-direction: column-reverse; /* Stack form on top of image on small screens */
+      
+    }
+  
+    .title, .slogan {
+      margin-top: 10px; /* Adjust spacing on smaller screens */
+    }
+  
+    .btn {
+      margin: 5px auto; /* Center buttons horizontally on small screens */
+    }
+  
+    .auth-img {
+      width: 100%; /* Ensure image fills container width on small screens */
+    }
+  }
+  
+  /* UI Enhancements (optional) */
+  .form-container {
+    animation: fadeIn 0.5s ease-in-out forwards; /* Basic fade-in animation */
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+
+  }
+  
+  .form-item {
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #007bff; /* Blue primary button */
+    color: #fff; /* White text for primary button */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    transition: transform 0.2s ease-in-out;
+    width: 100%;
+    
+  }
+  
+  .form-item label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold; /* Emphasize labels */
+  }
+  
+  .input {
+    
+    border: 1px solid #ccc; 
+  }  

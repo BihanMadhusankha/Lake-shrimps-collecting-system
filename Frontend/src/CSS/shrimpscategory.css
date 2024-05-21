@@ -1,0 +1,75 @@
+.container {
+    padding: 20px;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .section {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease; /* Adding transition for smooth hover effect */
+  }
+  
+  .section:hover {
+    transform: translateY(-5px); /* Hover effect */
+  }
+  
+  .image-container {
+    overflow: hidden;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  
+  .image {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease; /* Adding transition for image scaling effect */
+  }
+  
+  .image:hover {
+    transform: scale(1.1); /* Image scaling effect on hover */
+  }
+  
+  .fade-in {
+    animation: fadeIn 1s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .section {
+      padding: 10px;
+      max-width: 100%;
+    }
+  }
+  
+  @media only screen and (max-width: 576px) {
+    .section {
+      padding: 5px;
+    }
+  
+    .section:hover {
+      transform: none; /* Disable hover effect on smaller screens */
+    }
+  }
+  

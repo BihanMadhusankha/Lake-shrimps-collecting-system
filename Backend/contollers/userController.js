@@ -91,7 +91,7 @@ const loginUser = asyncHandler(async (req, res,next) => {
                 id: user.id
             }
         }, process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '1m' });
+            { expiresIn: '10s' });
         
         res.status(200).json({
             status: 'success',
@@ -118,19 +118,96 @@ const loginUser = asyncHandler(async (req, res,next) => {
 })
 
 const getUserProfile = async (req, res) => {
+    // Access protected user data or perform actions (replace with your logic)
+    console.log('User accessed protected resource:', req.user); // User data from decoded token
+    res.json({ message: 'Welcome, authorized user!' });
+  }
+
+const SellersPages  = async (req, res) => {
     try {
-      const user = await User.findById(req.user._id).select('-password'); // Exclude password from response
+      const sellers = await User.find({ role: 'seler' });
+      res.json({ data: sellers });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error fetching sellers');
+    }
+  }
+
+  const VehicalOwnerPage  = async (req, res) => {
+    try {
+      const owners = await User.find({ role: 'vehicale_owner' });
+      res.json({ data: owners });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error fetching Vehicale Owner');
+    }
+  }
+
+
+  const getUsers = async (req, res) => {
+    try {
+      const users = await User.find(); // Find all users in the collection
+      res.json(users);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      res.status(500).json({ message: 'Failed to load user data.' });
+    }
+  };
+
+  const deleteUsers =  async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const deletedUser = await User.findByIdAndDelete(id);
+  
+      if (!deletedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting user' });
+    }
+  }
+
+  const updateUsers = async (req, res) => {
+    try {
+      const { firstname, lastname, email, phone, nic } = req.body;
+  
+      let updateData = { firstname, lastname, email, phone, nic };
+      if (req.file) {
+        updateData.profilePicture = req.file.path; // Update profile picture path
+      }
+  
+      const user = await User.findByIdAndUpdate(req.user.id, updateData, { new: true }); // Return updated user
+  
+      if (!user) {
+        return res.status(404).send('User not found');
+      }
+      res.send(user);
+    } catch (error) {
+      console.error('Error updating user data:', error);
+      res.status(500).send('Internal server error');
+    }
+  
+    }
+ const displayUser = async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const user = await User.findById(id);
   
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
-      console.log(req.user._id)
+  
       res.json(user);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching user data' });
     }
-  };
+  }
+
+  
   
   const logout = asyncHandler(async (req, res) => {
       // res.clearCookie('accessToken');
@@ -142,8 +219,13 @@ const getUserProfile = async (req, res) => {
       loginUser: loginUser,
       registerUser: registerUser,
       logout: logout,
-      getUserProfile: getUserProfile
-     
+      getUserProfile: getUserProfile,
+      SellersPages : SellersPages ,
+      VehicalOwnerPage:VehicalOwnerPage	,
+      getUsers:getUsers,
+      deleteUsers:deleteUsers,
+      updateUsers:updateUsers,
+      displayUser:displayUser
   }
 
   
