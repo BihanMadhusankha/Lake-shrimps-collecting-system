@@ -10,7 +10,7 @@ import AdminHome from './Admin/AdminHome';
 import UserHome from './Users/userhome';
 import SelerPage from './page/selerPage';
 import VehicaleOwnerPage from './page/vehicaleOwnerPage';
-import ConCreatersPage from './page/contentCreaterPage';
+// import ConCreatersPage from './page/contentCreaterPage';
 import ShrimpColorMonitoring from './page/byColor'
 import UserProfile from './Users/profile';
 import { Toaster } from 'react-hot-toast';
@@ -51,7 +51,7 @@ function App() {
         <Route path="/SSABS/user/userhome" element={<UserHome />} />
         <Route path='/SSABS/user/userhome/selerPage' element={<SelerPage />} />
         <Route path='/SSABS/user/userhome/vehicaleowner' element={<VehicaleOwnerPage />} />
-        <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} />
+        {/* <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} /> */}
         <Route path='/SSABS/user/userhome/profile' element={<UserProfile />} />
         <Route path='/SSABS/user/userhome/byColor' element={<ShrimpColorMonitoring />} />
           <Route path='/SSABS/user/userhome/environment' element={<EnvironmentPage/>}/>

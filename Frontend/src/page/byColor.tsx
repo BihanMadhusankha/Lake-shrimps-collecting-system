@@ -1,7 +1,7 @@
 import React from 'react';
 import '../CSS/shrimpscategory.css'; // Make sure to adjust the path based on your project structure
 import UserNavigation from '../Navigations/userNav';
-import shrimps_color from '../assets/shrimps_color.jpg';
+import shrimps_color from '../assets/shrimps color.jpg';
 import shrimps_size from '../assets/shrimp-sizes-chart.jpg';
 import shrimps_preparation from '../assets/Preparation_shrimps.jpg';
 import shrimps_Species from '../assets/Species_shrimps.jpg';
