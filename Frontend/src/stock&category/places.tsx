@@ -14,7 +14,7 @@ import './places.css';
 function Places(){
     return(
         <Form>
-            <UserNavigation></UserNavigation>
+            <UserNavigation/>
             <br></br>
             <br></br>
              <Form.Group className="mb-3" controlId="formBasic">
