@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Signup from './page/signup'; 
@@ -17,11 +17,26 @@ import RegForm from './delivery/RegForm';
 import VehicleList from './delivery/VehicleList';
 import VehicleDetails from './delivery/VehicleDetails'
 import UserForm from './delivery/UserForm';
-
-
-
+import AOS from 'aos';
+import 'aos/dist/aos.js';
+import 'aos/dist/aos.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
 
 function App() {
+  useEffect(()=>{
+    AOS.init({
+      duration: 3000,
+      easing: 'ease-in-out-sine',
+      once: true,
+      mirror: false,
+      delay: 100,
+      offset: 100,
+      
+    });
+  }, []);
+  
+  
   return (
     <div className="App">
         <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
