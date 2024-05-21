@@ -1,0 +1,32 @@
+.label{
+    padding-left: 250px;
+}
+
+.button2{
+    margin-right: 150px;
+}
+
+.image-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.image-container img {
+  flex: 1 1 calc(25% - 10px); /* Adjust the width to 25% minus some margin */
+  margin: 5px;
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .image-container img {
+    flex: 1 1 calc(50% - 10px); /* 2 images per row on medium screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .image-container img {
+    flex: 1 1 calc(100% - 10px); /* 1 image per row on small screens */
+  }
+}

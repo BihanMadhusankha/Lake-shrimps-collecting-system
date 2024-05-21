@@ -6,39 +6,48 @@ import Button from 'react-bootstrap/Button';
 import env1 from "../assets/env1.jpg";
 import env2 from "../assets/env2.jpg";
 import env3 from "../assets/env3.jpg";
+import './environment.css';
+
 
 export default function environment() {
   return (
     <Form>
       <UserNavigation/>
+      <br></br>
+      <div className='title'>
       <h1>Environments</h1>
+      
+      </div>
+      <br></br>
       <br></br>
              <Form.Group className="mb-3" controlId="formBasic">
                 <Row>
+                <div className="image-container">
                     <Col xs={4} style={{display: 'flex', justifyContent: 'center'}}>
-                    <Image src={env1} rounded style={{width:"200px",height:"200px"}}/>
+                    <Image src={env1} className='image1'/>
                     </Col>
 
-                    <Col>
-                    <Image src={env3} rounded style={{width:"200px",height:"200px"}}/>
+                    <Col xs={4} style={{display: 'flex', justifyContent: 'center'}}>
+                    <Image src={env2} className='image1'/>
                     </Col>
 
-                    <Col>
-                    <Image src={env2} rounded style={{width:"200px",height:"200px"}}/>
-                    </Col>             
+                    <Col xs={4} style={{display: 'flex', justifyContent: 'center'}}>
+                    <Image src={env3} className='image1'/>
+                    </Col>  
+                    </div>           
                 </Row>
-                <br></br>
+               
                 <Row>
-                    <Col >
-                     <Button variant="primary">Marine</Button>{' '}
+                    <Col xs={4} style={{display: 'flex', justifyContent: 'center'}}  >
+                     <Button className='button1' variant="primary" >Marine</Button>{''}
                     </Col>
 
-                    <Col>
-                    <Button variant="primary">Lakes</Button>{' '}
+                    <Col xs={4} style={{display: 'flex', justifyContent: 'center'}}>
+                    <Button className='button1' variant="primary">Lakes</Button>{' '}
                     </Col>
 
-                    <Col >
-                     <Button variant="primary">Tanks</Button>{' '}
+                    <Col xs={4} style={{display: 'flex', justifyContent: 'center'}}>
+                     <Button className='button1' variant="primary">Tanks</Button>{' '}
                     </Col>  
                 </Row>
              </Form.Group>
