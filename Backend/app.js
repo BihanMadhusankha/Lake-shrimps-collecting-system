@@ -3,9 +3,12 @@ const errorHandler = require('./midleware/errorhandler');
 const connectDB = require('./config/dbconfig');
 const dotenv = require('dotenv').config();
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
 connectDB();
 
 const app = express();
+app.use(bodyParser.json());
 
 const PORT = process.env.PORT || 5000;
 app.use(express.json());

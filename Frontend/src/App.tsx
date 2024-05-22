@@ -6,7 +6,6 @@ import Landing from './page/landing';
 import Login from './page/login';
 import Footer from './Footer/fotter';
 import Dashboard from './Admin/dashboard';
-import AdminHome from './Admin/AdminHome';
 import UserHome from './Users/userhome';
 import SelerPage from './page/selerPage';
 import VehicaleOwnerPage from './page/vehicaleOwnerPage';
@@ -28,6 +27,10 @@ import VehicaleDetails from './delivery/VehicleDetails'
 import VehicleList from './delivery/VehicleList'
 import VehicaleUserForm from './delivery/VehicaleUserForm'
 import RegForm from './delivery/RegForm'
+import NotFound from './page/Notfounded';
+import AdminUsers from './Admin/AdminUsers';
+import Forgetpassword from './page/forgetpassword'
+import ResetPassword from './page/ResetPassword'
 
 function App() {
   useEffect(() => {
@@ -48,10 +51,16 @@ function App() {
       <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/Notfounded" element={<NotFound />} />
         <Route path="/SSABS/user/signup/" element={<Signup />} />
         <Route path="/SSABS/user/login" element={<Login />} />
+        <Route path="/SSABS/user/forgetpassword" element={<Forgetpassword />} />
+        <Route path="/SSABS/user/resetPassword" element={<ResetPassword />} />
+
         <Route path="/SSABS/admin/dashboard" element={<Dashboard />} />
-        <Route path="/SSABS/admin/adminhome" element={<AdminHome />} />
+        <Route path="/SSABS/admin/allusers" element={<AdminUsers />} />
+
+        
         <Route path="/SSABS/user/userhome" element={<UserHome />} />
         <Route path='/SSABS/user/userhome/selerPage' element={<SelerPage />} />
         <Route path='/SSABS/user/userhome/vehicaleowner' element={<VehicaleOwnerPage />} />

@@ -1,0 +1,58 @@
+/* src/NotFound.css */
+
+.not-found-container {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .not-found-title {
+    font-size: 96px;
+    margin: 0;
+  }
+  
+  .not-found-message {
+    font-size: 24px;
+    margin: 20px 0;
+  }
+  
+  .not-found-animation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+  }
+  
+  .circle {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background-color: #007BFF;
+    animation: bounce 1.5s infinite;
+  }
+  
+  .circle:nth-child(2) {
+    animation-delay: 0.3s;
+  }
+  
+  .circle:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+  
+  .circle:nth-child(4) {
+    animation-delay: 0.9s;
+  }
+  
+  .circle:nth-child(5) {
+    animation-delay: 1.2s;
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  

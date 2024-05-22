@@ -21,7 +21,7 @@ const Sidebar: React.FC = () => {
                 <h3>My Dashboard</h3>
                 <ul className='sidebar-links'>
                     {navigationLinks.map((link) => (
-                        <li key={link.path} className='sidebar-link'>
+                        <li key={link.path} className=''>
                             <a href={link.path}>
                                 {link.icon && <link.icon className="sidebar-link-icon me-2 " />}
                                 {link.label}
