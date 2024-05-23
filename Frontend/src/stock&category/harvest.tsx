@@ -1,46 +1,40 @@
-import React from 'react'
-import UserNavigation from '../Navigations/userNav'
-import Form from "react-bootstrap/Form";
-import { Col, Image, Row } from 'react-bootstrap'
-import Shrimp5 from '/src/assets/Shrimp5.jpeg';
-import Button from 'react-bootstrap/Button';
+import React from 'react';
+import './harvest.css';
+import UserNavigation from '../Navigations/userNav';
+import Shrimp5 from '../assets/Shrimp5.jpeg'; 
+import Shrimp9 from '../assets/Shrimp9.jpeg'; 
+import Shrimp10 from '../assets/Shrimp10.jpeg'; 
+import {  Row } from 'react-bootstrap'
 
-export default function harvest() {
+export default function harvest(){
   return (
-   <Form>
-    <UserNavigation/>
-    <h1>Daily Harvest</h1>
-    <h5>Date:-</h5>
-   
-    <Form.Group className="mb-3" controlId="formBasic">
-        <Row>
+    <div className="container">
+      <UserNavigation />
+      <main className="main">
+        <h1>Daily Harvest</h1>
+        <div className="content">
+          
+            <p>Date:- ____________</p>
             <Row>
-            <col>
-            <h6>Marine:-</h6>
-
-            </col>
-
-            <col>
-            <h6>Lakes:-</h6>
-
-            </col>
-
-            <col>
-            <h6>Tanks:-</h6>
-
-            </col>
+            <img src={Shrimp5} alt="Seafood" className="image" />
+            <img src={Shrimp9} alt="Seafood" className="image" />
+            <img src={Shrimp10} alt="Seafood" className="image" />
             </Row>
-
-             <Col xs={4} style={{display: 'flex', justifyContent: 'center'}}>
-             <Image src={Shrimp5} rounded style={{width:"200px",height:"200px"}}/>
-             </Col>
-        </Row>
-        </Form.Group>
-
+            <p>Marine:- ____________</p>
+            <p>Lakes :- ____________</p>
+            <p>Tanks :- ____________</p>
+          
+          
+        </div>
         <h2>Today Full Harvest</h2>
-
-
-        <Button variant="primary">History</Button>{''}
-   </Form>
-  )
+        <div className="full-harvest">
+          <div className="placeholder"></div>
+        </div>
+        <button className="history-button">History</button>
+      </main>
+      
+    </div>
+  );
 }
+
+

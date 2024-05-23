@@ -1,93 +1,52 @@
-import React from 'react'
-import UserNavigation from '../Navigations/userNav'
-import Form from "react-bootstrap/Form";
-import { Col, Image, Row } from 'react-bootstrap'
-import Shrimp6 from "../assets/Shrimp6.jpg";
-import Button from 'react-bootstrap/Button';
+import React from 'react';
+import './details.css';
+import UserNavigation from '../Navigations/userNav';
+import Shrimp5 from '../assets/Shrimp5.jpeg';
 
 export default function details() {
   return (
-    <Form>
-        <UserNavigation/>
+    <div className="container">
+      <UserNavigation/>
+      
+      <main className="main">
         <h1>Kandalama in Dambulla</h1>
-        <br></br>
-        <Form.Group className="mb-3" controlId="formBasic">
-        <Row>
-                    <Col xs={4} style={{display: 'flex', justifyContent: 'center'}}>
-                    <Image src={Shrimp6} rounded style={{width:"200px",height:"200px"}}/>
-                    </Col>
-
-                    <Row>
-                        <col>
-                        <h5>Category</h5>
-                        </col>
-
-                        <col>
-                        <h5>Quantity</h5>
-                        </col>
-
-                        <col>
-                        <h5>Unit Price</h5>
-                        </col>
-                    </Row>
-
-                    <Row>
-                        <col>
-                        <h6>0-350g</h6>
-                        </col>
-
-                        <col>
-                        <input type='text'placeholder=''></input>
-                        </col>
-
-                        <col>
-                        <input type='text'placeholder=''></input>
-                        </col>
-
-                        <Col >
-                        <Button variant="primary">Buy</Button>{''}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <col>
-                        <h6>0-700g</h6>
-                        </col>
-
-                        <col>
-                        <input type='text'placeholder=''></input>
-                        </col>
-
-                        <col>
-                        <input type='text'placeholder=''></input>
-                        </col>
-
-                        <Col >
-                        <Button variant="primary">Buy</Button>{''}
-                        </Col>
-                    </Row>
-                    <Row>
-                        <col>
-                        <h6>0-1kg</h6>
-                        </col>
-
-                        <col>
-                        <input type='text'placeholder=''></input>
-                        </col>
-
-                        <col>
-                        <input type='text'placeholder=''></input>
-                        </col>
-
-                        <Col >
-                        <Button variant="primary">Buy</Button>{''}
-                        </Col>
-                    </Row>
-        </Row>
-
-
-         </Form.Group>
-    </Form>
-  )
+        <div className="content">
+          <img src={Shrimp5} className="image" />
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>UnitPrice</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0-350g</td>
+                <td>10</td>
+                <td></td>
+                <td><button className="buy-button">buy</button></td>
+              </tr>
+              <tr>
+                <td>350-700g</td>
+                <td>15</td>
+                <td></td>
+                <td><button className="buy-button">buy</button></td>
+              </tr>
+              <tr>
+                <td>700-1000g</td>
+                <td>17</td>
+                <td>98</td>
+                <td><button className="buy-button">buy</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+      
+    </div>
+  );
 }
 
 
