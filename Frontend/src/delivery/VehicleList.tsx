@@ -11,14 +11,7 @@ import ThreeImage from './../assets/download.jpeg';
 import Lorry1Image from './../assets/images.jpeg';
 import VehicleImage from './../assets/lorry2.jpg';
 import NewImage from './../assets/scoter.jpg';
-
-
-
-
-
-
-
-
+import UserNavigation from '../Navigations/userNav';
 
 export default function VehicleList(): JSX.Element {
   const [modal1, setModal1] = useState<boolean>(false);
@@ -26,7 +19,8 @@ export default function VehicleList(): JSX.Element {
   const [modal3, setModal3] = useState<boolean>(false);
 
   return (
-    <>
+    <div>
+      <UserNavigation/>
      <div className="page-container"></div>
     <h1 style={{textAlign: 'center', fontWeight: 'bold'}}>List Of Vehicles</h1>
     
@@ -123,7 +117,7 @@ export default function VehicleList(): JSX.Element {
       
 
      
-    </>
+    </div>
   );
 
   
