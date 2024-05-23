@@ -1,0 +1,68 @@
+*
+  
+  .main {
+    flex: 1;
+    padding: 2rem;
+    background-color: white;
+  }
+  
+  .main h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .image {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+  }
+  
+  .table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: center;
+  }
+  
+  .buy-button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  
+  .buy-button:hover {
+    background-color: #357abd;
+  }
+  
+  
+  
+  
+  
+  @media (max-width: 768px) {
+    
+  
+    .content {
+      width: 100%;
+      padding: 0 1rem;
+    }
+  
+    .table {
+      width: 100%;
+      overflow-x: auto;
+    }
+  }
+  
