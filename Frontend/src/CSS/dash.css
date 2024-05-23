@@ -1,128 +1,68 @@
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
+/* src/CSS/dash.css */
 
-th,
-td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: left;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-
-
-
-
-/* ssidebar */
-
-/* Style the sidebar container */
 .sidebar {
-  background-color: #f5f5f5; /* Adjust background color as needed */
-  width: 200px; /* Set sidebar width */
-  height: 100vh; /* Set sidebar height to full viewport */
-  display: flex; /* Allow stacking header and links */
-  flex-direction: column; /* Stack elements vertically */
-  padding: 20px; /* Add padding for content */
-}
-
-/* Style the sidebar header */
-.sidebar-header {
+  width: 250px;
+  height: 100vh;
+  background-color: #2c3e50;
+  color: #ecf0f1;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center header elements horizontally */
-  margin-bottom: 20px; /* Add bottom margin */
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+  padding: 20px;
+  background-color: #34495e;
+  text-align: center;
+  border-bottom: 1px solid #2c3e50;
 }
 
 .sidebar-header h3 {
-  margin: 5px; /* Remove default margin */
-  font-size: 1.2rem; /* Set font size for the heading */
+  margin: 0;
+  font-size: 24px;
 }
 
-/* Style the container for navigation links */
 .sidebar-links {
-  display: flex; /* Allow horizontal arrangement of links */
-  flex-direction: column; /* Stack links vertically */
-  gap: 10px; /* Add spacing between links */
-  list-style: none; /* Remove default bullets */
-  padding: 10px; /* Remove default padding */
-  margin: 20px; /* Add bottom margin */
-  border-radius: 20px;
-  background-color: #484646; /* Adjust background color as needed */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow to links */
-  transition: transform 0.2s ease-in-out; /* Add smooth transition */
-  text-decoration: none; /* Remove underline from links */
-  color: #333; /* Set text color */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
 }
 
-/* Style individual navigation links */
 .sidebar-link {
-  display: flex; /* Allow alignment of icon and text */
-  align-items: center; /* Align icon and text vertically */
-  text-decoration: none; /* Remove underline from links */
-  color: #333; /* Set text color */
-  padding: 5px 10px; /* Add padding for links */
-  border-radius: 5px; /* Add rounded corners */
-  transition: background-color 0.2s ease-in-out; /* Add smooth hover effect */
+  margin: 0;
 }
 
-.sidebar-link:hover {
-  background-color: #eee; /* Change background color on hover */
-  color: #333; /* Change text color on hover */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
-  transform: scale(1.02); /* Scale icon and text on hover */
-  transition: transform 0.2s ease-in-out; /* Add smooth transition */
-  text-decoration: none; /* Remove underline on hover */
-  color: #333; /* Change text color on hover */
+.sidebar-link-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  color: #ecf0f1;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.sidebar-link:active {
-  background-color: #ddd; /* Change background color on active */
-  color: #333; /* Change text color on active */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow on active */
-  transform: scale(1.02); /* Scale icon and text on active */
-  transition: transform 0.2s ease-in-out; /* Add smooth transition */
-  text-decoration: none; /* Remove underline on active */
-  color: #333; /* Change text color on active */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow on active */
-  transform: scale(1.02); /* Scale icon and text on active */
-  transition: transform 0.2s ease-in-out; /* Add smooth transition */
-  text-decoration: none; /* Remove underline on active */
-  color: #333; /* Change text color on active */
+.sidebar-link-item:hover {
+  background-color: #16a085;
+  color: #ffffff;
 }
 
-/* Style the icons within the links */
 .sidebar-link-icon {
-  font-size: 1.2rem; /* Set icon size */
-  margin-right: 10px; /* Add margin between icon and text */
+  margin-right: 10px;
 }
 
-/* delete button */
-.button{
-  background-color: #c90404; /* Adjust background color as needed */
-  color: #fff; /* Adjust text color as needed */
-  padding: 10px 20px; /* Adjust padding as needed */
-  border:#333; /* Remove default border */
-  border-radius: 5px; /* Add rounded corners */
-  border-width: 1px; /* Add border width */
-  cursor: pointer; /* Add pointer cursor on hover */
-  transition: background-color 0.2s ease-in-out; /* Add smooth hover effect */
-  
+.sidebar-link-item:hover .sidebar-link-icon {
+  animation: bounce 0.5s;
 }
 
-.button:hover {
-  background-color: #430000; /* Change background color on hover */
-  color: #fff; /* Change text color on hover */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
-  transform: scale(1.02); /* Scale icon and text on hover */
-  transition: transform 0.2s ease-in-out; /* Add smooth transition */
-  text-decoration: none; /* Remove underline on hover */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }

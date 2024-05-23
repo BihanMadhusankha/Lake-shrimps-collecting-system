@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import * as React from 'react';
 import registerImage from '../assets/pngegg (7).png';
 
-
 interface Sealers {
   firstname: string;
   lastname: string;
@@ -16,7 +15,6 @@ interface Sealers {
 
 export default function SelerPage() {
   const [sealers, setSealers] = useState<Sealers[]>([]);
-  
 
   useEffect(() => {
     const fetchSealers = async () => {
@@ -37,30 +35,26 @@ export default function SelerPage() {
     fetchSealers();
   }, []);
 
-  
-
   return (
     <div>
-     
-          <UserNavigation />
-          <h1>Seler Page</h1>
-          <div className="container bg-black rounded-5 p-5  mt-lg-5  ">
-            <div className="row justify-content-center">
-              {sealers.map((sealer: Sealers) => (
-                <div className="card bg-gray m-lg-3 rounded-3   col-lg-3 d-flex flex-row " key={sealer._id}>
-                  <div className="card-body ">
-                    <img src={registerImage} className="img-fluid" alt="..." />
-                    <h5>First Name: {sealer.firstname}</h5>
-                    <h5>Last Name: {sealer.lastname}</h5>
-                    <h5>Email: {sealer.email}</h5>
-                    <h5>National Id Card: {sealer.nic}</h5>
-                    <h5>Contact Numebr: {sealer.phone}</h5>
-                  </div>
-                </div>
-              ))}
+      <UserNavigation />
+      <h1>Seler Page</h1>
+      <div className="container bg-black rounded-5 p-5  mt-lg-5  ">
+        <div className="row justify-content-center">
+          {sealers.map((sealer: Sealers) => (
+            <div className="card bg-gray m-lg-3 rounded-3   col-lg-3 d-flex flex-row " key={sealer._id}>
+              <div className="card-body ">
+                <img src={registerImage} className="img-fluid" alt="..." />
+                <h5>First Name: {sealer.firstname}</h5>
+                <h5>Last Name: {sealer.lastname}</h5>
+                <h5>Email: {sealer.email}</h5>
+                <h5>National Id Card: {sealer.nic}</h5>
+                <h5>Contact Numebr: {sealer.phone}</h5>
+              </div>
             </div>
-          </div>
-       
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

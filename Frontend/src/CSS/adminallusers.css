@@ -1,0 +1,187 @@
+.dashboard {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .sidebar {
+    width: 200px;
+    background-color: #343a40;
+    padding: 20px;
+    color: white;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin: 20px 0;
+  }
+  
+  .sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar ul li a i {
+    margin-right: 10px;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .user-table th,
+  .user-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .user-table th {
+    background-color: #f2f2f2;
+    color: black;
+  }
+  
+  .user-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .user-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .user-table tr.highlight {
+    animation: highlightRow 1s ease-in-out;
+  }
+  
+  @keyframes highlightRow {
+    from {
+      background-color: #ffffcc;
+    }
+    to {
+      background-color: #f9f9f9;
+    }
+  }
+  
+  .button {
+    padding: 5px 10px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 14px; /* Smaller font size */
+  }
+  
+  .generate-pdf {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .generate-pdf:hover {
+    background-color: #0056b3;
+  }
+  
+  @keyframes buttonPulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .generate-pdf {
+    animation: buttonPulse 2s infinite;
+  }
+  
+  .delete-button {
+    background-color: #dc3545; /* Red background for delete button */
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #c82333;
+  }
+  
+  .error-message {
+    color: red;
+  }
+  
+  .highlight {
+    animation: rowHighlight 1s ease;
+  }
+  
+  @keyframes rowHighlight {
+    from {
+      background-color: yellow;
+    }
+    to {
+      background-color: inherit;
+    }
+  }
+
+  /* searchbar */
+
+
+  /* adminallusers.css */
+
+/* Search container */
+.search-container {
+  position: relative;
+  margin: 0 auto; /* Add this line to center the search container */
+}
+
+/* Search input */
+.search-container input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+/* Search popup */
+.search-popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 1;
+  padding: 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Search popup animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

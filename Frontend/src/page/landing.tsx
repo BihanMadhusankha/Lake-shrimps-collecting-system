@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Navigation from '../Navigations/nav';
- import UsersLAnding from '../LandingContent.tsx/UsersLAnding';
+import Notfoundedlanding from '../LandingContent.tsx/Notfoundedlanding';
 import '../CSS/navCSS.css'
 
 
@@ -8,7 +8,7 @@ function Landing() {
     return (
         <div>
             <Navigation />
-            <UsersLAnding/>
+            <Notfoundedlanding/>
             
         </div>
 

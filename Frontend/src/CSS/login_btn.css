@@ -1,0 +1,36 @@
+/* src/LoginButtons.css */
+
+.login-buttons {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .login-btn {
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s, border-color 0.4s;
+  }
+  
+  .login-btn::before {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.4s;
+    pointer-events: none;
+  }
+  
+  .login-btn:hover::before {
+    width: 110%;
+    height: 110%;
+  }
+  
+  .login-btn:hover {
+    color: #000;
+    border-color: #fff;
+  }
+  

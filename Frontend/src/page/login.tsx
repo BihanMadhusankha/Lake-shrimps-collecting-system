@@ -37,7 +37,7 @@ function Login() {
         toast.success('Login successful');
 
         if (response.data.user.role === 'admin') {
-          navigate('/SSABS/admin/adminhome');
+          navigate('/SSABS/admin/dashboard');
         } else {
           navigate('/SSABS/user/userhome');
         }
@@ -91,6 +91,12 @@ function Login() {
             <FormItem>
               <Link to="/SSABS/user/signup">
                 <Button className='btn' size='large'>Create an Account</Button>
+              </Link>
+            </FormItem>
+
+            <FormItem>
+              <Link to={'/SSABS/user/forgetpassword'}>
+              <Button  className='btn' size='large'>Forgot Password</Button>
               </Link>
             </FormItem>
           </Form>
