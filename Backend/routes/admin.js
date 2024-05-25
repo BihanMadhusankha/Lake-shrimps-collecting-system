@@ -1,10 +1,10 @@
 const express = require('express');
-const {getUsers,deleteUsers} = require('../contollers/userController');
+const {adminGetUsers,deleteUsers} = require('../contollers/userController');
 // const validateToken = require('../midleware/validationTokenHandler');
 
 const router = express.Router();
 
-router.get('/dashboard',getUsers );
+router.get('/dashboard',adminGetUsers );
 
 router.delete('/dashboard/:id',deleteUsers );	
 

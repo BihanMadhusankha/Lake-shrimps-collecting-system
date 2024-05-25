@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import UsersLAnding from '../LandingContent/UsersLAnding';
-import UserNavigation from '../Navigations/userNav';
+import UsersLanding from '../LandingContent/UsersLAnding';
+import SealerNav from './sealerNav';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const UserHome = () => {
+function SealerHome() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const checkTokenValidity = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/SSABS/user/userhome', {
+        const response = await axios.get('http://localhost:5001/SSABS/seler/selerhome', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           },
@@ -21,12 +21,12 @@ const UserHome = () => {
           setIsLoggedIn(false);
           localStorage.removeItem('accessToken');
         }
-        
+
         setIsLoggedIn(true);
       } catch (error) {
         console.error('Error checking token:', error);
         setIsLoggedIn(false);
-         localStorage.removeItem('accessToken');
+        localStorage.removeItem('accessToken');
       }
     };
 
@@ -41,14 +41,10 @@ const UserHome = () => {
 
   return (
     <div>
-      {isLoggedIn && (
-        <>
-          <UserNavigation />
-          <UsersLAnding />
-        </>
-      )}
+      <SealerNav />
+      <UsersLanding />
     </div>
   );
-};
+}
 
-export default UserHome;
+export default SealerHome;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import AdminNavigation from '../Navigations/AdminNAvigation';
+import AdminNavigation from './AdminNAvigation';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import '../CSS/adminallusers.css';

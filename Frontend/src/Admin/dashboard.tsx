@@ -1,7 +1,7 @@
 import React from 'react';
 import Sidebar from './Sidebar'; // Import Sidebar component
 import '../CSS/dash.css'; // Assuming your existing CSS for the table
-import AdminNavigation from '../Navigations/AdminNAvigation';
+import AdminNavigation from './AdminNAvigation';
 import Card from './adminCard'; // Import Card component (if created)
 
 

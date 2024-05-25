@@ -129,6 +129,7 @@ const validatePassword = (rule:string, value:string) => {
                 onChange={(e) => setData({ ...data, role: e.target.value })}
                 >
                 <option value="user">User</option>
+                <option value="user">User</option>
                 <option value="seler">Seler</option>
                 <option value="vehicale_owner">Vehicale Owner</option>
                 <option value="content_creater">Content Creater</option>

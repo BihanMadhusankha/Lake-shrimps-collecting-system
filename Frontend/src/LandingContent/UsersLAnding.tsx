@@ -107,6 +107,28 @@ export default function UsersLAnding() {
 
 
       </div>
+      <div className='m-4 d-flex flex-row ' data-aos="fade-right">
+
+      <div className='col-6  ' data-aos="fade-left">
+          <img className='w-100' src={landingImg} alt="About" />
+        </div>
+        <div className='col-6'>
+          <section className="about-company">
+            <Link to={'/SSABS/user/daylyproducts'}>
+            <div className='card'>
+            <h2>Today Products</h2>
+
+            </div>
+            </Link>
+           
+            
+          </section>
+        </div>
+
+       
+
+
+      </div>
 
       <section className="user-categories m-4 ">
         <h2 >Who is the person you want ?</h2>

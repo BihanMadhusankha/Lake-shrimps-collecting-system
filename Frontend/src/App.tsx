@@ -5,10 +5,32 @@ import Signup from './page/signup';
 import Landing from './page/landing';
 import Login from './page/login';
 import Footer from './Footer/fotter';
-import Dashboard from './Admin/dashboard';
+
+import AdminDashboard from './Admin/dashboard';
+import ContentCreaterDashoard from './ContentCreater/ContentCreaterDashboard';
+import VehicaleOwnerDashboard from './VehicaleOwners/VehicaleOwnerDashboard';
 import UserHome from './Users/userhome';
+import SelerDashboard from './Sealer/SealerDashboard';
+
+import DaylyProducts from './LandingContent/DaylyProducts'
+
+import Sealerhome from './Sealer/sealerhome';
+import AddProductFormSealer from './Sealer/AddProductFormSealer';
+import SealerProfile from './Sealer/selerProfile'
+import SealerAllProducts from './Sealer/Dashboard'
+
+import VehicaleRegistration from './VehicaleOwners/VeicaleOwnerPost'
+import RegistedVehicale from './VehicaleOwners/RegisteredVehicles'
+
 import SelerPage from './page/selerPage';
+
+
 import VehicaleOwnerPage from './page/vehicaleOwnerPage';
+import VehicleListPage from './VehicaleOwners/VehicleListPage';
+
+
+import BookingForm from './VehicaleOwners/BookingForm';
+
 // import ConCreatersPage from './page/contentCreaterPage';
 import ShrimpColorMonitoring from './page/byColor'
 import UserProfile from './Users/profile';
@@ -57,13 +79,49 @@ function App() {
         <Route path="/SSABS/user/forgetpassword" element={<Forgetpassword />} />
         <Route path="/SSABS/user/resetPassword" element={<ResetPassword />} />
 
-        <Route path="/SSABS/admin/dashboard" element={<Dashboard />} />
+        {/* Dashboard */}
+        <Route path="/SSABS/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/SSABS/content_creater/dashboard" element={<ContentCreaterDashoard />} />
+        <Route path="/SSABS/vehicale_owner/dashboard" element={<VehicaleOwnerDashboard />} />
+        <Route path="/SSABS/seler/dashboard" element={<SelerDashboard />} />
+        <Route path="/SSABS/user/userhome" element={<UserHome />} />
+
+
+
+        {/* users home pages */}
+        <Route path="/SSABS/user/userhome" element={<UserHome />} />
+        <Route path="/SSABS/seler/selerhome" element={<Sealerhome />} />
+        <Route path="/SSABS/user/daylyproducts" element={<DaylyProducts />} />
+
+
+
+
+
+
+
+
+        <Route path="/SSABS/seler/products" element={<AddProductFormSealer />} />
+        <Route path="/SSABS/seler/allpost" element={<SealerAllProducts />} />
+
+        <Route path="/SSABS/seler/profile" element={<SealerProfile />} />
+        
+       
+        <Route path="/SSABS/vehicaleOwn/products" element={<VehicaleRegistration />} />
+        <Route path="/SSABS/vehicaleOwn/allpost" element={<RegistedVehicale />} />
+        <Route path="/user/book-vehicle/:vehicleId" element={<BookingForm />} />
+       
+
+
+
         <Route path="/SSABS/admin/allusers" element={<AdminUsers />} />
+        <Route path='/SSABS/selerPage' element={<SelerPage />} />
+
+
+        <Route path='/SSABS/vehicaleowner' element={<VehicaleOwnerPage />} />
+        <Route path='/SSABS/vehicle-owner' element={<VehicleListPage />} />
 
         
-        <Route path="/SSABS/user/userhome" element={<UserHome />} />
-        <Route path='/SSABS/user/userhome/selerPage' element={<SelerPage />} />
-        <Route path='/SSABS/user/userhome/vehicaleowner' element={<VehicaleOwnerPage />} />
+
         {/* <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} /> */}
         <Route path='/SSABS/user/userhome/profile' element={<UserProfile />} />
         <Route path='/SSABS/user/userhome/byColor' element={<ShrimpColorMonitoring />} />
