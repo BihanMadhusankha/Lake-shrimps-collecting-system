@@ -139,6 +139,15 @@ const SellersPages = async (req, res) => {
     res.status(500).send('Error fetching sellers');
   }
 }
+const InstructerPage = async (req, res) => {
+  try {
+    const instructer = await User.find({ role: 'content_creater' });
+    res.json({ data: instructer });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching sellers');
+  }
+}
 
 const VehicalOwnerPage = async (req, res) => {
   try {
@@ -467,11 +476,13 @@ const deleteVehicle =async (req, res) => {
 const vehicale_owners_vehicle = async (req, res) => {
   try {
     const ownerId = req.params.ownerId;
-    const vehicles = await Vehicle.find({ ownerId }); // Assuming ownerId is the field in the Vehicle model that represents the owner's ID
-    res.json({ success: true, data: vehicles });
+    console.log(ownerId);
+    const ownerVehicles = await Vehicle.find({ owner: ownerId }); // Use Mongoose to find vehicles by ownerId
+    console.log(ownerVehicles)
+    res.json({ data: ownerVehicles });
   } catch (error) {
     console.error('Error fetching vehicles:', error);
-    res.status(500).json({ success: false, message: 'Internal server error' });
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }
 
@@ -687,6 +698,7 @@ const getUploadPhoto = async (req, res) => {
     logout: logout,
     getUserProfile: getUserProfile,
     SellersPages: SellersPages,
+    InstructerPage:InstructerPage,
     VehicalOwnerPage: VehicalOwnerPage,
     adminGetUsers: adminGetUsers,
     deleteUsers: deleteUsers,

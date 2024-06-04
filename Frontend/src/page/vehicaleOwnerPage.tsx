@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import UserNavigation from '../Navigations/userNav';
+import axios from 'axios';
+import SealerNav from '../Sealer/sealerNav';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import registerImage from '../assets/pngegg (7).png';
+import { Modal, Button, Form } from 'react-bootstrap';
 
 interface VehicleOwner {
   firstname: string;
@@ -16,25 +17,23 @@ interface VehicleOwner {
 interface Vehicle {
   licensePlate: string;
   vehicleType: string;
+  photo: string;
   _id: string; // Assuming vehicle has an ID
-  // Add more properties as needed
 }
 
 const VehicleOwnerPage: React.FC = () => {
   const [vehicleOwners, setVehicleOwners] = useState<VehicleOwner[]>([]);
   const [selectedOwner, setSelectedOwner] = useState<VehicleOwner | null>(null);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [selectedVehicleId, setSelectedVehicleId] = useState<string | null>(null);
+  const [bookingDetails, setBookingDetails] = useState({ name: '', contact: '',distance:'', date: '' });
 
   useEffect(() => {
     const fetchVehicleOwners = async () => {
       try {
-        const response = await fetch('http://localhost:5001/SSABS/vehicaleowner');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setVehicleOwners(data.data);
+        const response = await axios.get('http://localhost:5001/SSABS/vehicaleowner');
+        setVehicleOwners(response.data.data);
       } catch (error) {
         console.error('Error fetching vehicle owners:', error);
       }
@@ -47,12 +46,8 @@ const VehicleOwnerPage: React.FC = () => {
     const fetchVehicles = async () => {
       if (selectedOwner) {
         try {
-          const response = await fetch(`http://localhost:5001/SSABS/vehicaleown/${selectedOwner._id}`);
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const data = await response.json();
-          setVehicles(data.data);
+          const response = await axios.get(`http://localhost:5001/SSABS/vehicaleown/${selectedOwner._id}`);
+          setVehicles(response.data.data);
         } catch (error) {
           console.error('Error fetching vehicles:', error);
         }
@@ -66,20 +61,39 @@ const VehicleOwnerPage: React.FC = () => {
     setSelectedOwner(owner);
   };
 
-  const handleBookVehicle = (vehicle: Vehicle) => {
-    navigate(`/user/book-vehicle/${vehicle._id}`);
+  const handleClose = () => {
+    setSelectedOwner(null);
+    setVehicles([]);
+  };
+
+  const handleBookVehicle = (vehicleId: string) => {
+    setSelectedVehicleId(vehicleId);
+    setShowModal(true);
+  };
+
+  const handleBookingSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(`Booking details for vehicle ID: ${selectedVehicleId}\nName: ${bookingDetails.name}\nContact: ${bookingDetails.contact}\nDate: ${bookingDetails.date}`);
+    // Here, you would typically send the bookingDetails to your server
+    setShowModal(false);
+    setBookingDetails({ name: '', contact: '',distance:'', date: '' });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setBookingDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
   };
 
   return (
     <div>
-      <UserNavigation />
+      <SealerNav />
       <h1 className='d-flex justify-content-center mt-4'>Vehicle Owners</h1>
-      <div className="container  rounded-5 p-5 mt-lg-5">
+      <div className={`container rounded-5 p-5 mt-lg-5 ${selectedOwner ? 'blur-background' : ''}`}>
         <div className="row justify-content-center">
           {vehicleOwners.map((owner: VehicleOwner) => (
-            <div className="card bg-gray m-lg-3 rounded-3 col-lg-3" key={owner._id}>
-              <div className="card-body" onClick={() => handleOwnerSelect(owner)}>
-                <img src={registerImage} className="img-fluid" alt="..." />
+            <div className="card owner-card m-lg-3 rounded-3 col-lg-3" key={owner._id} onClick={() => handleOwnerSelect(owner)}>
+              <div className="card-body">
+                <img src={registerImage} className="img-fluid" alt="Owner" />
                 <h5>First Name: {owner.firstname}</h5>
                 <h5>Last Name: {owner.lastname}</h5>
                 <h5>Email: {owner.email}</h5>
@@ -91,27 +105,115 @@ const VehicleOwnerPage: React.FC = () => {
         </div>
       </div>
       {selectedOwner && (
-        <div className="container bg-black rounded-5 p-5 mt-lg-5">
-          <h2>Vehicles belonging to {selectedOwner.firstname} {selectedOwner.lastname}</h2>
-          <div className="row justify-content-center">
-            {vehicles.map((vehicle: Vehicle, index: number) => (
-              <div className="card bg-gray m-lg-3 rounded-3 col-lg-3 d-flex flex-row" key={index}>
-                <div className="card-body">
-                  <h5>License Plate: {vehicle.licensePlate}</h5>
-                  <h5>Vehicle Type: {vehicle.vehicleType}</h5>
-                  {/* Render other vehicle details as needed */}
-                  <button
-                    onClick={() => handleBookVehicle(vehicle)}
-                    className="btn btn-primary mt-3"
-                  >
-                    Book a Vehicle
-                  </button>
+        <div className="vehicle-list-overlay">
+          <div className="container vehicle-list-container rounded-5 p-5 mt-lg-5">
+            <h2>Vehicles belonging to {selectedOwner.firstname} {selectedOwner.lastname}</h2>
+            <div className="row justify-content-center">
+              {vehicles.map((vehicle: Vehicle, index: number) => (
+                <div className="card vehicle-card m-lg-3 rounded-3 col-lg-3 d-flex flex-row" key={index}>
+                  <div className="card-body">
+                    <h5>License Plate: {vehicle.licensePlate}</h5>
+                    <h5>Vehicle Type: {vehicle.vehicleType}</h5>
+                    <img src={vehicle.photo} alt="Vehicle" className="vehicle-photo" />
+                    <button className="btn btn-primary mt-3" onClick={() => handleBookVehicle(vehicle._id)}>Book Vehicle</button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <button className="btn btn-danger" onClick={handleClose}>Close</button>
           </div>
         </div>
       )}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Book Vehicle</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleBookingSubmit}>
+            <Form.Group controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" name="name" value={bookingDetails.name} onChange={handleInputChange} required />
+            </Form.Group>
+            <Form.Group controlId="contact">
+              <Form.Label>Contact</Form.Label>
+              <Form.Control type="text" name="contact" value={bookingDetails.contact} onChange={handleInputChange} required />
+            </Form.Group>
+            <Form.Group controlId="distance">
+              <Form.Label>Distance(Km)</Form.Label>
+              <Form.Control type="text" name="distance" value={bookingDetails.distance} onChange={handleInputChange} required />
+            </Form.Group>
+            <Form.Group controlId="date">
+              <Form.Label>Booking Date</Form.Label>
+              <Form.Control type="date" name="date" value={bookingDetails.date} onChange={handleInputChange} required />
+            </Form.Group>
+            <Button variant="primary" type="submit" className="mt-3">
+              Submit
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+      <style>{`
+        .blur-background {
+          filter: blur(5px);
+        }
+        .owner-card {
+          cursor: pointer;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .owner-card:hover {
+          transform: scale(1.05);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .vehicle-list-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          animation: fadeIn 0.5s;
+        }
+        .vehicle-list-container {
+          background: #fff;
+          animation: slideIn 0.5s;
+        }
+        .vehicle-card {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .vehicle-card:hover {
+          transform: scale(1.05);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .vehicle-photo {
+          width: 100%;
+          height: auto;
+          transition: transform 0.3s ease;
+        }
+        .vehicle-photo:hover {
+          transform: scale(1.1);
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes slideIn {
+          from {
+            transform: translateY(-20px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+      `}</style>
     </div>
   );
 }

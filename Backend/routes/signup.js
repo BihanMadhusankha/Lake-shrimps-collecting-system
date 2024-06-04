@@ -1,6 +1,6 @@
 const express = require('express');
 const { registerUser, loginUser, getUserProfile,
-        SellersPages,VehicalOwnerPage ,
+        SellersPages,InstructerPage,VehicalOwnerPage ,
         updateUserProfile,getUser,ForgetPassword,
         ResetPassword,    
         Products,getProducts,productdelete,updateProduct,
@@ -34,12 +34,12 @@ router.put('/profile',validateToken, updateUserProfile);
 
 router.get('/user/daylyproducts',validateToken,productveiw);
 
-
 router.post('/vehicaleOwn/products',validateToken,upload.single('photo'),registerVehicle);
 router.get('/vehicaleOwn/products', validateToken, getRegisteredVehicles);
 router.put('/vehicaleOwn/products/:id', validateToken, UpdateVehicaledata);
 router.delete('/vehicaleOwn/products/:id', validateToken, deleteVehicle);
-router.get('/vehicaleOwn/:id',validateToken, vehicale_owners_vehicle);
+
+router.get('/vehicaleOwn/:ownerId', vehicale_owners_vehicle);
 
 
 router.post('/user/book-vehicle',validateToken,booking);
@@ -58,6 +58,9 @@ router.get('/message/user/:userId', validateToken, viewMessage);
 router.delete('/message/delete/:messageId', validateToken, deleteMessage);
 
 router.post('/upload/paymentReceipt',validateToken, upload.single('file'), uploadPaymentReceipt);
+
+router.get('/allInstructer', InstructerPage);
+
 
 
 

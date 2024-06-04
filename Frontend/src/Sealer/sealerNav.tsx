@@ -12,6 +12,15 @@ export default function sealerNav() {
                         <a href="/" className="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
                             {/* <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap" /></svg> */}
                         </a>
+                        <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                            <Link to={'/SSABS/vehicaleowner'}>
+                                <li>
+                                    <a href="#" className="nav-link px-2 text-white">vehicle Owners</a>
+                                </li>
+                            </Link>
+                            
+                            
+                        </ul>
 
                         <div className="dropdown text-end">
                             <a href="#" className="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
