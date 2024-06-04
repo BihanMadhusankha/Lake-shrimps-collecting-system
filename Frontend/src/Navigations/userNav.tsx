@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../CSS/navCSS.css';
 import { Button } from 'antd';
 import CartPopup from '../page/CartPopup';
+import logoweb from '../assets/logoweb.png';
 
 const UserNavigation: React.FC = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
@@ -14,7 +15,10 @@ const UserNavigation: React.FC = () => {
                 <div className="container">
                     <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                         <a href="/" className="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-                            {/* Your logo or brand */}
+                            {/* logo here */}
+                            
+                            <h1 className='me-5' style={{ color: 'white', fontFamily: "'LogoFont', sans-serif"  }}>SBSC</h1>
+                    
                         </a>
 
                         <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">

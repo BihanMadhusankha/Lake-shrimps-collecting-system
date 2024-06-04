@@ -42,6 +42,7 @@ import Instructoruploaddeatils from './page/InstructoruploadDeatils';
 import Instructorsingup from './page/InstructorSingup';
 import Instructorlogin from './page/InstructorLogin';
 import Classpost from './page/classpost';
+import Contentadmindashboardss from './page/contentadmindashboardss';
 
 import { Toaster } from 'react-hot-toast';
 import AOS from 'aos';
@@ -145,6 +146,7 @@ function App() {
         <Route path='/SSABS/user/userhome/Instructorsingup' element={<Instructorsingup />} />
         <Route path='/SSABS/user/userhome/Instructorlogin' element={<Instructorlogin />} />
         <Route path='/SSABS/user/userhome/Classpost' element={<Classpost />} />
+        <Route path='/SSABS/user/userhome/Contentadmindashboardss' element={<Contentadmindashboardss />} />
 
 
       </Routes>
