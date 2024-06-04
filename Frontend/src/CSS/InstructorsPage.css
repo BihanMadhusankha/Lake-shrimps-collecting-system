@@ -1,0 +1,53 @@
+/* Styling for the container */
+.alldetails {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: rgba(207, 180, 233, 0.153);
+  border-radius: 60px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: inset;
+  padding: 20px 20px 20;
+  margin: 30px ;
+}
+
+/* Styling for the instructor photo */
+.instructorPhoto {
+  margin-bottom: 20px;
+  margin-top: 20px;
+   /* Adjust margin as needed */
+}
+
+/* Styling for the image */
+.instructorPhoto img {
+  margin-left: 50px;
+  margin-right: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  width: 178px; /* Adjust width as needed */
+  height: 250px; /* Adjust height as needed */
+  border-radius: 59px; /* Adjust border radius as needed */
+}
+
+/* Styling for the instructor name */
+.instructorName {
+  font-size: 2rem; /* Adjust size as needed */
+  font-weight: bold;
+  color: black;
+  margin-right: 50px;
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+/* Styling for the instructor details */
+.instrutorDetails {
+  margin-left: 30px;
+  font-size: 1rem; /* Adjust size as needed */
+  color: #4A5568; /* Adjust color as needed */
+  text-align: center; /* Align text to the center */
+}
+
+
+.browse-more-courses{
+  margin-left: 120px;
+  margin-bottom: 30px;
+  background-color: #ef266c;
+}
