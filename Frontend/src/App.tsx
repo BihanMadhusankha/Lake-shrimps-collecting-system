@@ -103,20 +103,12 @@ function App() {
         <Route path="/SSABS/user/userhome" element={<UserHome />} />
 
 
-
-        {/* users home pages */}
-        {/* <Route path="/SSABS/user/userhome" element={<UserHome />} /> */}
-        {/* <Route path="/SSABS/seler/selerhome" element={<Sealerhome />} /> */}
-
-
         <Route path="/SSABS/user/daylyproducts" element={<DaylyProducts />} />
         <Route path="/SSABS/seler/products" element={<AddProductFormSealer />} />
         <Route path="/SSABS/seler/allpost" element={<SealerAllProducts />} />
         <Route path="/SSABS/sellers/requests" element={<SellerRequestHistory />} />
         <Route path="/SSABS/seler/profile" element={<SellerProfile />} />
         <Route path='/SSABS/selerPage' element={<SelerPage />} />
-
-
 
 
         <Route path="/SSABS/vehicaleOwn/products" element={<VehicaleRegistration />} />
@@ -127,16 +119,10 @@ function App() {
         <Route path='/SSABS/vehicaleOwn/profile' element={<VehicleOwnerProfile />} />
 
 
-
-
         <Route path="/SSABS/admin/allusers" element={<AdminUsers />} />
-
-
-
 
         <Route path='/SSABS/admin/profile' element={<AdminProfile />} />
 
-        {/* <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} /> */}
         <Route path='/SSABS/user/userhome/profile' element={<UserProfile />} />
         <Route path='/SSABS/user/userhome/byColor' element={<ShrimpColorMonitoring />} />
         <Route path='/SSABS/user/userhome/environment' element={<EnvironmentPage />} />
@@ -145,15 +131,13 @@ function App() {
         <Route path='/SSABS/user/userhome/history' element={<HistoryPage />} />
         <Route path='/SSABS/user/userhome/places' element={<PlacesPage />} />
         <Route path='/SSABS/user/userhome/VehicaleDetails' element={<VehicaleDetails />} />
-        {/* <Route path='/SSABS/user/userhome/VehicleList' element={<VehicleList/>}/> */}
         <Route path='/SSABS/user/userhome/VehicaleUserForm' element={<VehicaleUserForm />} />
         <Route path='/SSABS/user/userhome/RegForm' element={<RegForm />} />
       </Routes>
       <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
       <Routes>
         
-        {/* <Route path='/SSABS/user/userhome/selerPage' element={<SelerPage />} /> */}
-        {/* <Route path='/SSABS/user/userhome/vehicaleowner' element={<VehicaleOwnerPage />} /> */}
+        
         <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} />
         <Route path='/SSABS/user/userhome/FindINSTRUCTORS' element={<Instructorspage />} />
         <Route path='/SSABS/user/userhome/courses' element={<Instructorprofile />} />
