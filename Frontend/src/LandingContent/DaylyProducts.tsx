@@ -3,20 +3,36 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import UserNavigation from '../Navigations/userNav';
 
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  totalHarvest: number;
+  description: string;
+  sellerId: string;
+}
+
+interface RequestDetails {
+  address: string;
+  city: string;
+  deliveryOption: string;
+  quantity: number;
+  totalAmount: number;
+}
+
 const DaylyProducts: React.FC = () => {
-  const [todayProducts, setTodayProducts] = useState<any[]>([]);
+  const [todayProducts, setTodayProducts] = useState<Product[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [cartUpdated, setCartUpdated] = useState<boolean>(false);
-  const [showPaymentForm, setShowPaymentForm] = useState<boolean>(false);
-  const [selectedProductId, setSelectedProductId] = useState<string>('');
-  const [deliveryDetails, setDeliveryDetails] = useState({
+  const [showRequestForm, setShowRequestForm] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [requestDetails, setRequestDetails] = useState<RequestDetails>({
     address: '',
     city: '',
-    postalCode: '',
-    country: '',
-    deliveryOption: ''
+    deliveryOption: '',
+    quantity: 1,
+    totalAmount: 0,
   });
-  const [receiptFile, setReceiptFile] = useState<File | null>(null);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +59,7 @@ const DaylyProducts: React.FC = () => {
     };
 
     checkTokenValidity();
-  }, [cartUpdated]);
+  }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -65,150 +81,382 @@ const DaylyProducts: React.FC = () => {
     }
   };
 
-  const addToCart = async (productId: string, price: number) => {
-    try {
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        console.error('Token is missing');
-        return;
-      }
-
-      const response = await axios.post(
-        'http://localhost:5001/SSABS/cart/add',
-        { productId, price },
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        }
-      );
-
-      console.log(response.data);
-
-      setCartUpdated(prevState => !prevState);
-    } catch (error) {
-      console.error('Error adding product to cart', error);
-    }
+  const handleRequestClick = (product: Product) => {
+    setSelectedProduct(product);
+    setRequestDetails({
+      ...requestDetails,
+      totalAmount: product.price * requestDetails.quantity,
+    });
+    setShowRequestForm(true);
   };
 
-  const handlePaymentClick = (productId: string) => {
-    setSelectedProductId(productId);
-    setShowPaymentForm(true);
+  const validateField = (name: string, value: string | number) => {
+    let error = '';
+    switch (name) {
+      case 'address':
+        if (!value) {
+          error = 'Address is required';
+        } else if (typeof value === 'string' && !/^[a-zA-Z0-9\s,.-]+$/.test(value)) {
+          error = 'Address can only contain letters, numbers, spaces, commas, and periods';
+        } else if (typeof value === 'string' && value.length < 5) {
+          error = 'Address must be at least 5 characters long';
+        }
+        break;
+      case 'city':
+        if (!value) {
+          error = 'City is required';
+        } else if (typeof value === 'string' && !/^[a-zA-Z\s]+$/.test(value)) {
+          error = 'City must contain only letters and spaces';
+        }
+        break;
+      case 'quantity':
+        if (Number(value) <= 0) {
+          error = 'Quantity must be greater than zero';
+        } else if (!Number.isInteger(Number(value))) {
+          error = 'Quantity must be a whole number';
+        }
+        break;
+      case 'deliveryOption':
+        if (!value) {
+          error = 'Delivery option is required';
+        }
+        break;
+      default:
+        break;
+    }
+
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: error,
+    }));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-    setDeliveryDetails({
-      ...deliveryDetails,
-      [e.target.name]: e.target.value
+    const { name, value } = e.target;
+    setRequestDetails((prevDetails) => {
+      const newDetails = { ...prevDetails, [name]: value };
+
+      if (name === 'quantity' && selectedProduct) {
+        newDetails.totalAmount = selectedProduct.price * Number(value);
+      }
+
+      validateField(name, value);
+
+      return newDetails;
     });
-
-    if (e.target.name === 'deliveryOption' && e.target.value === 'yes') {
-      navigate('/SSABS/vehicaleowner');
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setReceiptFile(e.target.files[0]);
-    }
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!receiptFile) {
-      alert("Please upload a payment receipt.");
+
+    const fieldsToValidate = ['address', 'city', 'quantity', 'deliveryOption'];
+    let allValid = true;
+
+    fieldsToValidate.forEach((field) => {
+      validateField(field, requestDetails[field as keyof RequestDetails]);
+      if (errors[field as keyof typeof errors]) {
+        allValid = false;
+      }
+    });
+
+    if (!allValid) {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('productId', selectedProductId);
-    formData.append('address', deliveryDetails.address);
-    formData.append('city', deliveryDetails.city);
-    formData.append('postalCode', deliveryDetails.postalCode);
-    formData.append('country', deliveryDetails.country);
-    formData.append('deliveryOption', deliveryDetails.deliveryOption);
-    formData.append('receipt', receiptFile);
+    const userId = localStorage.getItem('id');
+    if (!userId) {
+      console.error('User ID is not available');
+      return;
+    }
+
+    const requestData = {
+      productId: selectedProduct?._id,
+      address: requestDetails.address,
+      city: requestDetails.city,
+      deliveryOption: requestDetails.deliveryOption,
+      quantity: requestDetails.quantity,
+      totalAmount: requestDetails.totalAmount,
+      sellerId: selectedProduct?.sellerId,
+      userId,
+    };
 
     try {
-      const response = await axios.post('http://localhost:5001/SSABS/payment', formData, {
+      const response = await axios.post('http://localhost:5001/SSABS/request', requestData, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
-
-      console.log('Payment processed successfully', response.data);
-      setShowPaymentForm(false);
+      console.log('Request sent successfully', response.data);
+      setShowRequestForm(false);
     } catch (error) {
-      console.error('Error processing payment:', error);
+      console.error('Error sending request:', error);
     }
   };
 
   return (
-    <div>
+    <div >
       <UserNavigation />
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', padding: '20px', backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
-        <>
-          <div style={{ width: '100%', marginTop: '20px' }}>
-            <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: '#333' }}>Today's Products</h2>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '20px' }}>
-              {todayProducts.length > 0 ? (
-                todayProducts.map(product => (
-                  <div key={product._id} style={{ width: '280px', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', backgroundColor: '#fff', textAlign: 'center', margin: '10px', transition: 'transform 0.3s ease' }}>
-                    <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px', color: '#333' }}>{product.name}</h3>
-                    <p style={{ fontSize: '16px', marginBottom: '20px', color: '#666' }}>{product.description}</p>
-                    <button style={{ padding: '10px', border: 'none', borderRadius: '5px', backgroundColor: '#28a745', color: 'white', fontWeight: 'bold', cursor: 'pointer', margin: '5px' }} onClick={() => addToCart(product._id, product.price)}>Add to Cart</button>
-                    <button style={{ padding: '10px', border: 'none', borderRadius: '5px', backgroundColor: '#007bff', color: 'white', fontWeight: 'bold', cursor: 'pointer', margin: '5px' }} onClick={() => handlePaymentClick(product._id)}>Payment</button>
-                  </div>
-                ))
-              ) : (
-                <p style={{ fontSize: '18px', color: '#666' }}>No products added today.</p>
-              )}
-            </div>
-          </div>
-          {showPaymentForm && (
-            <div style={{ padding: '20px', backgroundColor: '#fff', borderRadius: '10px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', marginTop: '20px', width: '400px' }}>
-              <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#333' }}>Delivery Details</h3>
-              <form onSubmit={handleFormSubmit}>
-                <div style={{ marginBottom: '10px' }}>
-                  <label htmlFor="address" style={{ display: 'block', fontSize: '16px', color: '#333' }}>Address</label>
-                  <input type="text" id="address" name="address" value={deliveryDetails.address} onChange={handleInputChange} style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} required />
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                  <label htmlFor="city" style={{ display: 'block', fontSize: '16px', color: '#333' }}>City</label>
-                  <input type="text" id="city" name="city" value={deliveryDetails.city} onChange={handleInputChange} style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} required />
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                  <label htmlFor="postalCode" style={{ display: 'block', fontSize: '16px', color: '#333' }}>Postal Code</label>
-                  <input type="text" id="postalCode" name="postalCode" value={deliveryDetails.postalCode} onChange={handleInputChange} style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} required />
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                  <label htmlFor="country" style={{ display: 'block', fontSize: '16px', color: '#333' }}>Country</label>
-                  <input type="text" id="country" name="country" value={deliveryDetails.country} onChange={handleInputChange} style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} required />
-                </div>
-                <div style={{ marginBottom: '10px' }}>
-                  <label htmlFor="deliveryOption" style={{ display: 'block', fontSize: '16px', color: '#333' }}>Delivery Option</label>
-                  <select id="deliveryOption" name="deliveryOption" value={deliveryDetails.deliveryOption} onChange={handleInputChange} style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} required>
-                    <option value="">Select a delivery option</option>
-                    <option value="yes">Need a Delivery</option>
-                    <option value="no">No Need a Delivery</option>
-                  </select>
-                </div>
-                {deliveryDetails.deliveryOption === 'yes' && (
-                  <div style={{ marginBottom: '10px' }}>
-                    <label htmlFor="receipt" style={{ display: 'block', fontSize: '16px', color: '#333' }}>Upload Payment Receipt</label>
-                    <input type="file" id="receipt" name="receipt" onChange={handleFileChange} style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} required />
-                  </div>
-                )}
-                <button type="submit" style={{ padding: '10px 20px', border: 'none', borderRadius: '5px', backgroundColor: '#28a745', color: 'white', fontWeight: 'bold', cursor: 'pointer' }}>Submit</button>
-              </form>
-            </div>
+      <div style={styles.headerContainer}>
+        <h1 style={styles.header}>Today's Products</h1>
+        <div style={styles.productsContainer}>
+          {todayProducts.length > 0 ? (
+            todayProducts.map(product => (
+              <div
+                key={product._id}
+                style={styles.productCard}
+                onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.05)')}
+                onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+              >
+                <h3 style={styles.productName}>Product Name: {product.name}</h3>
+                <h3 style={styles.productPrice}>One Unit Price: {product.price}</h3>
+                <h3 style={styles.productHarvest}>Total Harvest: {product.totalHarvest}</h3>
+                <p style={styles.productDescription}>{product.description}</p>
+                <button style={styles.requestButton} onClick={() => handleRequestClick(product)}>Request</button>
+              </div>
+            ))
+          ) : (
+            <p style={styles.noProductsMessage}>No products added today.</p>
           )}
-        </>
+        </div>
       </div>
+      {showRequestForm && selectedProduct && (
+        <div style={styles.formContainerOverlay}>
+          <div style={styles.formContainer}>
+            <h3 style={styles.formHeader}>Request Details</h3>
+            <form onSubmit={handleFormSubmit}>
+              <div style={styles.formGroup}>
+                <label htmlFor="address" style={styles.formLabel}>My home address</label>
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  value={requestDetails.address}
+                  onChange={handleInputChange}
+                  style={styles.formInput}
+                  pattern="^[a-zA-Z0-9\s,.-]+$"
+                  required
+                />
+                {errors.address && <span style={styles.errorText}>{errors.address}</span>}
+              </div>
+
+              <div style={styles.formGroup}>
+                <label htmlFor="city" style={styles.formLabel}>My home city</label>
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  value={requestDetails.city}
+                  onChange={handleInputChange}
+                  style={styles.formInput}
+                  required
+                />
+                {errors.city && <p style={styles.errorText}>{errors.city}</p>}
+              </div>
+              <div style={styles.formGroup}>
+                <label htmlFor="quantity" style={styles.formLabel}>I want quantity(KG)</label>
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  value={requestDetails.quantity}
+                  onChange={handleInputChange}
+                  style={styles.formInput}
+                  required
+                />
+                {errors.quantity && <p style={styles.errorText}>{errors.quantity}</p>}
+              </div>
+              <div style={styles.formGroup}>
+                <label htmlFor="totalAmount" style={styles.formLabel}>Total Amount</label>
+                <input
+                  type="text"
+                  id="totalAmount"
+                  name="totalAmount"
+                  value={requestDetails.totalAmount.toFixed(2)}
+                  readOnly
+                  style={styles.formInput}
+                />
+              </div>
+              <div style={styles.formGroup}>
+                <label htmlFor="deliveryOption" style={styles.formLabel}>Delivery Option</label>
+                <select
+                  id="deliveryOption"
+                  name="deliveryOption"
+                  value={requestDetails.deliveryOption}
+                  onChange={handleInputChange}
+                  style={styles.formSelect}
+                  required
+                >
+                  <option value="">Select Delivery Option</option>
+                  <option value="yes">I need a delivery</option>
+                  <option value="no">I no need a delivery</option>
+                </select>
+                {errors.deliveryOption && <p style={styles.errorText}>{errors.deliveryOption}</p>}
+              </div>
+              <div style={styles.formGroup}>
+                <button type="submit" style={styles.submitButton}>Submit Request</button>
+              </div>
+            </form>
+            <button style={styles.closeButton} onClick={() => setShowRequestForm(false)}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
+const styles = {
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    padding: '20px',
+    backgroundColor: '#f8f9fa',
+  },
+  headerContainer: {
+    width: '100%',
+    marginTop: '20px',
+  },
+  header: {
+    fontSize: '40px',
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+  },
+  productsContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginTop: '40px',
+    marginBottom: '40px',
+  },
+  productCard: {
+    width: '280px',
+    padding: '20px',
+    borderRadius: '10px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)',
+    backgroundColor: '#fff',
+    textAlign: 'center',
+    margin: '10px',
+    transition: 'transform 0.3s ease',
+  },
+  productName: {
+    fontSize: '20px',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+    color: '#333',
+  },
+  productPrice: {
+    fontSize: '20px',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+    color: '#333',
+  },
+  productHarvest: {
+    fontSize: '20px',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+    color: '#333',
+  },
+  productDescription: {
+    fontSize: '16px',
+    marginBottom: '20px',
+    color: '#666',
+  },
+  requestButton: {
+    padding: '10px',
+    border: 'none',
+    borderRadius: '5px',
+    backgroundColor: '#007bff',
+    color: 'white',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    margin: '5px',
+  },
+  noProductsMessage: {
+    fontSize: '18px',
+    color: '#666',
+  },
+  formContainerOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backdropFilter: 'blur(8px)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  formContainer: {
+    width: '400px',
+    padding: '20px',
+    borderRadius: '10px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)',
+    backgroundColor: '#fff',
+    textAlign: 'center',
+    position: 'relative',
+  },
+  formHeader: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    marginBottom: '20px',
+    color: '#333',
+  },
+  formGroup: {
+    marginBottom: '20px',
+  },
+  formLabel: {
+    display: 'block',
+    marginBottom: '5px',
+    fontSize: '16px',
+    color: '#333',
+  },
+  formInput: {
+    width: '100%',
+    padding: '10px',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    fontSize: '16px',
+  },
+  formSelect: {
+    width: '100%',
+    padding: '10px',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    fontSize: '16px',
+  },
+  submitButton: {
+    padding: '10px 20px',
+    border: 'none',
+    borderRadius: '5px',
+    backgroundColor: '#007bff',
+    color: 'white',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    margin: '5px',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+    padding: '5px 10px',
+    border: 'none',
+    borderRadius: '5px',
+    backgroundColor: '#dc3545',
+    color: 'white',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: '14px',
+    marginTop: '5px',
+  },
+};
+
 export default DaylyProducts;
+
 

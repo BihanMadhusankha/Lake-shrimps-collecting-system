@@ -51,7 +51,7 @@ const SealerDashboard: React.FC = () => {
            </Link> 
          </div>
          <div style={cardStyle}>
-           <h2 style={titleStyle}>DASHBOARD</h2>
+           <h2 style={titleStyle}>All Products</h2>
            <Link to={'/SSABS/seler/allpost'}>
              <button style={buttonStyle}>More</button>
            </Link>           
@@ -59,6 +59,11 @@ const SealerDashboard: React.FC = () => {
          <div style={cardStyle}>
            <h2 style={titleStyle}>Setting</h2>
            <Link to={'/SSABS/seler/products'}>
+             <button style={buttonStyle}>More</button>
+           </Link>           
+         </div><div style={cardStyle}>
+           <h2 style={titleStyle}>History</h2>
+           <Link to={'/SSABS/sellers/requests'}>
              <button style={buttonStyle}>More</button>
            </Link>           
          </div>

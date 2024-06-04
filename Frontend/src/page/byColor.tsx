@@ -1,12 +1,18 @@
 import React from 'react';
-import '../CSS/shrimpscategory.css'; // Make sure to adjust the path based on your project structure
 import UserNavigation from '../Navigations/userNav';
 import shrimps_color from '../assets/shrimps color.jpg';
 import shrimps_size from '../assets/shrimp-sizes-chart.jpg';
 import shrimps_preparation from '../assets/Preparation_shrimps.jpg';
 import shrimps_Species from '../assets/Species_shrimps.jpg';
 
-const shrimpData = [
+interface ShrimpCategory {
+  id: string;
+  title: string;
+  imageUrl: string;
+  Explanation: string;
+}
+
+const shrimpData: ShrimpCategory[] = [
   {
     id: 'color',
     title: 'By Color',
@@ -23,7 +29,7 @@ const shrimpData = [
     id: 'species',
     title: 'By Species',
     imageUrl: shrimps_Species,
-    Explanation: "There are numerous species of shrimp found worldwide, each with its own distinct flavor profile, texture, and habitat. For example, tiger shrimp are known for their large size and slightly sweet flavor, while Gulf shrimp have a more robust taste and firmer texture. By exploring shrimp by species, you can learn about the specific attributes of each type, allowing you to select the best variety for your culinary needs. Whether you're looking for something delicate and sweet or bold and savory, understanding shrimp species can help you create dishes that cater to your taste preferences."
+    Explanation: "There are numerous species of shrimp found worldwide, each with its own distinct flavor profile, texture, and habitat. For example, tiger shrimp are known for their large size and slightly sweet flavor, while Gulf shrimp have a more robust taste and firmer texture. By exploring shrimp by species, you can learn about the specific attributes of each type, allowing you to select the best variety for your culinary needs. Whether you're looking for something delicate and sweet or bold and savory, understanding shrimp by species can help you create dishes that cater to your taste preferences."
   },
   {
     id: 'preparation',
@@ -35,17 +41,17 @@ const shrimpData = [
 
 const ShrimpCategories: React.FC = () => {
   return (
-    <div className="container">
+    <div >
       <UserNavigation />
-      <header className="header mt-3">
-        <h1>Explore Shrimp Categories</h1>
+      <header style={{ textAlign: 'center', marginTop: '20px' }}>
+        <h1 style={{ fontSize: '28px', marginBottom: '20px' }}>Explore Shrimp Categories</h1>
       </header>
-      <main className="main">
+      <main style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         {shrimpData.map(({ id, title, imageUrl, Explanation }) => (
-          <section key={id} className="section fade-in">
-            <img src={imageUrl} alt={title} className="image" />
-            <h2>{title}</h2>
-            <p>{Explanation}</p>
+          <section key={id} style={{ width: '35%', margin: '20px', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)', transition: 'transform 0.3s' }} className="fade-in hoverable">
+            <img src={imageUrl} alt={title} style={{ width: '40%', height: '40%', borderRadius: '8px' }} />
+            <h2 style={{ marginTop: '10px', fontSize: '20px' }}>{title}</h2>
+            <p style={{ marginTop: '10px', fontSize: '16px', lineHeight: '1.5' }}>{Explanation}</p>
           </section>
         ))}
       </main>

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import SelerNav from './sealerNav'
+import AdminNav from './AdminNAvigation'; // Import your AdminNav component
 
-
-const SellerProfile: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
+const AdminProfile: React.FC = () => {
+  const [admin, setAdmin] = useState<any>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editedUser, setEditedUser] = useState<any>({});
+  const [editedAdmin, setEditedAdmin] = useState<any>({});
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchAdminProfile = async () => {
       try {
         const token = localStorage.getItem('accessToken');
 
@@ -24,14 +23,14 @@ const SellerProfile: React.FC = () => {
           },
         });
 
-        setUser(response.data);
-        setEditedUser(response.data);
+        setAdmin(response.data);
+        setEditedAdmin(response.data);
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error('Error fetching admin data:', error);
       }
     };
 
-    fetchProfile();
+    fetchAdminProfile();
   }, []);
 
   const handleEdit = () => {
@@ -47,32 +46,31 @@ const SellerProfile: React.FC = () => {
         return;
       }
 
-      await axios.put('http://localhost:5001/SSABS/profile', editedUser, {
+      await axios.put('http://localhost:5001/SSABS/profile', editedAdmin, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      setUser(editedUser);
+      setAdmin(editedAdmin);
       setIsEditing(false);
     } catch (error) {
-      console.error('Error updating user data:', error);
+      console.error('Error updating admin data:', error);
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setEditedUser({ ...editedUser, [name]: value });
+    setEditedAdmin({ ...editedAdmin, [name]: value });
   };
 
   return (
     <div>
-      <SelerNav />
-
+      <AdminNav />
 
       <div style={{ textAlign: 'center', margin: '50px' }}>
         <h1 style={{ color: '#333', fontSize: '32px', marginBottom: '20px' }}>Profile</h1>
-        {user ? (
+        {admin ? (
           <div style={{
             background: 'rgba(255, 255, 255, 0.8)',
             padding: '20px',
@@ -88,7 +86,7 @@ const SellerProfile: React.FC = () => {
                   <input
                     type="text"
                     name="firstname"
-                    value={editedUser.firstname}
+                    value={editedAdmin.firstname}
                     onChange={handleInputChange}
                     style={{ marginBottom: '10px', padding: '5px', width: '100%', borderRadius: '4px' }}
                   />
@@ -97,7 +95,7 @@ const SellerProfile: React.FC = () => {
                   <input
                     type="text"
                     name="lastname"
-                    value={editedUser.lastname}
+                    value={editedAdmin.lastname}
                     onChange={handleInputChange}
                     style={{ marginBottom: '10px', padding: '5px', width: '100%', borderRadius: '4px' }}
                   />
@@ -106,7 +104,7 @@ const SellerProfile: React.FC = () => {
                   <input
                     type="text"
                     name="email"
-                    value={editedUser.email}
+                    value={editedAdmin.email}
                     onChange={handleInputChange}
                     style={{ marginBottom: '10px', padding: '5px', width: '100%', borderRadius: '4px' }}
                   />
@@ -115,7 +113,7 @@ const SellerProfile: React.FC = () => {
                   <input
                     type="text"
                     name="phone"
-                    value={editedUser.phone}
+                    value={editedAdmin.phone}
                     onChange={handleInputChange}
                     style={{ marginBottom: '10px', padding: '5px', width: '100%', borderRadius: '4px' }}
                   />
@@ -124,10 +122,10 @@ const SellerProfile: React.FC = () => {
               </>
             ) : (
               <>
-                <p style={{ marginBottom: '10px' }}><strong>First Name:</strong> {user.firstname}</p>
-                <p style={{ marginBottom: '10px' }}><strong>Last Name:</strong> {user.lastname}</p>
-                <p style={{ marginBottom: '10px' }}><strong>Email:</strong> {user.email}</p>
-                <p style={{ marginBottom: '10px' }}><strong>Phone:</strong> {user.phone}</p>
+                <p style={{ marginBottom: '10px' }}><strong>First Name:</strong> {editedAdmin.firstname}</p>
+                <p style={{ marginBottom: '10px' }}><strong>Last Name:</strong> {editedAdmin.lastname}</p>
+                <p style={{ marginBottom: '10px' }}><strong>Email:</strong> {editedAdmin.email}</p>
+                <p style={{ marginBottom: '10px' }}><strong>Phone:</strong> {editedAdmin.phone}</p>
                 <button onClick={handleEdit} style={{ padding: '8px 16px', borderRadius: '4px', backgroundColor: '#28a', color: 'white', border: 'none', cursor: 'pointer' }}>Edit</button>
               </>
             )}
@@ -140,4 +138,4 @@ const SellerProfile: React.FC = () => {
   );
 };
 
-export default SellerProfile;
+export default AdminProfile;

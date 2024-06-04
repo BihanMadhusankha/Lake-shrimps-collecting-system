@@ -5,12 +5,13 @@ const JWT = require('jsonwebtoken');
 const mongoose = require('mongoose'); // Assuming Mongoose for MongoDB
 const nodemailer = require('nodemailer');
 const Product = require('../models/Products')
-const CartItem = require('../models/cartItemSchema');
 const Vehicle = require('../models/vehicleSchema');
 const cloudinary = require('cloudinary').v2;
 const Booking = require('../models/bookingSchema');
 const VehicalOwner = require('../models/vehicleOwnerSchema')
-
+const Request = require('../models/Request');
+const Message = require('../models/messageSchema');
+const Receipt = require('../models/uploadRecipt');
 //@desc Register a user 
 //@route POST /SSABS/user/signup/
 //@access public
@@ -177,8 +178,7 @@ const deleteUsers = async (req, res) => {
 }
 
 const getUser = async (req, res) => {
-  const userId = req.user.id; // Assuming you have middleware that adds the user object to the request
-
+  const userId = req.user.id; 
   try {
     const user = await User.findById(userId);
 
@@ -197,14 +197,11 @@ const getUser = async (req, res) => {
 const updateUserProfile = async (req, res) => {
   try {
     const { firstname, lastname, email, phone } = req.body;
-    const userId = req.user.id; // Assuming the user ID is stored in req.user.id after authentication
-
-    // Check if the user ID is valid
+    const userId = req.user.id; 
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ message: 'Invalid user ID format' });
     }
 
-    // Find the user by ID and update the profile fields
     const updatedUser = await User.findByIdAndUpdate(userId, { firstname, lastname, email, phone }, { new: true });
 
     if (!updatedUser) {
@@ -289,7 +286,7 @@ const ForgetPassword = async (req, res) => {
       const sellerId = req.user.id;
   
       // Assuming the request body contains the product details
-      const { name, price, description } = req.body;
+      const { name, price,totalHarvest, description } = req.body;
   
       const createdAt = new Date();
 
@@ -297,6 +294,7 @@ const ForgetPassword = async (req, res) => {
       const newProduct = new Product({
         name,
         price,
+        totalHarvest,
         description,
         sellerId,
         createdAt
@@ -344,11 +342,11 @@ const ForgetPassword = async (req, res) => {
       try {
         const { id } = req.params;
         const sellerId = req.user.id;
-        const { name, price, description } = req.body;
+        const { name, price,totalHarvest, description } = req.body;
     
         const product = await Product.findOneAndUpdate(
           { _id: id, sellerId },
-          { name, price, description },
+          { name, price,totalHarvest, description },
           { new: true }
         );
     
@@ -396,62 +394,6 @@ const ForgetPassword = async (req, res) => {
       }
     };
 
-    const addToCart = async (req, res) => {
-      try {
-        const { productId ,price} = req.body;
-        const userId = req.user.id; // Assuming you have authenticated users
-    
-        // Create a new cart item
-        const cartItem = new CartItem({
-          productId,
-          userId,
-          price,
-          quantity: 1,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        });
-    
-        // Save the cart item to the database
-        await cartItem.save();
-    
-        res.status(200).json({ message: 'Product added to cart successfully' });
-      } catch (error) {
-        console.error('Error adding product to cart:', error);
-        res.status(500).json({ error: 'Failed to add product to cart' });
-      }
-    };
-    
-
-    const cartitem = async (req, res) => {
-      try {
-        const userId = req.user.id;
-        // Find all cart items associated with the user ID
-        const cartItems = await CartItem.find(
-          { userId: userId, quantity: { $gt: 0 } }, { userId });
-        console.log(cartItems);
-        res.json(cartItems);
-      } catch (error) {
-        console.error('Error fetching cart items:', error);
-        res.status(500).json({ error: 'Failed to fetch cart items' });
-      }
-    };
-
-    const addcartitemdelete =async (req, res) => {
-      const id = req.params.id;
-      console.log(id);
-  
-  
-      try {
-          const cartItem = await CartItem.findOneAndDelete({ _id: id });
-          if (!cartItem) {
-              return res.status(404).json({ message: 'Cart item not found' });
-          }
-          res.json({ message: 'Cart item deleted successfully' });
-      } catch (error) {
-          console.error('Error during deletion:', error);
-          res.status(500).send('An error occurred');
-      }
-  }
 
   const registerVehicle = async (req, res) => {
     // Handle file upload to Cloudinary
@@ -547,6 +489,191 @@ const booking =async (req, res) => {
   }
 }
 
+const PostRequest = async (req, res) => {
+  const { productId, address, city, deliveryOption, quantity, totalAmount, sellerId, userId } = req.body;
+  console.log(`User ${userId} is requesting product ${productId}`);
+
+  try {
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    const newRequest = new Request({
+      productId,
+      address,
+      city,
+      deliveryOption,
+      quantity,
+      totalAmount,
+      sellerId,
+      userId,  // Include userId in the new request
+    });
+
+    const savedRequest = await newRequest.save();
+    res.status(201).json(savedRequest);
+  } catch (error) {
+    console.error('Error creating request:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+const getRequestHistory =  async (req, res) => {
+  const sellerId = req.user.id; // Assuming user ID is available in req.user
+  try {
+    const requests = await Request.find({ sellerId: sellerId });
+    res.json(requests);
+  } catch (error) {
+    res.status(500).send('Server Error');
+  }
+}
+
+const requestAccept = async (req, res) => {
+  try {
+    const requestId = req.params.requestId;
+    const userId = req.params.userId;
+    const sellerId = req.params.sellerId;
+    
+      
+      const request = await Request.findById(requestId);
+      if (!request) {
+          return res.status(404).json({ message: 'Request not found' });
+      }
+
+      request.status = 'Accepted';
+      request.userId = userId; 
+      request.sellerId = sellerId; 
+      await request.save();
+
+      // Send a message to the user
+      const message = new Message({
+          userId: userId,
+          sellerId: sellerId,
+          message: 'Your request has been accepted!',
+      });
+
+      await message.save();
+
+      res.json({ message: 'Request accepted and message sent to user' });
+  } catch (error) {
+      console.error('Error accepting request:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
+
+
+const DeleteRequest =async (req, res) => {
+  try {
+    const requestId = req.params.requestId;
+
+    await Request.findByIdAndDelete(requestId);
+
+    res.status(200).json({ message: 'Request deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting request:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+
+
+
+const viewMessage = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    console.log(`User ${userId} is viewing their messages`);
+    const messages = await Message.find({ userId }).sort({ createdAt: -1 });
+    res.json(messages);
+  } catch (error) {
+    console.error('Error fetching messages:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+const deleteMessage = async (req, res) => {
+  try {
+    const message = req.params.messageId
+    if (!message) return res.status(404).json({ message: 'Message not found' });
+
+    // Check if the user is authorized to delete the message
+    // Add your authorization logic here...
+
+    await Message.findByIdAndDelete(message); // Use remove() method to delete the document
+    res.json({ message: 'Message deleted successfully' });
+} catch (error) {
+    console.error('Error deleting message:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+}
+}
+const getAcceptRequest = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const acceptedRequests = await Accepted.find({ userId: userId, status: 'Accepted' })
+      .populate('productId')
+      .populate('sellerId');
+
+    res.status(200).json(acceptedRequests);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching accepted requests', error });
+  }
+}
+
+const uploadPaymentReceipt = async (req, res) => {
+  try {
+      const file = req.file;
+      const { sellerId } = req.body;
+      console.log(sellerId); // Debug log to check if sellerId is received
+
+      if (!file) {
+          return res.status(400).json({ message: 'No file uploaded' });
+      }
+
+      if (!sellerId) {
+          return res.status(400).json({ message: 'sellerId is required' });
+      }
+
+      const result = await cloudinary.uploader.upload(file.path, {
+          folder: 'payment_receipts',
+      });
+
+      const newRicipt = new Receipt({
+          sellerId: sellerId,
+          message: 'Payment receipt uploaded',
+          photoUrl: result.secure_url,
+      });
+
+      await newRicipt.save();
+
+      res.status(201).json({ message: 'Payment receipt uploaded successfully', imageUrl: result.secure_url });
+  } catch (error) {
+      console.error('Error uploading payment receipt:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const getUploadPhoto = async (req, res) => {
+  try {
+    const sellerId = req.user.id; // Assuming req.user contains authenticated seller info
+    const receipts = await Receipt.find({ sellerId });
+
+    if (!receipts) {
+      return res.status(404).json({ message: 'No payment receipts found' });
+    }
+
+    res.json(receipts);
+  } catch (error) {
+    console.error('Error fetching payment receipts:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
+
+
+
 
   const logout = asyncHandler(async (req, res) => {
     // res.clearCookie('accessToken');
@@ -572,15 +699,21 @@ const booking =async (req, res) => {
     productdelete: productdelete,
     updateProduct:updateProduct,
     productveiw:productveiw,
-    addToCart:addToCart,
-    cartitem:cartitem,
-    addcartitemdelete:addcartitemdelete,
     registerVehicle :registerVehicle,
     getRegisteredVehicles:getRegisteredVehicles,
     UpdateVehicaledata:UpdateVehicaledata,
     deleteVehicle:deleteVehicle,
     vehicale_owners_vehicle:vehicale_owners_vehicle,
-    booking:booking
+    booking:booking,
+    PostRequest:PostRequest,
+    getRequestHistory:getRequestHistory,
+    requestAccept:requestAccept,
+    DeleteRequest:DeleteRequest,
+    getAcceptRequest:getAcceptRequest,
+    viewMessage:viewMessage,
+    deleteMessage:deleteMessage,
+    uploadPaymentReceipt:uploadPaymentReceipt,
+    getUploadPhoto:getUploadPhoto
   }
 
 

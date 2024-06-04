@@ -8,6 +8,7 @@ const AddProductFormSealer: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [price, setPrice] = useState<number>(0);
   const [description, setDescription] = useState<string>('');
+  const [totalHarvest, setTotalHarvest] = useState<number>(0);
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -32,6 +33,7 @@ const AddProductFormSealer: React.FC = () => {
         name,
         price,
         description,
+        totalHarvest,
         sellerId,
       }, {
         headers: {
@@ -39,7 +41,7 @@ const AddProductFormSealer: React.FC = () => {
         },
       });
 
-      console.log(response.data);
+      console.log(response.data.totalHarvest);
       navigate('/SSABS/seler/dashboard');
     } catch (error) {
       console.error('Error posting product', error);
@@ -82,23 +84,31 @@ const AddProductFormSealer: React.FC = () => {
   return (
     <div>
       <SealerNav />
-      <form onSubmit={handleSubmit} style={formStyle}>
+      <form className='d-flex justify-content-center mt-4' onSubmit={handleSubmit} style={formStyle}>
         <div>
-          <label style={labelStyle}>Product Name</label>
-          <input
-            placeholder="product name"
-            type="text"
+          <h3 className='d-flex justify-content-center '>Add product</h3>
+          <label style={labelStyle}>Select shrimps type name</label>
+          <select
+            
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
             style={inputStyle}
-          />
+          >
+            <option value="">Select a product</option>
+            <option value="Brine shrimp">Brine shrimp</option>
+            <option value="Cherry shrimp">Cherry shrimp</option>
+            <option value="Cocktail shrimp">Cocktail shrimp</option>
+            <option value="Large shrimp">Large shrimp</option>
+            <option value="Jumbo shrimp">Jumbo shrimp</option>
+            {/* Add more options as needed */}
+          </select>
         </div>
         <div>
-          <label style={labelStyle}>Product Price</label>
+          <label style={labelStyle}>Product Unit Price (Rs)</label>
           <input
             placeholder="product price"
-            type="number"
+            type="decimal"
             value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
             required
@@ -114,6 +124,17 @@ const AddProductFormSealer: React.FC = () => {
             required
             style={{ ...inputStyle, height: '100px' }}
           ></textarea>
+        </div>
+        <div>
+          <label style={labelStyle}>Total Harvest (Kg)</label>
+          <input
+            placeholder="total harvest"
+            type="number"
+            value={totalHarvest}
+            onChange={(e) => setTotalHarvest(Number(e.target.value))}
+            required
+            style={inputStyle}
+          />
         </div>
         <button type="submit" style={buttonStyle}>Add Product</button>
       </form>

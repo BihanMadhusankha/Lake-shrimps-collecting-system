@@ -38,11 +38,11 @@ export default function SelerPage() {
   return (
     <div>
       <UserNavigation />
-      <h1>Seler Page</h1>
-      <div className="container bg-black rounded-5 p-5  mt-lg-5  ">
+      <h1 className=' d-flex justify-content-center mt-4'>Seler Page</h1>
+      <div className="container rounded-5 p-5  mt-lg-5   ">
         <div className="row justify-content-center">
           {sealers.map((sealer: Sealers) => (
-            <div className="card bg-gray m-lg-3 rounded-3   col-lg-3 d-flex flex-row " key={sealer._id}>
+            <div className="card bg-gray m-lg-3 rounded-3 col-sm-5 col-lg-3  " key={sealer._id}>
               <div className="card-body ">
                 <img src={registerImage} className="img-fluid" alt="..." />
                 <h5>First Name: {sealer.firstname}</h5>

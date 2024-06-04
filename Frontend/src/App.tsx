@@ -16,7 +16,6 @@ import DaylyProducts from './LandingContent/DaylyProducts'
 
 import Sealerhome from './Sealer/sealerhome';
 import AddProductFormSealer from './Sealer/AddProductFormSealer';
-import SealerProfile from './Sealer/selerProfile'
 import SealerAllProducts from './Sealer/Dashboard'
 
 import VehicaleRegistration from './VehicaleOwners/VeicaleOwnerPost'
@@ -31,6 +30,7 @@ import VehicleListPage from './VehicaleOwners/VehicleListPage';
 
 import BookingForm from './VehicaleOwners/BookingForm';
 
+import SellerRequestHistory from './Sealer/SellerRequestHistory'
 // import ConCreatersPage from './page/contentCreaterPage';
 import ShrimpColorMonitoring from './page/byColor'
 import UserProfile from './Users/profile';
@@ -46,25 +46,33 @@ import HarvestPage from './stock&category/harvest';
 import HistoryPage from './stock&category/history';
 import PlacesPage from './stock&category/places';
 import VehicaleDetails from './delivery/VehicleDetails'
-import VehicleList from './delivery/VehicleList'
+// import VehicleList from './delivery/VehicleList'
 import VehicaleUserForm from './delivery/VehicaleUserForm'
 import RegForm from './delivery/RegForm'
 import NotFound from './page/Notfounded';
 import AdminUsers from './Admin/AdminUsers';
 import Forgetpassword from './page/forgetpassword'
 import ResetPassword from './page/ResetPassword'
+import SellerProfile from './Sealer/selerProfile';
+import VehicleOwnerProfile from './VehicaleOwners/vehicleOwnerProfile';
+import AdminProfile from './Admin/AdminProfile';
 
 function App() {
+  // State to store the logged-in seller ID
+
   useEffect(() => {
     AOS.init({
-      duration: 3000,
+      duration: 2000,
       easing: 'ease-in-out-sine',
       once: true,
       mirror: false,
       delay: 100,
       offset: 100,
-
     });
+
+    // Function to retrieve the seller ID after login
+  
+    
   }, []);
 
 
@@ -102,8 +110,9 @@ function App() {
 
         <Route path="/SSABS/seler/products" element={<AddProductFormSealer />} />
         <Route path="/SSABS/seler/allpost" element={<SealerAllProducts />} />
+        <Route path="/SSABS/sellers/requests" element={<SellerRequestHistory   />} />
 
-        <Route path="/SSABS/seler/profile" element={<SealerProfile />} />
+        <Route path="/SSABS/seler/profile" element={<SellerProfile />} />
         
        
         <Route path="/SSABS/vehicaleOwn/products" element={<VehicaleRegistration />} />
@@ -119,8 +128,9 @@ function App() {
 
         <Route path='/SSABS/vehicaleowner' element={<VehicaleOwnerPage />} />
         <Route path='/SSABS/vehicle-owner' element={<VehicleListPage />} />
+        <Route path='/SSABS/vehicaleOwn/profile' element={<VehicleOwnerProfile />} />  
 
-        
+        <Route path='/SSABS/admin/profile' element={<AdminProfile />} />  
 
         {/* <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} /> */}
         <Route path='/SSABS/user/userhome/profile' element={<UserProfile />} />
@@ -131,7 +141,7 @@ function App() {
           <Route path='/SSABS/user/userhome/history' element={<HistoryPage/>}/>
           <Route path='/SSABS/user/userhome/places' element={<PlacesPage/>}/>
           <Route path='/SSABS/user/userhome/VehicaleDetails' element={<VehicaleDetails/>}/>
-          <Route path='/SSABS/user/userhome/VehicleList' element={<VehicleList/>}/>
+          {/* <Route path='/SSABS/user/userhome/VehicleList' element={<VehicleList/>}/> */}
           <Route path='/SSABS/user/userhome/VehicaleUserForm' element={<VehicaleUserForm/>}/>
           <Route path='/SSABS/user/userhome/RegForm' element={<RegForm/>}/>
       </Routes>

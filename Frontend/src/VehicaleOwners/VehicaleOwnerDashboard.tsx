@@ -1,70 +1,71 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import VehicleNav from './vehicleNav';
 
 const VehicaleOwnerDashboard: React.FC = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-    const navigate = useNavigate();
-  
-    useEffect(() => {
-      const checkTokenValidity = async () => {
-        try {
-          const response = await axios.get('http://localhost:5001/SSABS/vehicale_owner/dashboard', {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            },
-          });
-  
-          if (!response.data) {
-            setIsLoggedIn(false);
-            localStorage.removeItem('accessToken');
-          }
-  
-          setIsLoggedIn(true);
-        } catch (error) {
-          console.error('Error checking token:', error);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkTokenValidity = async () => {
+      try {
+        const response = await axios.get('http://localhost:5001/SSABS/vehicale_owner/dashboard', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+        });
+
+        if (!response.data) {
           setIsLoggedIn(false);
           localStorage.removeItem('accessToken');
         }
-      };
-  
-      checkTokenValidity();
-    }, []);
-  
-    useEffect(() => {
-      if (!isLoggedIn) {
-        navigate('/SSABS/user/login');
+
+        setIsLoggedIn(true);
+      } catch (error) {
+        console.error('Error checking token:', error);
+        setIsLoggedIn(false);
+        localStorage.removeItem('accessToken');
       }
-    }, [isLoggedIn, navigate]);
+    };
+
+    checkTokenValidity();
+  }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/SSABS/user/login');
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <div>
-       
+      <VehicleNav />
 
-<div className="container" style={containerStyle}>
-       
-       <>
-         <div style={cardStyle}>
-           <h2 style={titleStyle}>PROFILE</h2>
-           <Link to={'/SSABS/vehicaleOwn/profile'}>
-             <button style={buttonStyle}>More</button>
-           </Link> 
-         </div>
-         <div style={cardStyle}>
-           <h2 style={titleStyle}>DASHBOARD</h2>
-           <Link to={'/SSABS/vehicaleOwn/allpost'}>
-             <button style={buttonStyle}>More</button>
-           </Link>           
-         </div>
-         <div style={cardStyle}>
-           <h2 style={titleStyle}>Setting</h2>
-           <Link to={'/SSABS/vehicaleOwn/products'}>
-             <button style={buttonStyle}>More</button>
-           </Link>           
-         </div>
-       </>
-     
-   </div>
+      <div className="container" style={containerStyle}>
+
+        <>
+          <div style={cardStyle}>
+            <h2 style={titleStyle}>PROFILE</h2>
+            <Link to={'/SSABS/vehicaleOwn/profile'}>
+              <button style={buttonStyle}>More</button>
+            </Link>
+          </div>
+          <div style={cardStyle}>
+            <h2 style={titleStyle}>DASHBOARD</h2>
+            <Link to={'/SSABS/vehicaleOwn/allpost'}>
+              <button style={buttonStyle}>More</button>
+            </Link>
+          </div>
+          <div style={cardStyle}>
+            <h2 style={titleStyle}>Setting</h2>
+            <Link to={'/SSABS/vehicaleOwn/products'}>
+              <button style={buttonStyle}>More</button>
+            </Link>
+          </div>
+        </>
+
+      </div>
     </div>
   );
 };

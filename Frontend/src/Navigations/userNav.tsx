@@ -4,8 +4,10 @@ import '../CSS/navCSS.css';
 import { Button } from 'antd';
 import CartPopup from '../page/CartPopup';
 
-function UserNavigation() {
+const UserNavigation: React.FC = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const userId = localStorage.getItem('id'); // Replace with actual user ID logic
+
     return (
         <div className="Nav">
             <header className="p-3 border-bottom">
@@ -24,13 +26,12 @@ function UserNavigation() {
                             <Link to={'/SSABS/selerPage'}>
                                 <li><a href="#" className="nav-link px-2 text-white">Sellers</a></li>
                             </Link>
-                            <Link to={'/SSABS/vehicaleowner'}>
-                                <li><a href="#" className="nav-link px-2 text-white">Vehi.Owner</a></li>
-                            </Link>
                             <Link to={'/SSABS/con.creaters'}>
                                 <li><a href="#" className="nav-link px-2 text-white">Con.Creaters</a></li>
                             </Link>
-                            <Link to="" onClick={() => setIsCartOpen(true)}>Cart</Link>
+                            <li>
+                                <a href="#" className="nav-link px-2 text-white" onClick={() => setIsCartOpen(true)}>Cart</a>
+                            </li>
                         </ul>
 
                         <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -45,7 +46,7 @@ function UserNavigation() {
                                 <Link to={'/SSABS/user/userhome/profile'}>
                                     <li><a className="dropdown-item" href="#">Profile</a></li>
                                 </Link>
-                                <li><a className="dropdown-item" href="#">Setting</a></li>
+                                
                                 <li><hr className="dropdown-divider" /></li>
                                 <Link to={'/SSABS/user/login'}>
                                     <li>
@@ -59,7 +60,7 @@ function UserNavigation() {
                     </div>
                 </div>
             </header>
-            <CartPopup isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+            <CartPopup isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} userId={userId ? userId : ''} />
         </div>
     );
 }

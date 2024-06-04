@@ -1,109 +1,209 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Flex } from 'antd';
 
-interface Product {
+interface Message {
     _id: string;
-    name: string;
-    description: string;
-    price: number;
+    userId: string;
+    sellerId: string;
+    message: string;
+    createdAt: Date;
 }
 
 interface CartPopupProps {
     isOpen: boolean;
     onClose: () => void;
+    userId: string;
 }
 
-const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose }) => {
-    const [cartProducts, setCartProducts] = useState<Product[]>([]);
+const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose, userId }) => {
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [paymentReceipt, setPaymentReceipt] = useState<File | null>(null);
+    const [selectedSellerId, setSelectedSellerId] = useState<string | null>(null);
 
     useEffect(() => {
         if (isOpen) {
-            fetchCartProducts();
+            fetchMessages();
         }
     }, [isOpen]);
 
-    const fetchCartProducts = async () => {
+    const fetchMessages = async () => {
         try {
-            const token = localStorage.getItem('accessToken');
-            if (!token) {
-                console.error('Token is missing');
-                return;
-            }
-
-            const response = await axios.get<Product[]>(
-                'http://localhost:5001/SSABS/cart/add',
+            const response = await axios.get<Message[]>(
+                `http://localhost:5001/SSABS/message/user/${userId}`,
                 {
                     headers: {
-                        'Authorization': `Bearer ${token}`,
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    },
+                }
+            );
+            setMessages(response.data);
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+        }
+    };
+
+    const handleDelete = async (messageId: string) => {
+        try {
+            await axios.delete(
+                `http://localhost:5001/SSABS/message/delete/${messageId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    },
+                }
+            );
+            setMessages(messages.filter((message) => message._id !== messageId));
+        } catch (error) {
+            console.error('Error deleting message:', error);
+        }
+    };
+
+    const handlePayment = (sellerId: string) => {
+        setSelectedSellerId(sellerId);
+        const paymentForm = document.getElementById('paymentForm') as HTMLFormElement | null;
+        if (paymentForm) {
+            paymentForm.style.display = 'block';
+            paymentForm.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => {
+                paymentForm.style.opacity = '1';
+            }, 10);
+        }
+    };
+
+    const handleSubmitPayment = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        
+        try {
+            if (!paymentReceipt) {
+                throw new Error('No payment receipt selected');
+            }
+            
+            if (!selectedSellerId) {
+                throw new Error('Seller ID is not selected');
+            }
+
+            const formData = new FormData();
+            formData.append('file', paymentReceipt);
+            formData.append('sellerId', selectedSellerId);
+
+            console.log(formData.get('sellerId')); // Debug log to check if sellerId is appended
+
+            const response = await axios.post(
+                'http://localhost:5001/SSABS/upload/paymentReceipt',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
                 }
             );
 
-            setCartProducts(response.data);
+            console.log('File uploaded successfully:', response.data);
+
         } catch (error) {
-            console.error("Error fetching cart products:", error);
+            console.error('Error uploading payment receipt:', error);
         }
     };
 
-    const handleDelete = async (productId: string) => {
-    try {
-        const token = localStorage.getItem('accessToken');
-        if (!token) {
-            console.error('Token is missing');
-            return;
-        }
-
-        // Make a DELETE request to your backend API endpoint to delete the product from the cart
-        try {
-            const response = await axios.delete(`http://localhost:5001/SSABS/cart/${productId}`);
-            console.log('Cart item deleted:', response.data);
-        } catch (error) {
-            console.error('Error deleting product from cart:', error);
-        }
-        // If the deletion is successful, you can update the cartProducts state to reflect the changes
-        setCartProducts(prevProducts => prevProducts.filter(product => product._id !== productId));
-
-        console.log(`Product ${productId} deleted from cart`);
-    } catch (error) {
-        console.error("Error deleting product from cart:", error);
-    }
-};
-
-    const handlePayment = async (productId: string) => {
-        try {
-            // Implement logic for handling payment
-            console.log(`Processing payment for product ${productId}`);
-        } catch (error) {
-            console.error("Error processing payment:", error);
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files && event.target.files[0];
+        if (file) {
+            setPaymentReceipt(file);
         }
     };
 
     return (
-        <div className={`modal ${isOpen ? 'show' : ''}`} tabIndex={-1} role="dialog" style={{ display: isOpen ? 'block' : 'none' }}>
-            <div className="modal-dialog" role="document">
-                <div className="modal-content" style={{ animation: 'fade-in 0.3s ease' }}>
-                    <div className="modal-header">
-                        <h5 className="modal-title">Cart</h5>
-                        <button type="button" className="close" onClick={onClose} aria-label="Close" style={{ position: 'absolute', top: '10px', right: '10px', color: '#000', opacity: '0.5', fontSize: '1.5rem' }}>
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-
-                    </div>
-                    <div className="modal-body">
-                        {cartProducts.map(product => (
-                            <div key={product._id}>
-                                <h3>{product.name}</h3>
-                                <p>{product.description}</p>
-                                <p>Price: {product.price}</p>
-                                <button style={{ padding: '5px 10px', marginRight: '5px', backgroundColor: '#dc3545', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }} onClick={() => handleDelete(product._id)}>Delete</button>
-                                <button style={{ padding: '5px 10px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }} onClick={() => handlePayment(product._id)}>Payment</button>
-                            </div>
+        <div>
+            {isOpen && (
+                <div>
+                    <h1 className='d-flex justify-content-center'>Messages</h1>
+                    <ul >
+                        {messages.map((message) => (
+                            <li className='d-flex fle justify-content-center' key={message._id}>
+                                {message.message}
+                                <button
+                                    style={buttonStyle('#007bff')}
+                                    onClick={() => handlePayment(message.sellerId)}
+                                >
+                                    Payment
+                                </button>
+                                <button
+                                    style={buttonStyle('#dc3545')}
+                                    onClick={() => handleDelete(message._id)}
+                                >
+                                    Delete
+                                </button>
+                            </li>
                         ))}
-                    </div>
+                    </ul>
+                    <button
+                        style={buttonStyle('#28a745')}
+                        onClick={onClose}
+                    >
+                        Close
+                    </button>
+                    <form
+                        id="paymentForm"
+                        style={formStyle}
+                        onSubmit={handleSubmitPayment}
+                        className='d-flex justify-content-center'
+                    >
+                        <div  style={{ margin: '10px'}}>
+                            <label htmlFor="payment-photo">Add payment receipt</label>
+                            <input
+                                id="payment-photo"
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                style={inputStyle}
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            style={buttonStyle('#007bff')}
+                        >
+                            Submit Payment
+                        </button>
+                    </form>
                 </div>
-            </div>
+            )}
         </div>
     );
+};
+
+const buttonStyle = (bgColor: string) => ({
+    padding: '5px',
+    margin: '5px',
+    borderRadius: '10px',
+    backgroundColor: bgColor,
+    color: 'white',
+    border: 'none',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+});
+
+const formStyle = {
+    display: 'none',
+    opacity: '0',
+    transition: 'opacity 0.3s ease',
+    padding: '10px',
+    borderRadius: '5px',
+    backgroundColor: '#f0f0f0',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+    marginTop: '10px',
+    
+};
+
+const inputStyle = {
+    width: '100%',
+    padding: '8px',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    boxSizing: 'border-box',
+    
+   
 };
 
 export default CartPopup;

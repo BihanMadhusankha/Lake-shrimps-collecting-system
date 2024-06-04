@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button, Card, Form, Input, Typography } from 'antd';
@@ -32,6 +32,7 @@ const Login: React.FC = () => {
 
       if (response.data.status === 'success') {
         localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('id', response.data.user._id);
         setToken(response.data.accessToken);
         setUser(response.data.user); // Set the user data in the context
         toast.success('Login successful');

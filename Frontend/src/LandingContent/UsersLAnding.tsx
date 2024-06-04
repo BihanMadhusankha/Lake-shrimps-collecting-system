@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import landingImg from '../assets/landing.jpg';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import '../CSS/navCSS.css'
 import Aos from 'aos'; // Animation library
 import 'aos/dist/aos.css';
 
-const Card = ({ title, linkTo, image }) => {
+interface CardProps {
+  title: string;
+  linkTo: string;
+  image?: string;
+}
+
+const Card: React.FC<CardProps> = ({ title, linkTo, image }) => {
   return (
     <div className="card m-2 text-center">
-      {image && <img src={image} alt={title} className="card-img-top" />}
+      {image && <img src={image} alt={title} className="card-img-top" style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'cover' }} />}
       <div className="card-body">
         <Link to={linkTo} className="card-title">{title}</Link>
       </div>
@@ -18,7 +23,13 @@ const Card = ({ title, linkTo, image }) => {
   );
 };
 
-const ShrimpCategory = ({ title, description, animation }) => {
+interface ShrimpCategoryProps {
+  title: string;
+  description: string;
+  animation: string;
+}
+
+const ShrimpCategory: React.FC<ShrimpCategoryProps> = ({ title, description, animation }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => setIsHovered(true);
@@ -37,17 +48,19 @@ const ShrimpCategory = ({ title, description, animation }) => {
   );
 };
 
-export default function UsersLAnding() {
-  const titles = [
-    { title: 'Sellers', linkTo: '/SSABS/user/userhome/selerPage' },
-    { title: 'Vehicale Owners', linkTo: '/SSABS/user/userhome/vehicaleowner' },
-    { title: 'Content Creators', linkTo: '/SSABS/user/userhome/con.creaters' },
+const UsersLanding: React.FC = () => {
+  useEffect(() => {
+    Aos.init();
+  }, []);
 
+  const titles = [
+    { title: 'Sellers', linkTo: '/SSABS/selerPage' },
+    { title: 'Content Creators', linkTo: '/SSABS/user/userhome/con.creaters' },
   ];
 
-  const aboutCompany = `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec diam euismod, porta lacus at, faucibus orci. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget a libero. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Donec id elit non mi porta gravida at eget a libero.
-  `;
+  const aboutShrimps = `At Shrimp Haven, we are passionate about bringing the best shrimp to the market. Our mission is to connect shrimp lovers and industry professionals with top-quality shrimp, sourced responsibly and delivered with care. Whether you're a buyer looking for the freshest shrimp or a seller aiming to reach a broader audience, Shrimp Haven is your trusted partner in the shrimp industry.`;
+
+  const ourStory = `Shrimp Haven was founded with a simple idea: to create a seamless, reliable platform for buying and selling shrimp. Recognizing the challenges faced by both buyers and sellers in the shrimp market, we set out to bridge the gap with a user-friendly, secure, and efficient marketplace. Our team is comprised of seafood enthusiasts, industry experts, and technology professionals dedicated to enhancing your shrimp buying and selling experience.`;
 
   const shrimpCategories = [
     {
@@ -72,13 +85,7 @@ export default function UsersLAnding() {
     },
   ];
 
-  // Initialize animation library on component mount
-  useEffect(() => {
-    Aos.init();
-  }, []);
-
   return (
-
     <div className="shrimp-market-landing kerala-theme">
       {/* Hero section with carousel or video */}
       <section className="hero">
@@ -95,46 +102,40 @@ export default function UsersLAnding() {
       <div className='m-4 d-flex flex-row ' data-aos="fade-right">
         <div className='col-6'>
           <section className="about-company">
-            <h2>About Shrimps</h2>
-            <p className=' opacity-0.7'>{aboutCompany}</p>
-            <p className=' opacity-0.7'>{aboutCompany}</p>
+            <h1>About Shrimps</h1>
+            <h4>Welcome to Shrimp Haven</h4>
+            <p className=' opacity-0.7'>{aboutShrimps}</p>
+
+            <h4>Our Story</h4>
+            <p className=' opacity-0.7'>{ourStory}</p>
           </section>
         </div>
 
         <div className='col-6  ' data-aos="fade-left">
           <img className='w-100' src={landingImg} alt="About" />
         </div>
-
-
       </div>
-      <div className='m-4 d-flex flex-row ' data-aos="fade-right">
 
-      <div className='col-6  ' data-aos="fade-left">
+      <div className='m-4 d-flex flex-row ' data-aos="fade-right">
+        <div className='col-6  ' data-aos="fade-left">
           <img className='w-100' src={landingImg} alt="About" />
         </div>
-        <div className='col-6'>
-          <section className="about-company">
+        <div className='col-6 '>
+          <section className="about-company ">
             <Link to={'/SSABS/user/daylyproducts'}>
-            <div className='card'>
-            <h2>Today Products</h2>
-
-            </div>
+              <div className='card w-100 '>
+                <h2>Today Products</h2>
+              </div>
             </Link>
-           
-            
           </section>
         </div>
-
-       
-
-
       </div>
 
       <section className="user-categories m-4 ">
-        <h2 >Who is the person you want ?</h2>
-        <div className="mt-3 d-flex flex-row justify-content-between mt-2" data-aos="fade-up">
-          {titles.map((item) => (
-            <Card key={item.title} title={item.title} linkTo={item.linkTo} />
+        <h2 className=' m-3' >Who is the person you want ?</h2>
+        <div className="mt-3 d-flex flex-row justify-content-center mt-2" data-aos="fade-up">
+          {titles.map((item, index) => (
+            <Card key={index} title={item.title} linkTo={item.linkTo} />
           ))}
         </div>
       </section>
@@ -143,16 +144,14 @@ export default function UsersLAnding() {
         <h2 className='m-4 d-flex justify-content-center '>Explore Shrimp Categories</h2>
         <div className="row  " data-aos="zoom-in">
           <div className=' d-flex flex-row justify-content-center'>
-            {shrimpCategories.map((category) => (
-              <ShrimpCategory key={category.title} {...category} />
+            {shrimpCategories.map((category, index) => (
+              <ShrimpCategory key={index} {...category} />
             ))}
           </div>
-
         </div>
       </section>
-
-
-
     </div>
-  )
+  );
 }
+
+export default UsersLanding;

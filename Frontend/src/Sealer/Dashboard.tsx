@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import EditProductModal from './EditProductModal'; // Import the EditProductModal component
 import SealerNav from './sealerNav';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 interface Product {
   _id: string;
   name: string;
   price: number;
   description: string;
+  totalHarvest: number;
   dateAdded: string; // Assuming dateAdded is part of the product model
 }
 
@@ -74,88 +77,132 @@ const Dashboard: React.FC = () => {
     ? products.filter(product => product.dateAdded.startsWith(selectedDate))
     : products;
 
+  const getMaxDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
+
+  const getMinDate = () => {
+    const today = new Date();
+    const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
+    return lastMonth.toISOString().split('T')[0];
+  };
+
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    doc.autoTable({
+      head: [['Name', 'Price', 'Harvest', 'Description']],
+      body: filteredProducts.map(product => [product.name, product.price, product.totalHarvest, product.description]),
+    });
+    doc.save('products.pdf');
+  };
+
   return (
     <div>
-      <SealerNav/>
+      <SealerNav />
       <div style={{ padding: '20px' }}>
-      <h2>Dashboard</h2>
-      <div style={{ marginBottom: '20px' }}>
-        <label>Select Date: </label>
-        <input
-          type="date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-          style={{
-            padding: '8px',
-            borderRadius: '4px',
-            border: '1px solid #ddd',
-            marginLeft: '10px',
-          }}
-        />
-      </div>
-      <table style={{ borderCollapse: 'collapse', width: '100%', animation: 'fadeIn 1s ease-in-out' }}>
-        <thead>
-          <tr>
-            <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Name</th>
-            <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Price</th>
-            <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Description</th>
-            <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredProducts.map(product => (
-            <tr key={product._id} style={{ animation: 'fadeIn 1s ease-in-out' }}>
-              <td style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>{product.name}</td>
-              <td style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>{product.price}</td>
-              <td style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>{product.description}</td>
-              <td style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>
-                <button
-                  onClick={() => handleEdit(product)}
-                  style={{
-                    marginRight: '8px',
-                    padding: '6px 12px',
-                    backgroundColor: '#007bff',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.3s',
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#0056b3')}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#007bff')}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(product._id)}
-                  style={{
-                    marginRight: '8px',
-                    padding: '6px 12px',
-                    backgroundColor: '#dc3545',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.3s',
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#c82333')}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#dc3545')}
-                >
-                  Delete
-                </button>
-              </td>
+        <h2 className='d-flex justify-content-center mt-4'>Add to all products</h2>
+        <div className='d-flex justify-content-between' style={{ marginBottom: '20px' }}>
+          <div>
+            <label className=' m-4'>Select Date: </label>
+            <input
+              type="date"
+              value={selectedDate}
+              min={getMinDate()}
+              max={getMaxDate()}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              style={{
+                padding: '8px',
+                borderRadius: '4px',
+                border: '1px solid #ddd',
+                marginLeft: '10px',
+              }}
+            />
+          </div>
+
+
+          <button
+            onClick={handleDownloadPDF}
+            style={{
+              marginBottom: '20px',
+              padding: '6px 12px',
+              backgroundColor: '#28a',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              transition: 'background-color 0.3s',
+            }}
+          >
+            Download PDF
+          </button>
+        </div>
+
+        <table className='m-3' style={{ borderCollapse: 'collapse', width: '100%', animation: 'fadeIn 1s ease-in-out' }}>
+          <thead>
+            <tr>
+              <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Shrimps type</th>
+              <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Unite price(Rs)</th>
+              <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Total harvest(Kg)</th>
+              <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Description</th>
+              <th style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {isModalOpen && selectedProduct && (
-        <EditProductModal
-          product={selectedProduct}
-          onClose={() => setIsModalOpen(false)}
-          onSave={handleSave}
-        />
-      )}
-    </div>
+          </thead>
+          <tbody>
+            {filteredProducts.map(product => (
+              <tr key={product._id} style={{ animation: 'fadeIn 1s ease-in-out' }}>
+                <td style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>{product.name}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>{product.price}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>{product.totalHarvest}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>{product.description}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>
+                  <button
+                    onClick={() => handleEdit(product)}
+                    style={{
+                      marginRight: '8px',
+                      padding: '6px 12px',
+                      backgroundColor: '#007bff',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      transition: 'background-color 0.3s',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#0056b3')}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#007bff')}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(product._id)}
+                    style={{
+                      marginRight: '8px',
+                      padding: '6px 12px',
+                      backgroundColor: '#dc3545',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      transition: 'background-color 0.3s',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#c82333')}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#dc3545')}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {isModalOpen && selectedProduct && (
+          <EditProductModal
+            product={selectedProduct}
+            onClose={() => setIsModalOpen(false)}
+            onSave={handleSave}
+          />
+        )}
+      </div>
     </div>
   );
 };
@@ -171,3 +218,4 @@ style.innerHTML = `
 document.head.appendChild(style);
 
 export default Dashboard;
+

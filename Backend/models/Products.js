@@ -13,6 +13,10 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  totalHarvest: {
+    type: Number,
+    required: true,
+  },
   dateAdded: {
     type: Date,
     default: Date.now,

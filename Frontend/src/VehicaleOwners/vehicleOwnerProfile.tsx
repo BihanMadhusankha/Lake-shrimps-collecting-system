@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
-import SelerNav from './sealerNav'
+import VehicleOwnerNav from './vehicleNav'; // Assuming you have a component named VehicleOwnerNav
 
+interface User {
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string;
+}
 
-const SellerProfile: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
+const VehicleOwnerProfile: React.FC = () => {
+  const [user, setUser] = useState<User | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [editedUser, setEditedUser] = useState<any>({});
+  const [editedUser, setEditedUser] = useState<User | any>({});
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -18,7 +24,7 @@ const SellerProfile: React.FC = () => {
           return;
         }
 
-        const response = await axios.get('http://localhost:5001/SSABS/profile', {
+        const response = await axios.get<User>('http://localhost:5001/SSABS/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -60,15 +66,14 @@ const SellerProfile: React.FC = () => {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEditedUser({ ...editedUser, [name]: value });
   };
 
   return (
     <div>
-      <SelerNav />
-
+      <VehicleOwnerNav />
 
       <div style={{ textAlign: 'center', margin: '50px' }}>
         <h1 style={{ color: '#333', fontSize: '32px', marginBottom: '20px' }}>Profile</h1>
@@ -140,4 +145,4 @@ const SellerProfile: React.FC = () => {
   );
 };
 
-export default SellerProfile;
+export default VehicleOwnerProfile;

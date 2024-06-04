@@ -73,11 +73,11 @@ const VehicleOwnerPage: React.FC = () => {
   return (
     <div>
       <UserNavigation />
-      <h1>Vehicle Owners</h1>
-      <div className="container bg-black rounded-5 p-5 mt-lg-5">
+      <h1 className='d-flex justify-content-center mt-4'>Vehicle Owners</h1>
+      <div className="container  rounded-5 p-5 mt-lg-5">
         <div className="row justify-content-center">
           {vehicleOwners.map((owner: VehicleOwner) => (
-            <div className="card bg-gray m-lg-3 rounded-3 col-lg-3 d-flex flex-row" key={owner._id}>
+            <div className="card bg-gray m-lg-3 rounded-3 col-lg-3" key={owner._id}>
               <div className="card-body" onClick={() => handleOwnerSelect(owner)}>
                 <img src={registerImage} className="img-fluid" alt="..." />
                 <h5>First Name: {owner.firstname}</h5>
