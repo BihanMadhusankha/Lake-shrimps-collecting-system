@@ -14,15 +14,7 @@ import { Link } from 'react-router-dom';
 import Advertisment from '../page/classpost'
 
 
-// class post here 
-const images = [
-  { src: 'path/to/school_master.png', alt: 'School Master' },
-  { src: 'path/to/sltc.png', alt: 'SLTC' },
-  { src: 'path/to/oracle_academy.png', alt: 'Oracle Academy' },
-  { src: 'path/to/psd_academy.png', alt: 'PSD Academy' },
-  { src: 'path/to/smart_mind.png', alt: 'Smart Mind' },
-];
-// class post here 
+
 
 
 
