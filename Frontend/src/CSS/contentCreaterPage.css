@@ -9,19 +9,19 @@ body {
     text-align: center;
   }
   
-  .chome {
+  .heropageconten {
     background-color: #fff;
     padding: 50px 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
   }
   
-  .chero {
+  .bigtitle {
     max-width: 900px;
   }
   
-  .chero h1a {
+  .bigtitle h1a {
     font-size: 3.5em;
     font-family: inherit;
     padding-top: 160px;
@@ -248,6 +248,11 @@ body {
     background-color: #fff;
     padding: 50px 20px;
   }
+
+  .catagorypoost{
+    font-size: 42px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
   
   .course-list {
     display: flex;
@@ -256,13 +261,32 @@ body {
   }
   
   .course-card {
-    background-color: #e8eaf6;
+    background-color: #070707;
+    
     margin: 10px;
     padding: 20px;
     border-radius: 10px;
-    width: 200
-    px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    box-shadow: 0px 0px 10px rgba(13, 161, 224, 0.959);
+  }
+
+  .course-card:hover {
+    box-shadow: 0px 0px 10px rgb(245, 16, 8);
+
+  }
+
+  .topicwordscard{
+    font-size: 29px;
+    color: #1a1592;
+    
+    
+  }
+
+  .dipwordpost{
+    color: #09090a; /* Green color */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Shadow effect */
+  padding: 10px; /* Padding for the box */
+  background-color: #f0f0f0; /* Background color for the box */
   }
   
   .browse-more-courses {

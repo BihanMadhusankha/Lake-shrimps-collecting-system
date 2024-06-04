@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaUsers, FaCog, FaSignOutAlt  } from 'react-icons/fa'; // Import FaBars icon from react-icons
+import { FaUsers, FaCog, FaSignOutAlt } from 'react-icons/fa'; // Import FaUsers, FaCog, FaSignOutAlt icons from react-icons
 import '../CSS/dash.css'
 interface SidebarLink {
     path: string; // Path for the link

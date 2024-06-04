@@ -1,5 +1,6 @@
 import React from "react";
 import "./footer.css";
+import logoweb from '../assets/logoweb.png'
 
 const Footer = () => {
   return (
@@ -8,7 +9,7 @@ const Footer = () => {
         <div className='container'>
           <div  className='box bigest'>
             <div className='logo'>
-              <img src='https://files.eventleadershipinstitute.com/2018/12/ELI-Logo-Square-Black-1024x344.png' alt='' style={{ maxWidth: '100%' }} />
+              <img src =  {logoweb} alt='' style={{ maxWidth: '70%' }} />
               <h2>Do You Need Help With Anything?</h2>
               <p>Receive updates, hot deals, discounts sent straight to your inbox every month</p>
 

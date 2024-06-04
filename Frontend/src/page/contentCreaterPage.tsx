@@ -66,19 +66,16 @@ export default function ContentCreatorPage() {
         </style>
 
 
-        <div className="chome">
+        
 
-          <div className="heropageconten">
+          <div className="heropageconten ">
 
-            <div className="chero">
-              <h1 data-aos="fade-left"  >The best program to Enroll for exchange</h1>
+            <div className="bigtitle m-6">
+              <h1 className="bigtitle m-6" data-aos="fade-left"  >The best program to Enroll for exchange</h1>
               {/* <button className="btn btn-outline-primary">Find courses →</button> */}
-              <Link to={'/SSABS/user/userhome/Classpost'}> <button className="btn btn-outline-warning">Find INSTRUCTORS →</button></Link>
+              <Link to={'/SSABS/user/userhome/Contentadmindashboardss'}> <button className="btn btn-outline-warning">Find INSTRUCTORS →</button></Link>
 
-              {/* <div className="contact">
-            <span>Online Support</span>
-            <a href="tel:+0123456789">+012 (345) 6789</a>
-          </div> */}
+             
             </div>
 
             <div className='heroimg' >
@@ -104,15 +101,13 @@ export default function ContentCreatorPage() {
 
 
 
-          {/* <div className="intro-images3">
-                <img src={Contentimge4} alt="hero banner" />
-              </div> */}
+          
 
-        </div>
+        
 
         {/* class post here to play */}
         <Advertisment />
-        
+
         {/* class post here to play */}
 
 
@@ -194,22 +189,23 @@ export default function ContentCreatorPage() {
 
 
         <section className="courses">
-          <h2>Pick A Course To Get Started</h2>
+          <h2 className='catagorypoost'>categories to explore when learning about shrimp</h2>
           <div className="course-list">
             <div className="course-card">
-              <h3>Build Website</h3>
-              <p>$29.00</p>
+              <h3 className='topicwordscard'>Aquaculture and Farming Techniques:</h3>
+             
+              <p className='dipwordpost'>Explore the various methods and technologies used in shrimp farming, such as pond culture, recirculating aquaculture systems (RAS), and biofloc technology.</p>
             </div>
             <div className="course-card">
-              <h3>Build Website</h3>
-              <p>$29.00</p>
+              <h3 className='topicwordscard'>Shrimp Species and Biology:</h3>
+              <p className='dipwordpost'>Study the different species of shrimp commonly farmed around the world, such as Pacific white shrimp (Litopenaeus vannamei), black tiger shrimp (Penaeus monodon), and freshwater prawns (Macrobrachium spp.).</p>
             </div>
             <div className="course-card">
-              <h3>Build Website</h3>
-              <p>$29.00</p>
+              <h3 className='topicwordscard'>Market Trends and Economics:</h3>
+              <p className='dipwordpost'>Investigate global trends in shrimp consumption, production, and trade, including key importing and exporting countries. Analyze market dynamics, pricing factors, and demand drivers influencing the shrimp industry, such as consumer preferences, dietary trends, and health considerations.</p>
             </div>
           </div>
-          <button className="browse-more-courses">Browse more courses →</button>
+          {/* <button className="browse-more-courses">Browse more courses →</button> */}
         </section>
 
 
