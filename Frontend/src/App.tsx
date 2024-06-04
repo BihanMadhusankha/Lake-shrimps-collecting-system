@@ -14,7 +14,7 @@ import SelerDashboard from './Sealer/SealerDashboard';
 
 import DaylyProducts from './LandingContent/DaylyProducts'
 
-import Sealerhome from './Sealer/sealerhome';
+// import Sealerhome from './Sealer/sealerhome';
 import AddProductFormSealer from './Sealer/AddProductFormSealer';
 import SealerAllProducts from './Sealer/Dashboard'
 
@@ -36,7 +36,7 @@ import ShrimpColorMonitoring from './page/byColor'
 import UserProfile from './Users/profile';
 import ConCreatersPage from './page/contentCreaterPage';
 import Instructorspage from './page/InstructorsPage';
-import Instructorprofile from './page/InstructorProfile'; 
+import Instructorprofile from './page/InstructorProfile';
 import Instructorvideos from './page/Instructorvideos';
 import Instructoruploaddeatils from './page/InstructoruploadDeatils';
 import Instructorsingup from './page/InstructorSingup';
@@ -80,9 +80,7 @@ function App() {
       offset: 100,
     });
 
-    // Function to retrieve the seller ID after login
-  
-    
+
   }, []);
 
 
@@ -107,77 +105,67 @@ function App() {
 
 
         {/* users home pages */}
-        <Route path="/SSABS/user/userhome" element={<UserHome />} />
-        <Route path="/SSABS/seler/selerhome" element={<Sealerhome />} />
+        {/* <Route path="/SSABS/user/userhome" element={<UserHome />} /> */}
+        {/* <Route path="/SSABS/seler/selerhome" element={<Sealerhome />} /> */}
+
+
         <Route path="/SSABS/user/daylyproducts" element={<DaylyProducts />} />
-
-
-
-
-
-
-
-
         <Route path="/SSABS/seler/products" element={<AddProductFormSealer />} />
         <Route path="/SSABS/seler/allpost" element={<SealerAllProducts />} />
-        <Route path="/SSABS/sellers/requests" element={<SellerRequestHistory   />} />
-
+        <Route path="/SSABS/sellers/requests" element={<SellerRequestHistory />} />
         <Route path="/SSABS/seler/profile" element={<SellerProfile />} />
-        
-       
+        <Route path='/SSABS/selerPage' element={<SelerPage />} />
+
+
+
+
         <Route path="/SSABS/vehicaleOwn/products" element={<VehicaleRegistration />} />
         <Route path="/SSABS/vehicaleOwn/allpost" element={<RegistedVehicale />} />
         <Route path="/user/book-vehicle/:vehicleId" element={<BookingForm />} />
-       
+        <Route path='/SSABS/vehicaleowner' element={<VehicaleOwnerPage />} />
+        <Route path='/SSABS/vehicle-owner' element={<VehicleListPage />} />
+        <Route path='/SSABS/vehicaleOwn/profile' element={<VehicleOwnerProfile />} />
+
 
 
 
         <Route path="/SSABS/admin/allusers" element={<AdminUsers />} />
-        <Route path='/SSABS/selerPage' element={<SelerPage />} />
 
 
-        <Route path='/SSABS/vehicaleowner' element={<VehicaleOwnerPage />} />
-        <Route path='/SSABS/vehicle-owner' element={<VehicleListPage />} />
-        <Route path='/SSABS/vehicaleOwn/profile' element={<VehicleOwnerProfile />} />  
 
-        <Route path='/SSABS/admin/profile' element={<AdminProfile />} />  
+
+        <Route path='/SSABS/admin/profile' element={<AdminProfile />} />
 
         {/* <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} /> */}
         <Route path='/SSABS/user/userhome/profile' element={<UserProfile />} />
         <Route path='/SSABS/user/userhome/byColor' element={<ShrimpColorMonitoring />} />
-          <Route path='/SSABS/user/userhome/environment' element={<EnvironmentPage/>}/>
-          <Route path='/SSABS/user/userhome/details' element={<DetailsPage/>}/>
-          <Route path='/SSABS/user/userhome/harvest' element={<HarvestPage/>}/>
-          <Route path='/SSABS/user/userhome/history' element={<HistoryPage/>}/>
-          <Route path='/SSABS/user/userhome/places' element={<PlacesPage/>}/>
-          <Route path='/SSABS/user/userhome/VehicaleDetails' element={<VehicaleDetails/>}/>
-          {/* <Route path='/SSABS/user/userhome/VehicleList' element={<VehicleList/>}/> */}
-          <Route path='/SSABS/user/userhome/VehicaleUserForm' element={<VehicaleUserForm/>}/>
-          <Route path='/SSABS/user/userhome/RegForm' element={<RegForm/>}/>
+        <Route path='/SSABS/user/userhome/environment' element={<EnvironmentPage />} />
+        <Route path='/SSABS/user/userhome/details' element={<DetailsPage />} />
+        <Route path='/SSABS/user/userhome/harvest' element={<HarvestPage />} />
+        <Route path='/SSABS/user/userhome/history' element={<HistoryPage />} />
+        <Route path='/SSABS/user/userhome/places' element={<PlacesPage />} />
+        <Route path='/SSABS/user/userhome/VehicaleDetails' element={<VehicaleDetails />} />
+        {/* <Route path='/SSABS/user/userhome/VehicleList' element={<VehicleList/>}/> */}
+        <Route path='/SSABS/user/userhome/VehicaleUserForm' element={<VehicaleUserForm />} />
+        <Route path='/SSABS/user/userhome/RegForm' element={<RegForm />} />
       </Routes>
-        <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/SSABS/user/signup/" element={<Signup />} />
-          <Route path="/SSABS/user/login" element={<Login />} />
-          <Route path="/SSABS/admin/dashboard" element={<Dashboard />} />
-          <Route path="/SSABS/admin/adminhome" element={<AdminHome />} />
-          <Route path="/SSABS/user/userhome" element={<UserHome />} />
-          <Route path='/SSABS/user/userhome/selerPage' element={<SelerPage/>}/>
-          <Route path='/SSABS/user/userhome/vehicaleowner' element={<VehicaleOwnerPage/>}/>
-          <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage/>}/>
-          <Route path='/SSABS/user/userhome/FindINSTRUCTORS' element={<Instructorspage/>}/>
-          <Route path='/SSABS/user/userhome/courses' element={<Instructorprofile/>}/>
-          <Route path='/SSABS/user/userhome/video' element={<Instructorvideos/>}/>
-          <Route path='/SSABS/user/userhome/uploadfile' element={<Instructoruploaddeatils/>}/>
-          <Route path='/SSABS/user/userhome/Instructorsingup' element={<Instructorsingup/>}/>
-          <Route path='/SSABS/user/userhome/Instructorlogin' element={<Instructorlogin/>}/>
-          <Route path='/SSABS/user/userhome/Classpost' element={<Classpost/>}/>
-         
+      <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
+      <Routes>
+        
+        {/* <Route path='/SSABS/user/userhome/selerPage' element={<SelerPage />} /> */}
+        {/* <Route path='/SSABS/user/userhome/vehicaleowner' element={<VehicaleOwnerPage />} /> */}
+        <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} />
+        <Route path='/SSABS/user/userhome/FindINSTRUCTORS' element={<Instructorspage />} />
+        <Route path='/SSABS/user/userhome/courses' element={<Instructorprofile />} />
+        <Route path='/SSABS/user/userhome/video' element={<Instructorvideos />} />
+        <Route path='/SSABS/user/userhome/uploadfile' element={<Instructoruploaddeatils />} />
+        <Route path='/SSABS/user/userhome/Instructorsingup' element={<Instructorsingup />} />
+        <Route path='/SSABS/user/userhome/Instructorlogin' element={<Instructorlogin />} />
+        <Route path='/SSABS/user/userhome/Classpost' element={<Classpost />} />
 
-          <Route path='/SSABS/user/userhome/profile' element={<ProfilePage/>}/>
+        <Route path='/SSABS/user/userhome/profile' element={<ProfilePage />} />
 
-        </Routes> 
+      </Routes>
       <Footer />
     </div>
   );

@@ -26,7 +26,7 @@ const UserNavigation: React.FC = () => {
                             <Link to={'/SSABS/selerPage'}>
                                 <li><a href="#" className="nav-link px-2 text-white">Sellers</a></li>
                             </Link>
-                            <Link to={'/SSABS/con.creaters'}>
+                            <Link to={'/SSABS/user/userhome/con.creaters'}>
                                 <li><a href="#" className="nav-link px-2 text-white">Con.Creaters</a></li>
                             </Link>
                             <li>

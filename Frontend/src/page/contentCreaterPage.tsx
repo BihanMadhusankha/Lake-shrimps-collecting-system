@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import React from 'react'
 import UserNavigation from '../Navigations/userNav'
 import '../CSS/contentCreaterPage.css'
@@ -9,22 +7,11 @@ import slidimd1 from '../assets/slidimg1.jpeg';
 import slidimd2 from '../assets/slidimg2.jpg';
 import slidimd3 from '../assets/slidimg3.jpg';
 
-import Contentimge3 from '../assets/contentpgbgimg.png';
-import Contentimge4 from '../assets/number eka.png';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import Advertisment from '../page/classpost'
 
-
-// class post here 
-const images = [
-  { src: 'path/to/school_master.png', alt: 'School Master' },
-  { src: 'path/to/sltc.png', alt: 'SLTC' },
-  { src: 'path/to/oracle_academy.png', alt: 'Oracle Academy' },
-  { src: 'path/to/psd_academy.png', alt: 'PSD Academy' },
-  { src: 'path/to/smart_mind.png', alt: 'Smart Mind' },
-];
-// class post here 
 
 
 
@@ -270,4 +257,3 @@ export default function ContentCreatorPage() {
 
   );
 }
->>>>>>> 7c2d35d2dd904e6624d579b55454a4f077869c0e
