@@ -1,6 +1,6 @@
 import * as React from 'react';
 import '../CSS/Instrctovideo.css';
-import slidimd2 from '../assets/slidimg2.jpg';
+// import slidimd2 from '../assets/slidimg2.jpg';
 
 // Sample course data
 const courses = [

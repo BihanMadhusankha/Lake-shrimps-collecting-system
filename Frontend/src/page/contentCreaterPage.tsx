@@ -100,21 +100,10 @@ export default function ContentCreatorPage() {
           </div>
 
 
-
-          
-
-        
-
         {/* class post here to play */}
         <Advertisment />
 
         {/* class post here to play */}
-
-
-
-
-
-
 
 
 

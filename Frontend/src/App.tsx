@@ -142,7 +142,7 @@ function App() {
         <Route path='/SSABS/user/userhome/FindINSTRUCTORS' element={<Instructorspage />} />
         <Route path='/SSABS/user/userhome/courses' element={<Instructorprofile />} />
         <Route path='/SSABS/user/userhome/video' element={<Instructorvideos />} />
-        <Route path='/SSABS/user/userhome/uploadfile' element={<Instructoruploaddeatils />} />
+        <Route path='/SSABS/instructer/uploadfile' element={<Instructoruploaddeatils />} />
         <Route path='/SSABS/user/userhome/Instructorsingup' element={<Instructorsingup />} />
         <Route path='/SSABS/user/userhome/Instructorlogin' element={<Instructorlogin />} />
         <Route path='/SSABS/user/userhome/Classpost' element={<Classpost />} />

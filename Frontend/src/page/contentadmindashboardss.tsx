@@ -1,13 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+// import SelerNav from './sealerNav';
 
-const AdvancedDashboard: React.FC = () => {
+const ContentCreaterDashboard: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkTokenValidity = async () => {
+      try {
+        const response = await axios.get('http://localhost:5001/SSABS/seler/dashboard', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+        });
+
+        if (!response.data) {
+          setIsLoggedIn(false);
+          localStorage.removeItem('accessToken');
+        }
+
+        setIsLoggedIn(true);
+      } catch (error) {
+        console.error('Error checking token:', error);
+        setIsLoggedIn(false);
+        localStorage.removeItem('accessToken');
+      }
+    };
+
+    checkTokenValidity();
+  }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/SSABS/user/login');
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
     <div className="dashboard-container">
       <style>
         {`
-
-        /* src/AdvancedDashboard.css */
-
         body {
           font-family: 'Arial', sans-serif;
           margin: 0;
@@ -60,65 +94,22 @@ const AdvancedDashboard: React.FC = () => {
           box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        .middle-box .chart-placeholder {
-          background-color: #ecf0f1;
-          height: 150px;
-          margin-top: 10px;
-          border-radius: 8px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-size: 1.2em;
-          color: #95a5a6;
-        }
-
-        .bottom-box {
-          display: flex;
-          align-items: center;
-          padding: 10px;
-        }
-
-        .bottom-box img {
-          border-radius: 50%;
-          width: 50px;
-          height: 50px;
-          margin-right: 15px;
-        }
-
-        .bottom-box h3 {
-          margin: 0;
-          font-size: 1.1em;
-        }
-
-        .bottom-box p {
-          margin: 5px 0;
-          color: #7f8c8d;
-        }
-
-        .bottom-box p.role {
-          font-weight: bold;
-        }
-
-        .bottom-box p.email {
-          font-size: 0.9em;
-        }
-
-        .top-box:nth-child(1) {
+        .top-box-1 {
           background-color: #f9e79f;
           border-left: 5px solid #f1c40f;
         }
 
-        .top-box:nth-child(2) {
+        .top-box-2 {
           background-color: #aed6f1;
           border-left: 5px solid #3498db;
         }
 
-        .top-box:nth-child(3) {
+        .top-box-3 {
           background-color: #f5b7b1;
           border-left: 5px solid #e74c3c;
         }
 
-        .top-box:nth-child(4) {
+        .top-box-4 {
           background-color: #d5f5e3;
           border-left: 5px solid #2ecc71;
         }
@@ -173,17 +164,25 @@ const AdvancedDashboard: React.FC = () => {
             height: auto; /* Adjust height for smaller screens */
           }
         }
-
         `}
       </style>
+      {/* <SelerNav/> */}
       <header className="header">
-        <h1>Instructor Dashboard</h1>
+        <h1>Seller Dashboard</h1>
       </header>
       <div className="top-section">
-        <button className="top-box">Edit Profile</button>
-        <button className="top-box">Upload content</button>
-        <button className="top-box">Upload post</button>
-        <button className="top-box">History</button>
+        <Link to={'/SSABS/contentcreater/profile'}>
+          <button className="top-box top-box-1">Edit Profile</button>
+        </Link>
+        <Link to={'/SSABS/contentcreater/allpost'}>
+          <button className="top-box top-box-2">Uploaded Post</button>
+        </Link>
+        <Link to={'/SSABS/contentcreater/products'}>
+          <button className="top-box top-box-3">Upload Post</button>
+        </Link>
+        <Link to={'/SSABS/sellers/requests'}>
+          <button className="top-box top-box-4">History</button>
+        </Link>
       </div>
       <div className="middle-section">
         <div className="middle-box">
@@ -225,4 +224,4 @@ const AdvancedDashboard: React.FC = () => {
   );
 };
 
-export default AdvancedDashboard;
+export default ContentCreaterDashboard;
