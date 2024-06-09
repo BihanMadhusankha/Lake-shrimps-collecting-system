@@ -19,6 +19,7 @@ const Dashboard: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(''); // State for the selected date
+  const [searchQuery, setSearchQuery] = useState<string>(''); // State for search query
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -72,10 +73,12 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  // Filter products based on selected date
-  const filteredProducts = selectedDate
-    ? products.filter(product => product.dateAdded.startsWith(selectedDate))
-    : products;
+  // Filter products based on selected date and search query
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesDate = selectedDate ? product.dateAdded.startsWith(selectedDate) : true;
+    return matchesSearch && matchesDate;
+  });
 
   const getMaxDate = () => {
     const today = new Date();
@@ -119,8 +122,20 @@ const Dashboard: React.FC = () => {
               }}
             />
           </div>
-
-
+          <div>
+            <label className=' m-4'>Search Product: </label>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                padding: '8px',
+                borderRadius: '4px',
+                border: '1px solid #ddd',
+                marginLeft: '10px',
+              }}
+            />
+          </div>
           <button
             onClick={handleDownloadPDF}
             style={{
@@ -218,4 +233,3 @@ style.innerHTML = `
 document.head.appendChild(style);
 
 export default Dashboard;
-

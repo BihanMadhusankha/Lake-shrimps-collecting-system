@@ -33,6 +33,7 @@ const DaylyProducts: React.FC = () => {
     totalAmount: 0,
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [alert, setAlert] = useState<{ type: string, message: string } | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -125,7 +126,6 @@ const DaylyProducts: React.FC = () => {
         break;
     }
 
-
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: error,
@@ -189,8 +189,10 @@ const DaylyProducts: React.FC = () => {
       });
       console.log('Request sent successfully', response.data);
       setShowRequestForm(false);
+      setAlert({ type: 'success', message: 'Request sent successfully!' });
     } catch (error) {
       console.error('Error sending request:', error);
+      setAlert({ type: 'error', message: 'Error sending request. Please try again.' });
     }
   };
 
@@ -199,6 +201,11 @@ const DaylyProducts: React.FC = () => {
       <UserNavigation />
       <div style={styles.headerContainer}>
         <h1 style={styles.header}>Today's Products</h1>
+        {alert && (
+          <div style={alert.type === 'success' ? styles.successAlert : styles.errorAlert}>
+            {alert.message}
+          </div>
+        )}
         <div style={styles.productsContainer}>
           {todayProducts.length > 0 ? (
             todayProducts.map(product => (
@@ -455,8 +462,22 @@ const styles = {
     fontSize: '14px',
     marginTop: '5px',
   },
+  successAlert: {
+    backgroundColor: '#d4edda',
+    color: '#155724',
+    padding: '10px',
+    borderRadius: '5px',
+    marginBottom: '10px',
+    textAlign: 'center' as 'center',
+  },
+  errorAlert: {
+    backgroundColor: '#f8d7da',
+    color: '#721c24',
+    padding: '10px',
+    borderRadius: '5px',
+    marginBottom: '10px',
+    textAlign: 'center' as 'center',
+  },
 };
 
 export default DaylyProducts;
-
-

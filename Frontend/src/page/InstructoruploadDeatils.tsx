@@ -1,181 +1,166 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import axios from 'axios';
+import ContentNav from '../ContentCreater/contentNav';
+import { useNavigate } from 'react-router-dom';
 
+const categories = [
+  'Shrimp Biology',
+  'Shrimp Farming',
+  'Shrimp Recipes',
+  'Shrimp Conservation',
+  'Shrimp Diseases and Treatment',
+];
+
+const validationSchema = yup.object({
+  title: yup
+    .string()
+    .required('Title is required')
+    .matches(/^[A-Z][a-zA-Z\s]*$/, 'Title must start with a capital letter and contain only letters and spaces'),
+  category: yup
+    .string()
+    .oneOf(categories, 'Invalid category')
+    .required('Category is required'),
+  description: yup
+    .string()
+    .required('Description is required')
+    .max(100, 'Description must be at most 100 characters long')
+    .matches(/^[A-Z].*$/, 'Description must start with a capital letter'),
+  youtubeLink: yup
+    .string()
+    .url('Invalid YouTube link')
+    .required('YouTube link is required'),
+  thumbnail: yup
+    .mixed()
+    .required('Thumbnail is required')
+    .test('fileType', 'Unsupported File Format', (value) => {
+      return value && ['image/jpg', 'image/jpeg', 'image/png'].includes(value.type);
+    }),
+});
 
 const InstructorProfile: React.FC = () => {
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState<File | null>(null);
-  const [video, setVideo] = useState<File | null>(null);
-  const [youtubeLink, setYoutubeLink] = useState('');
+  const navigate = useNavigate();
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setImage(e.target.files[0]);
-    }
-  };
+  const formik = useFormik({
+    initialValues: {
+      title: '',
+      category: categories[0],
+      description: '',
+      youtubeLink: '',
+      thumbnail: null,
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      const formData = new FormData();
+      formData.append('title', values.title);
+      formData.append('category', values.category);
+      formData.append('description', values.description);
+      formData.append('youtubeLink', values.youtubeLink);
+      if (values.thumbnail) formData.append('thumbnail', values.thumbnail);
 
-  const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setVideo(e.target.files[0]);
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('category', category);
-    formData.append('description', description);
-    if (image) formData.append('image', image);
-    if (video) formData.append('video', video);
-    if (youtubeLink) formData.append('youtubeLink', youtubeLink);
-
-    try {
-      await axios.post('/api/courses', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      alert('Course uploaded successfully!');
-    } catch (error) {
-      console.error('Error uploading course', error);
-      alert('Failed to upload course.');
-    }
-  };
+      try {
+        await axios.post('http://localhost:5001/SSABS/instructer/uploadfile', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // Include the token in the request headers
+          },
+        });
+        alert('Course uploaded successfully!');
+        navigate('/SSABS/content_creater/dashboard');
+      } catch (error) {
+        console.error('Error uploading course', error);
+        alert('Failed to upload course.');
+      }
+    },
+  });
 
   return (
-    <div className="container">
-      <style>
-        {`
-        /* src/CSS/InstructorProfile.css */
+    <div>
+      <ContentNav />
+      <div style={{ width: '80%', margin: '0 auto', fontFamily: 'Arial, sans-serif', textAlign: 'center' }}>
+        <style>
+          {`
+          @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
+          
+          .fadeIn {
+            animation: fadeIn 2s;
+          }
 
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            font-family: Arial, sans-serif;
-            text-align: center;
+          @keyframes buttonHover {
+            from { background-color: #007bff; }
+            to { background-color: #0056b3; }
           }
-          
-          h2 {
-            margin-top: 20px;
-            margin-bottom: 20px;
-          }
-          
-          .upload-form {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-          
-          .upload-photo {
-            width: 200px;
-            height: 200px;
-            background-color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 20px;
-            position: relative;
-            overflow: hidden;
-          }
-          
-          .upload-photo .file-upload {
-            display: block;
-            width: 100%;
-            height: 100%;
-            background-color: #fff;
-            border: 2px solid #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-          }
-          
-          .upload-photo input {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-          }
-          
-          .form-fields {
-            display: flex;
-            flex-direction: column;
-          }
-          
-          .form-fields input,
-          .form-fields textarea {
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-          }
-          
-          textarea {
-            resize: none;
-            height: 100px;
-          }
-          
-          button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-          }
-          
+
           button:hover {
-            background-color: #0056b3;
+            animation: buttonHover 0.5s forwards;
           }
-          
-        
-        `}
-      </style>
-      <h2>Upload Your Content</h2>
-      <form onSubmit={handleSubmit} className="upload-form">
-        <div className="upload-photo">
-          <label className="file-upload">
-            <input type="file" accept="image/*" onChange={handleImageChange} />
-            Choose Image
-          </label>
-        </div>
-        <div className="form-fields">
-          <input
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          />
-          <textarea
-            placeholder="Description about your course"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <input
-            type="file"
-            accept="video/*"
-            onChange={handleVideoChange}
-          />
-          <input
-            type="text"
-            placeholder="YouTube Link (optional)"
-            value={youtubeLink}
-            onChange={(e) => setYoutubeLink(e.target.value)}
-          />
-          <button type="submit">Upload</button>
-        </div>
-      </form>
+          `}
+        </style>
+        <h2 style={{ marginTop: '20px', marginBottom: '20px' }} className="fadeIn">Upload Your Content</h2>
+        <form onSubmit={formik.handleSubmit} className="upload-form" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div className="form-fields" style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+            <label style={{ marginBottom: '5px' }}>Title</label>
+            <input
+              type="text"
+              placeholder="Title"
+              {...formik.getFieldProps('title')}
+              style={{ marginBottom: '10px', padding: '10px', border: '1px solid #ccc', borderRadius: '4px' }}
+            />
+            {formik.touched.title && formik.errors.title ? <div style={{ color: 'red', marginBottom: '10px' }}>{formik.errors.title}</div> : null}
+            
+            <label style={{ marginBottom: '5px' }}>Category</label>
+            <select
+              {...formik.getFieldProps('category')}
+              style={{ marginBottom: '10px', padding: '10px', border: '1px solid #ccc', borderRadius: '4px' }}
+            >
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+            {formik.touched.category && formik.errors.category ? <div style={{ color: 'red', marginBottom: '10px' }}>{formik.errors.category}</div> : null}
+            
+            <label style={{ marginBottom: '5px' }}>Description</label>
+            <textarea
+              placeholder="Description about your course"
+              {...formik.getFieldProps('description')}
+              style={{ marginBottom: '10px', padding: '10px', border: '1px solid #ccc', borderRadius: '4px', resize: 'none', height: '100px' }}
+            />
+            {formik.touched.description && formik.errors.description ? <div style={{ color: 'red', marginBottom: '10px' }}>{formik.errors.description}</div> : null}
+            
+            <label style={{ marginBottom: '5px' }}>Upload Thumbnail</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(event) => {
+                if (event.target.files && event.target.files.length > 0) {
+                  formik.setFieldValue('thumbnail', event.target.files[0]);
+                }
+              }}
+              style={{ marginBottom: '10px' }}
+            />
+            {formik.touched.thumbnail && formik.errors.thumbnail ? <div style={{ color: 'red', marginBottom: '10px' }}>{formik.errors.thumbnail}</div> : null}
+            
+            <label style={{ marginBottom: '5px' }}>YouTube Link</label>
+            <input
+              type="text"
+              placeholder="YouTube Link"
+              {...formik.getFieldProps('youtubeLink')}
+              style={{ marginBottom: '10px', padding: '10px', border: '1px solid #ccc', borderRadius: '4px' }}
+            />
+            {formik.touched.youtubeLink && formik.errors.youtubeLink ? <div style={{ color: 'red', marginBottom: '10px' }}>{formik.errors.youtubeLink}</div> : null}
+            
+            <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '4px' }}>
+              Upload
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

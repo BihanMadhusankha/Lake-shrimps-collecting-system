@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Flex } from 'antd';
 
 interface Message {
     _id: string;
@@ -20,6 +19,8 @@ const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose, userId }) => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [paymentReceipt, setPaymentReceipt] = useState<File | null>(null);
     const [selectedSellerId, setSelectedSellerId] = useState<string | null>(null);
+    const [alertMessage, setAlertMessage] = useState<string | null>(null);
+    const [alertType, setAlertType] = useState<'success' | 'error' | null>(null);
 
     useEffect(() => {
         if (isOpen) {
@@ -40,6 +41,8 @@ const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose, userId }) => {
             setMessages(response.data);
         } catch (error) {
             console.error('Error fetching messages:', error);
+            setAlertMessage('Error fetching messages');
+            setAlertType('error');
         }
     };
 
@@ -54,8 +57,12 @@ const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose, userId }) => {
                 }
             );
             setMessages(messages.filter((message) => message._id !== messageId));
+            setAlertMessage('Message deleted successfully');
+            setAlertType('success');
         } catch (error) {
             console.error('Error deleting message:', error);
+            setAlertMessage('Error deleting message');
+            setAlertType('error');
         }
     };
 
@@ -73,12 +80,12 @@ const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose, userId }) => {
 
     const handleSubmitPayment = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        
+
         try {
             if (!paymentReceipt) {
                 throw new Error('No payment receipt selected');
             }
-            
+
             if (!selectedSellerId) {
                 throw new Error('Seller ID is not selected');
             }
@@ -86,8 +93,6 @@ const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose, userId }) => {
             const formData = new FormData();
             formData.append('file', paymentReceipt);
             formData.append('sellerId', selectedSellerId);
-
-            console.log(formData.get('sellerId')); // Debug log to check if sellerId is appended
 
             const response = await axios.post(
                 'http://localhost:5001/SSABS/upload/paymentReceipt',
@@ -101,9 +106,12 @@ const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose, userId }) => {
             );
 
             console.log('File uploaded successfully:', response.data);
-
+            setAlertMessage('Payment receipt uploaded successfully');
+            setAlertType('success');
         } catch (error) {
             console.error('Error uploading payment receipt:', error);
+            setAlertMessage('Error uploading payment receipt');
+            setAlertType('error');
         }
     };
 
@@ -118,10 +126,15 @@ const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose, userId }) => {
         <div>
             {isOpen && (
                 <div>
-                    <h1 className='d-flex justify-content-center'>Messages</h1>
-                    <ul >
+                    <h1 className="d-flex justify-content-center">Messages</h1>
+                    {alertMessage && (
+                        <div style={alertStyle(alertType)}>
+                            {alertMessage}
+                        </div>
+                    )}
+                    <ul>
                         {messages.map((message) => (
-                            <li className='d-flex fle justify-content-center' key={message._id}>
+                            <li className="d-flex justify-content-center" key={message._id}>
                                 {message.message}
                                 <button
                                     style={buttonStyle('#007bff')}
@@ -148,9 +161,9 @@ const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose, userId }) => {
                         id="paymentForm"
                         style={formStyle}
                         onSubmit={handleSubmitPayment}
-                        className='d-flex justify-content-center'
+                        className="d-flex justify-content-center"
                     >
-                        <div  style={{ margin: '10px'}}>
+                        <div style={{ margin: '10px' }}>
                             <label htmlFor="payment-photo">Add payment receipt</label>
                             <input
                                 id="payment-photo"
@@ -193,7 +206,6 @@ const formStyle = {
     backgroundColor: '#f0f0f0',
     boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
     marginTop: '10px',
-    
 };
 
 const inputStyle = {
@@ -202,8 +214,15 @@ const inputStyle = {
     borderRadius: '5px',
     border: '1px solid #ccc',
     boxSizing: 'border-box',
-    
-   
 };
+
+const alertStyle = (type: 'success' | 'error' | null) => ({
+    padding: '10px',
+    margin: '10px 0',
+    borderRadius: '5px',
+    color: type === 'success' ? 'green' : 'red',
+    backgroundColor: type === 'success' ? '#d4edda' : '#f8d7da',
+    border: type === 'success' ? '1px solid #c3e6cb' : '1px solid #f5c6cb',
+});
 
 export default CartPopup;

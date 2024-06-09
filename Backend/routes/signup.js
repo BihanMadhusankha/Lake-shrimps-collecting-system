@@ -9,7 +9,8 @@ const { registerUser, loginUser, getUserProfile,
         vehicale_owners_vehicle,
         booking,PostRequest,getRequestHistory,requestAccept
         ,DeleteRequest,viewMessage,deleteMessage
-    ,uploadPaymentReceipt,getUploadPhoto} = require('../contollers/userController');
+    ,uploadPaymentReceipt,getUploadPhoto,UploadVideoContent,getUploadedPost,
+    deleteContent,updateCourse} = require('../contollers/userController');
 const validateToken = require('../midleware/validationTokenHandler');
 const upload = require('../midleware/uploadMiddleware');
 
@@ -45,8 +46,8 @@ router.get('/vehicaleOwn/:ownerId', vehicale_owners_vehicle);
 router.post('/user/book-vehicle',validateToken,booking);
 
 
-router.post('/user/forgetpassword',validateToken,ForgetPassword);
-router.post('/user/resetPassword',validateToken,ResetPassword);
+router.post('/user/forgetpassword',ForgetPassword);
+router.post('/user/resetPassword',ResetPassword);
 
 router.post('/request',validateToken,PostRequest);
 router.get('/seller/requests',validateToken,getRequestHistory);
@@ -60,6 +61,12 @@ router.delete('/message/delete/:messageId', validateToken, deleteMessage);
 router.post('/upload/paymentReceipt',validateToken, upload.single('file'), uploadPaymentReceipt);
 
 router.get('/allInstructer', InstructerPage);
+
+
+router.post('/instructer/uploadfile',validateToken, upload.single('thumbnail'), UploadVideoContent);
+router.get('/contentcreater/uploadedpost',validateToken, getUploadedPost);
+router.delete('/contentcreater/uploadedpost/:courseId',validateToken, deleteContent);
+router.put('/contentcreater/uploadedpost/:updatingCourseId',validateToken, updateCourse);
 
 
 

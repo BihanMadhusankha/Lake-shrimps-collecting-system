@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Contentnav from './contentNav'
 
 const ContentCreaterDashboard: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -39,6 +40,7 @@ const ContentCreaterDashboard: React.FC = () => {
 
   return (
     <div>
+      <Contentnav/>
 
     <div className="dashboard-container">
       
@@ -173,10 +175,10 @@ const ContentCreaterDashboard: React.FC = () => {
         <h1>Content Creater Dashboard</h1>
       </header>
       <div className="top-section">
-        <Link to={'/SSABS/vehicaleOwn/profile'}>
+        <Link to={'/SSABS/contentcreater/profile'}>
           <button className="top-box top-box-1">Edit Profile</button>
         </Link>
-        <Link to={'#'}>
+        <Link to={'/SSABS/contentcreater/uploadedpost'}>
           <button className="top-box top-box-2">Uploaded Content</button>
         </Link>
         <Link to={'/SSABS/instructer/uploadfile'}>

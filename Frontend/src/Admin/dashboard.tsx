@@ -17,6 +17,7 @@ const Dashboard: React.FC = () => {
   const navigationLinks: NavigationLink[] = [
     { path: '/SSABS/admin/allusers', label: 'Users' },
     { path: '/SSABS/admin/profile', label: 'Profile' },
+    { path: '/SSABS/admin/alltransaction', label: 'Transaction' },
 
   ];
   // Fetch data (replace with your actual API endpoint)
