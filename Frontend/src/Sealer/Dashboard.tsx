@@ -11,9 +11,8 @@ interface Product {
   price: number;
   description: string;
   totalHarvest: number;
-  dateAdded: string; // Assuming dateAdded is part of the product model
+  dateAdded: string;
 }
-
 const Dashboard: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -63,8 +62,8 @@ const Dashboard: React.FC = () => {
       const token = localStorage.getItem('accessToken');
       await axios.put(`http://localhost:5001/SSABS/seler/products/${updatedProduct._id}`, updatedProduct, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       setProducts(products.map(product => (product._id === updatedProduct._id ? updatedProduct : product)));
       setIsModalOpen(false);
@@ -212,10 +211,10 @@ const Dashboard: React.FC = () => {
         </table>
         {isModalOpen && selectedProduct && (
           <EditProductModal
-            product={selectedProduct}
-            onClose={() => setIsModalOpen(false)}
-            onSave={handleSave}
-          />
+          product={selectedProduct}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSave}
+        />
         )}
       </div>
     </div>

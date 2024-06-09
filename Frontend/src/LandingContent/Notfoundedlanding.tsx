@@ -7,7 +7,7 @@ import '../CSS/navCSS.css'
 import Aos from 'aos'; // Animation library
 import 'aos/dist/aos.css';
 
-const Card = ({ title, linkTo, image }) => {
+const Card = ({ title, linkTo, image }: { title: string; linkTo: string; image: string | undefined }) => {
   return (
     <div className="card m-2 text-center">
       {image && <img src={image} alt={title} className="card-img-top" />}
@@ -18,7 +18,7 @@ const Card = ({ title, linkTo, image }) => {
   );
 };
 
-const ShrimpCategory = ({ title, description, animation }) => {
+const ShrimpCategory = ({ title, description, animation }: { title: string; description: string; animation: string }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => setIsHovered(true);
@@ -112,7 +112,7 @@ export default function Notfoundedlanding() {
         <h2 >Who is the person you want ?</h2>
         <div className="mt-3 d-flex flex-row justify-content-between mt-2" data-aos="fade-up">
           {titles.map((item) => (
-            <Card key={item.title} title={item.title} linkTo={item.linkTo} />
+            <Card key={item.title} title={item.title} linkTo={item.linkTo} image={undefined} />
           ))}
         </div>
       </section>

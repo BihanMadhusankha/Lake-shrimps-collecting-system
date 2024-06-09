@@ -41,7 +41,6 @@ import Instructorprofile from './page/InstructorProfile';
 import Instructorvideos from './page/Instructorvideos';
 import Instructoruploaddeatils from './page/InstructoruploadDeatils';
 import Classpost from './page/classpost';
-
 import { Toaster } from 'react-hot-toast';
 import AOS from 'aos';
 import 'aos/dist/aos.js';

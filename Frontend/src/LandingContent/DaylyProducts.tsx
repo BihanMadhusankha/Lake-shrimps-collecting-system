@@ -313,14 +313,6 @@ const DaylyProducts: React.FC = () => {
 };
 
 const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    padding: '20px',
-    backgroundColor: '#f8f9fa',
-  },
   headerContainer: {
     width: '100%',
     marginTop: '20px',
@@ -333,7 +325,7 @@ const styles = {
   },
   productsContainer: {
     display: 'flex',
-    flexWrap: 'wrap',
+    flexWrap: 'wrap' ,
     justifyContent: 'center',
     marginTop: '40px',
     marginBottom: '40px',
@@ -468,7 +460,7 @@ const styles = {
     padding: '10px',
     borderRadius: '5px',
     marginBottom: '10px',
-    textAlign: 'center' as 'center',
+    textAlign: 'center' ,
   },
   errorAlert: {
     backgroundColor: '#f8d7da',
@@ -476,7 +468,7 @@ const styles = {
     padding: '10px',
     borderRadius: '5px',
     marginBottom: '10px',
-    textAlign: 'center' as 'center',
+    textAlign: 'center' 
   },
 };
 
