@@ -87,13 +87,16 @@ const AllTransactionsPage: React.FC = () => {
             deleteButtons.forEach(button => {
                 (button as HTMLElement).style.display = 'none';
             });
-
+    
             const canvas = await html2canvas(input);
             const imgData = canvas.toDataURL('image/png');
             const pdf = new jsPDF();
-            pdf.addImage(imgData, 'PNG', 0, 0);
+    
+            // Add the image to the PDF
+            pdf.addImage(imgData, 'PNG', 0, 0, 200, 100);
+    
             pdf.save('receipts.pdf');
-
+    
             deleteButtons.forEach(button => {
                 (button as HTMLElement).style.display = 'inline-block';
             });

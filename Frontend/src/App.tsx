@@ -40,8 +40,6 @@ import Instructorspage from './page/InstructorsPage';
 import Instructorprofile from './page/InstructorProfile';
 import Instructorvideos from './page/Instructorvideos';
 import Instructoruploaddeatils from './page/InstructoruploadDeatils';
-import Instructorsingup from './page/InstructorSingup';
-import Instructorlogin from './page/InstructorLogin';
 import Classpost from './page/classpost';
 
 import { Toaster } from 'react-hot-toast';
@@ -50,15 +48,8 @@ import 'aos/dist/aos.js';
 import 'aos/dist/aos.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import EnvironmentPage from './stock&category/environment';
-import DetailsPage from './stock&category/details';
-import HarvestPage from './stock&category/harvest';
-import HistoryPage from './stock&category/history';
-import PlacesPage from './stock&category/places';
-import VehicaleDetails from './delivery/VehicleDetails'
 // import VehicleList from './delivery/VehicleList'
-import VehicaleUserForm from './delivery/VehicaleUserForm'
-import RegForm from './delivery/RegForm'
+
 import NotFound from './page/Notfounded';
 import AdminUsers from './Admin/AdminUsers';
 import Forgetpassword from './page/forgetpassword'
@@ -127,14 +118,7 @@ function App() {
 
         <Route path='/SSABS/user/userhome/profile' element={<UserProfile />} />
         <Route path='/SSABS/user/userhome/byColor' element={<ShrimpColorMonitoring />} />
-        <Route path='/SSABS/user/userhome/environment' element={<EnvironmentPage />} />
-        <Route path='/SSABS/user/userhome/details' element={<DetailsPage />} />
-        <Route path='/SSABS/user/userhome/harvest' element={<HarvestPage />} />
-        <Route path='/SSABS/user/userhome/history' element={<HistoryPage />} />
-        <Route path='/SSABS/user/userhome/places' element={<PlacesPage />} />
-        <Route path='/SSABS/user/userhome/VehicaleDetails' element={<VehicaleDetails />} />
-        <Route path='/SSABS/user/userhome/VehicaleUserForm' element={<VehicaleUserForm />} />
-        <Route path='/SSABS/user/userhome/RegForm' element={<RegForm />} />
+       
       </Routes>
       <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
       <Routes>
@@ -145,8 +129,7 @@ function App() {
         <Route path='/SSABS/user/userhome/courses' element={<Instructorprofile />} />
         <Route path='/SSABS/user/userhome/video' element={<Instructorvideos />} />
         <Route path='/SSABS/instructer/uploadfile' element={<Instructoruploaddeatils />} />
-        <Route path='/SSABS/user/userhome/Instructorsingup' element={<Instructorsingup />} />
-        <Route path='/SSABS/user/userhome/Instructorlogin' element={<Instructorlogin />} />
+        
         <Route path='/SSABS/user/userhome/Classpost' element={<Classpost />} />
 
 

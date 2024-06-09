@@ -68,9 +68,4 @@ router.get('/contentcreater/uploadedpost',validateToken, getUploadedPost);
 router.delete('/contentcreater/uploadedpost/:courseId',validateToken, deleteContent);
 router.put('/contentcreater/uploadedpost/:updatingCourseId',validateToken, updateCourse);
 
-
-
-
-
-
 module.exports = router;

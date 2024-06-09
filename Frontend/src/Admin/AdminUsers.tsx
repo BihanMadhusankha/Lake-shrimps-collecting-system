@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import AdminNavigation from './AdminNAvigation';
-import { jsPDF } from 'jspdf';
+import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import axios from 'axios';
 import '../CSS/adminallusers.css';
 
 interface User {
@@ -25,8 +26,8 @@ export default function AdminUsers() {
       setError(null);
 
       try {
-        const response = await fetch('http://localhost:5001/SSABS/admin/dashboard');
-        const data: User[] = await response.json();
+        const response = await axios.get('http://localhost:5001/SSABS/admin/dashboard');
+        const data: User[] = response.data;
 
         setUsers(data);
       } catch (error) {
@@ -52,14 +53,12 @@ export default function AdminUsers() {
 
   const handleDeleteUser = async (userId: string) => {
     try {
-      const response = await fetch(`http://localhost:5001/SSABS/admin/dashboard/${userId}`, {
-        method: 'DELETE',
-      });
+      const response = await axios.delete(`http://localhost:5001/SSABS/admin/dashboard/${userId}`);
 
-      if (response.ok) {
+      if (response.status === 200) {
         setUsers(users.filter((user) => user._id !== userId));
       } else {
-        console.error('Error deleting user:', await response.text());
+        console.error('Error deleting user:', response.statusText);
       }
     } catch (error) {
       console.error('Error deleting user:', error);
@@ -69,23 +68,23 @@ export default function AdminUsers() {
   const generatePDF = () => {
     const doc = new jsPDF();
     doc.text('User Report', 20, 10);
-    doc.autoTable({
+    (doc as any).autoTable({
       head: [['First Name', 'Last Name', 'Role']],
       body: users.map(user => [user.firstname, user.lastname, user.role]),
     });
     doc.save('user_report.pdf');
   };
 
-  // Function to filter users based on search query
   const filteredUsers = users.filter(user =>
     user.firstname.toLowerCase().includes(searchQuery.toLowerCase()) ||
     user.lastname.toLowerCase().includes(searchQuery.toLowerCase()) ||
     user.role.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  
 
   return (
     <div className="dashboard d-flex flex-column">
-      <AdminNavigation setSearchQuery={setSearchQuery} />
+      <AdminNavigation  />
       <h2 className="d-flex justify-content-center m-3">All Users</h2>
 
       <button onClick={generatePDF} className="button generate-pdf col-2 m-3">
@@ -98,7 +97,7 @@ export default function AdminUsers() {
         <p className="error-message">{error}</p>
       ) : (
         <div>
-          <div className="search-container  col-5">
+          <div className="search-container col-5">
             <input
               type="text"
               placeholder="Search users..."
@@ -109,8 +108,6 @@ export default function AdminUsers() {
             />
             {showPopup && (
               <div className="search-popup">
-                {/* Your popup content here */}
-                {/* For example: */}
                 <p>Search results:</p>
                 <ul>
                   {filteredUsers.map((user) => (
@@ -152,7 +149,7 @@ export default function AdminUsers() {
               ))}
               {filteredUsers.length === 0 && (
                 <tr>
-                  <td colSpan="4" style={{ textAlign: 'center' }}>
+                  <td colSpan={4} style={{ textAlign: 'center' }}>
                     No users found.
                   </td>
                 </tr>
