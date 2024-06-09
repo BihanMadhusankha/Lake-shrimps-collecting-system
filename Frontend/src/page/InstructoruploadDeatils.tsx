@@ -34,9 +34,7 @@ const validationSchema = yup.object({
   thumbnail: yup
     .mixed()
     .required('Thumbnail is required')
-    .test('fileType', 'Unsupported File Format', (value) => {
-      return value && ['image/jpg', 'image/jpeg', 'image/png'].includes(value.type);
-    }),
+    
 });
 
 const InstructorProfile: React.FC = () => {
@@ -135,6 +133,8 @@ const InstructorProfile: React.FC = () => {
             
             <label style={{ marginBottom: '5px' }}>Upload Thumbnail</label>
             <input
+            placeholder="Upload Thumbnail"
+            {...formik.getFieldProps('thumbnail')}
               type="file"
               accept="image/*"
               onChange={(event) => {

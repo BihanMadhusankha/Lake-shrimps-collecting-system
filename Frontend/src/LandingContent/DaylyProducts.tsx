@@ -199,7 +199,7 @@ const DaylyProducts: React.FC = () => {
   return (
     <div >
       <UserNavigation />
-      <div style={styles.headerContainer}>
+      <div style={{ textAlign: 'left' }}> 
         <h1 style={styles.header}>Today's Products</h1>
         {alert && (
           <div style={alert.type === 'success' ? styles.successAlert : styles.errorAlert}>
