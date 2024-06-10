@@ -36,7 +36,7 @@ import ShrimpColorMonitoring from './page/byColor'
 import UserProfile from './Users/profile';
 import Contentcraterprofile from './ContentCreater/contentcraterprofile';
 import ConCreatersPage from './page/contentCreaterPage';
-import Instructorspage from './ContentCreater/InstructorsPage';
+import Instructorspage from './page/InstructorsPage';
 import Instructorprofile from './page/InstructorProfile';
 import Instructorvideos from './page/Instructorvideos';
 import Instructoruploaddeatils from './ContentCreater/InstructoruploadDeatils';
