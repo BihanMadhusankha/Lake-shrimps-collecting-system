@@ -9,7 +9,7 @@
     "routes": [
         {
             "src": "/home",
-            "destination": "/index.html"
+            "dest": "/index.html"
         }
     ]
   }
