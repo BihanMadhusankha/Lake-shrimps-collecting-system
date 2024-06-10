@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "src/index.html",
+        "src": "index.html",
         "use": "@vercel/static"
       }
     ],
@@ -13,7 +13,7 @@
       },
       {
         "source": "/(.*)",
-        "destination": "/src/index.html"
+        "destination": "index.html"
       }
     ]
   }
