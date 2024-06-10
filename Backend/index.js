@@ -9,10 +9,18 @@ connectDB();
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors({ origin: '*' }));
+
+const PORT = process.env.PORT || 5000;
+app.use(express.json());
+
+app.use(cors({ origin: '*' })); 
 
 app.use('/SSABS/', require('./routes/signup.js'));
 app.use('/SSABS/admin/', require('./routes/admin.js'));
+
+
 app.use(errorHandler);
 
-module.exports = app; // Export the app
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});

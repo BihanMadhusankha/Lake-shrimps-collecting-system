@@ -33,7 +33,11 @@ const errorHandler = (err, req, res, next) => {
             });
             break;
         case constants.SERVER_ERROR:
-            res.status(500).json({ message: 'Something went wrong!', error: err.message });;
+            res.status(500).json({
+                title: "Server Error",
+                message: err.message,
+                stackTrace: err.stack
+            });
             break;
     }
 }
