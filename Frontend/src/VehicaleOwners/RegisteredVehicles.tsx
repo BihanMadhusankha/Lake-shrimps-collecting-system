@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import jsPDF from 'jspdf';
+// import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import UpdateVehicleModal from './UpdateVehicleModal'; // Import the modal component
 import VehicleNav from './vehicleNav';
@@ -55,25 +55,25 @@ const RegisteredVehicles: React.FC = () => {
     }
   };
 
-  const handleDownloadPDF = () => {
-    const doc = new jsPDF();
-    const tableColumn = ["License Plate", "Vehicle Type", "Contact Number", "Additional Info"];
-    const tableRows = vehicles.map(vehicle => [
-      vehicle.licensePlate,
-      vehicle.vehicleType,
-      vehicle.contactNumber,
-      vehicle.additionalInfo,
-    ]);
+  // const handleDownloadPDF = () => {
+  //   const doc = new jsPDF();
+  //   const tableColumn = ["License Plate", "Vehicle Type", "Contact Number", "Additional Info"];
+  //   const tableRows = vehicles.map(vehicle => [
+  //     vehicle.licensePlate,
+  //     vehicle.vehicleType,
+  //     vehicle.contactNumber,
+  //     vehicle.additionalInfo,
+  //   ]);
 
-    doc.autoTable({
-      head: [tableColumn],
-      body: tableRows,
-      startY: 20,
-    });
+    // doc.autoTable({
+    //   head: [tableColumn],
+    //   body: tableRows,
+    //   startY: 20,
+    // });
 
-    doc.text("Registered Vehicles", 14, 15);
-    doc.save("registered_vehicles.pdf");
-  };
+  //   doc.text("Registered Vehicles", 14, 15);
+  //   doc.save("registered_vehicles.pdf");
+  // };
 
   const filteredVehicles = vehicles.filter(vehicle =>
     vehicle.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -94,7 +94,7 @@ const RegisteredVehicles: React.FC = () => {
           onChange={e => setSearchTerm(e.target.value)}
           style={{ marginBottom: '20px', padding: '5px' }}
         />
-        <button onClick={handleDownloadPDF} style={{ marginBottom: '20px', padding: '5px 10px', borderRadius: '5px', border: 'none', cursor: 'pointer', color: '#fff', backgroundColor: '#007bff' }}>Download PDF</button>
+        {/* <button onClick={handleDownloadPDF} style={{ marginBottom: '20px', padding: '5px 10px', borderRadius: '5px', border: 'none', cursor: 'pointer', color: '#fff', backgroundColor: '#007bff' }}>Download PDF</button> */}
         <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
           <thead>
             <tr>
@@ -124,7 +124,7 @@ const RegisteredVehicles: React.FC = () => {
             ))}
           </tbody>
         </table>
-        {selectedVehicle && <UpdateVehicleModal vehicle={selectedVehicle} />} {/* Display modal if a vehicle is selected */}
+        {selectedVehicle && <UpdateVehicleModal vehicle={selectedVehicle} closeModal={() => setSelectedVehicle(null)} />} {/* Display modal if a vehicle is selected */}
       </div>
     </div>
   );

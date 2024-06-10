@@ -208,7 +208,7 @@ const formStyle = {
     marginTop: '10px',
 };
 
-const inputStyle = {
+const inputStyle: React.CSSProperties = {
     width: '100%',
     padding: '8px',
     borderRadius: '5px',

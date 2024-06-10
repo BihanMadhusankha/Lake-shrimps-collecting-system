@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import EditProductModal from './EditProductModal'; // Import the EditProductModal component
 import SealerNav from './sealerNav';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+// import jsPDF from 'jspdf';
 
 interface Product {
   _id: string;
@@ -11,8 +10,10 @@ interface Product {
   price: number;
   description: string;
   totalHarvest: number;
-  dateAdded: string;
 }
+
+declare module 'jspdf-autotable';
+
 const Dashboard: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -75,8 +76,7 @@ const Dashboard: React.FC = () => {
   // Filter products based on selected date and search query
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesDate = selectedDate ? product.dateAdded.startsWith(selectedDate) : true;
-    return matchesSearch && matchesDate;
+    return matchesSearch ;
   });
 
   const getMaxDate = () => {
@@ -90,14 +90,14 @@ const Dashboard: React.FC = () => {
     return lastMonth.toISOString().split('T')[0];
   };
 
-  const handleDownloadPDF = () => {
-    const doc = new jsPDF();
-    doc.autoTable({
-      head: [['Name', 'Price', 'Harvest', 'Description']],
-      body: filteredProducts.map(product => [product.name, product.price, product.totalHarvest, product.description]),
-    });
-    doc.save('products.pdf');
-  };
+  // const handleDownloadPDF = () => {
+  //   const doc = new jsPDF();
+  //   doc.autoTable({
+  //     head: [['Name', 'Price', 'Harvest', 'Description']],
+  //     body: filteredProducts.map(product => [product.name, product.price, product.totalHarvest, product.description]),
+  //   });
+  //   doc.save('products.pdf');
+  // };
 
   return (
     <div>
@@ -108,6 +108,7 @@ const Dashboard: React.FC = () => {
           <div>
             <label className=' m-4'>Select Date: </label>
             <input
+            placeholder='select date'
               type="date"
               value={selectedDate}
               min={getMinDate()}
@@ -124,6 +125,7 @@ const Dashboard: React.FC = () => {
           <div>
             <label className=' m-4'>Search Product: </label>
             <input
+            placeholder='search product'
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -135,7 +137,7 @@ const Dashboard: React.FC = () => {
               }}
             />
           </div>
-          <button
+          {/* <button
             onClick={handleDownloadPDF}
             style={{
               marginBottom: '20px',
@@ -149,7 +151,7 @@ const Dashboard: React.FC = () => {
             }}
           >
             Download PDF
-          </button>
+          </button> */}
         </div>
 
         <table className='m-3' style={{ borderCollapse: 'collapse', width: '100%', animation: 'fadeIn 1s ease-in-out' }}>
@@ -232,3 +234,4 @@ style.innerHTML = `
 document.head.appendChild(style);
 
 export default Dashboard;
+

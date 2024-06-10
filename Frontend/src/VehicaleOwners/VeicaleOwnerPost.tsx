@@ -26,8 +26,7 @@ const validationSchema = yup.object({
     .mixed()
     .required('A vehicle photo is required')
     .test('fileType', 'Unsupported file format', (value) => {
-      return value && ['image/jpg', 'image/jpeg', 'image/png'].includes(value.type);
-    }),
+      return value && ['image/jpg', 'image/jpeg', 'image/png'].includes((value as File).type);    }),
 });
 
 const RegisterVehicle: React.FC = () => {
@@ -39,19 +38,19 @@ const RegisterVehicle: React.FC = () => {
       vehicleType: '',
       licensePlate: '',
       additionalInfo: '',
-      photo: null,
+      photo: null as File | null,
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       const data = new FormData();
-      data.append('photo', values.photo);
+      data.append('photo', values.photo as File);
       data.append('contactNumber', values.contactNumber);
       data.append('vehicleType', values.vehicleType);
       data.append('licensePlate', values.licensePlate);
       data.append('additionalInfo', values.additionalInfo);
 
       try {
-        const response = await axios.post('http://localhost:5001/SSABS/vehicaleOwn/products', data, {
+         await axios.post('http://localhost:5001/SSABS/vehicaleOwn/products', data, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           },
