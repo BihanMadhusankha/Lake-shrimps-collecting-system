@@ -140,15 +140,7 @@ const SellersPages = async (req, res) => {
     res.status(500).send('Error fetching sellers');
   }
 }
-const InstructerPage = async (req, res) => {
-  try {
-    const instructer = await User.find({ role: 'content_creater' });
-    res.json({ data: instructer });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error fetching sellers');
-  }
-}
+
 
 const VehicalOwnerPage = async (req, res) => {
   try {
@@ -187,108 +179,8 @@ const deleteUsers = async (req, res) => {
   }
 }
 
-const getUser = async (req, res) => {
-  const userId = req.user.id;
-  try {
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json(user);
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-    res.status(500).json({ message: 'Error fetching user data', error: error.message });
-  }
-};
 
 
-const updateUserProfile = async (req, res) => {
-  try {
-    const { firstname, lastname, email, phone } = req.body;
-    const userId = req.user.id;
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ message: 'Invalid user ID format' });
-    }
-
-    const updatedUser = await User.findByIdAndUpdate(userId, { firstname, lastname, email, phone }, { new: true });
-
-    if (!updatedUser) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json(updatedUser);
-  } catch (error) {
-    console.error('Error updating user profile:', error);
-    res.status(500).json({ message: 'Error updating user profile', error: error.message });
-  }
-};
-
-
-
-const ForgetPassword = async (req, res) => {
-  const { email } = req.body;
-
-  if (!email) {
-    return res.status(400).json({ status: 'error', error: 'Email is required' });
-  }
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(404).json({ status: 'error', error: 'Email not found' });
-  }
-
-  const token = generateResetToken(email);
-  // If email exists, send a password reset email
-  const mailOptions = {
-    from: process.env.MY_GMAIL,
-    to: email,
-    subject: 'Password Reset',
-    text: `Please click the link below to reset your password: \n\n${process.env.CLIENT_URL}/resetPassword?token=${token}`
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    res.json({ status: 'success', message: 'Password reset email sent' });
-  } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).json({ status: 'error', error: 'Failed to send password reset email' });
-  }
-}
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.MY_GMAIL,
-    pass: process.env.MY_PASSWORD
-  }
-});
-
-const ResetPassword = async (req, res) => {
-  const { token, newPassword } = req.body;
-
-  try {
-    const decoded = JWT.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    const email = decoded.email;
-
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ status: 'error', error: 'User not found' });
-    }
-
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    user.password = hashedPassword;
-    await user.save();
-
-    res.json({ status: 'success', message: 'Password reset successfully' });
-  } catch (error) {
-    console.error('Error resetting password:', error);
-    res.status(500).json({ status: 'error', error: 'Failed to reset password' });
-  }
-};
-const generateResetToken = (email) => {
-  return JWT.sign({ email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
-};
 
 const Products = async (req, res) => {
   try {
@@ -404,89 +296,6 @@ const productveiw = async (req, res) => {
   }
 };
 
-
-const registerVehicle = async (req, res) => {
-  // Handle file upload to Cloudinary
-  try {
-    const file = req.file;
-    const cloudinaryResponse = await cloudinary.uploader.upload(file.path, {
-      folder: 'vehicle_photos'
-    });
-
-    // Save vehicle data to database
-    const vehicleData = {
-      ...req.body,
-      photo: cloudinaryResponse.secure_url,
-      owner: req.user.id // Assuming you have authentication middleware that attaches the user ID to the request object
-    };
-
-    const vehicle = new Vehicle(vehicleData);
-    await vehicle.save();
-
-    res.status(201).json({ message: 'Vehicle registered successfully', vehicle });
-  } catch (error) {
-    console.error('Error registering vehicle:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-}
-
-const getRegisteredVehicles = async (req, res) => {
-  try {
-    const vehicles = await Vehicle.find({ owner: req.user.id });
-    res.json(vehicles);
-    console.log(vehicles);
-  } catch (error) {
-    console.error('Error fetching registered vehicles:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-}
-
-const UpdateVehicaledata = async (req, res) => {
-  const id = req.params.id;
-  const updatedVehicleData = req.body;
-
-  try {
-    // Find the vehicle by ID and update it
-    const updatedVehicle = await Vehicle.findByIdAndUpdate(id, updatedVehicleData, { new: true });
-
-    if (!updatedVehicle) {
-      return res.status(404).json({ error: 'Vehicle not found' });
-    }
-
-    res.json(updatedVehicle);
-  } catch (error) {
-    console.error('Error updating vehicle:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-}
-
-const deleteVehicle = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const deletedVehicle = await Vehicle.findOneAndDelete({ _id: id });
-    if (!deletedVehicle) {
-      return res.status(404).json({ message: 'Vehicle not found' });
-    }
-    res.json({ message: 'Vehicle deleted successfully' });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-}
-
-const vehicale_owners_vehicle = async (req, res) => {
-  try {
-    const ownerId = req.params.ownerId;
-    console.log(ownerId);
-    const ownerVehicles = await Vehicle.find({ owner: ownerId }); // Use Mongoose to find vehicles by ownerId
-    console.log(ownerVehicles)
-    res.json({ data: ownerVehicles });
-  } catch (error) {
-    console.error('Error fetching vehicles:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-}
-
 const booking = async (req, res) => {
   const { vehicleId, name, date } = req.body;
 
@@ -586,9 +395,6 @@ const DeleteRequest = async (req, res) => {
   }
 }
 
-
-
-
 const viewMessage = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -606,8 +412,7 @@ const deleteMessage = async (req, res) => {
     const message = req.params.messageId
     if (!message) return res.status(404).json({ message: 'Message not found' });
 
-    // Check if the user is authorized to delete the message
-    // Add your authorization logic here...
+    
 
     await Message.findByIdAndDelete(message); // Use remove() method to delete the document
     res.json({ message: 'Message deleted successfully' });
@@ -700,100 +505,6 @@ const deleteReceipt = async (req, res) => {
   }
 }
 
-const UploadVideoContent = asyncHandler(async (req, res) => {
-  try {
-    const file = req.file;
-    const { title, category, description, youtubeLink } = req.body;
-
-    if (!file) {
-      return res.status(400).json({ message: 'No file uploaded' });
-    }
-
-    // Extract user ID from token (assuming validateToken middleware sets req.user)
-    console.log('req.user:', req.user); // Debug log
-    const userId = req.user.id;
-
-    // Upload file to Cloudinary
-    const result = await cloudinary.uploader.upload(file.path, {
-      folder: 'thumbnails',
-    });
-
-    // Create new course entry in the database
-    const newCourse = new Course({
-      title,
-      category,
-      description,
-      youtubeLink,
-      thumbnail: result.secure_url,
-      user: userId, // Set the user ID
-    });
-
-    await newCourse.save();
-
-    res.status(201).json({ message: 'Course uploaded successfully', imageUrl: result.secure_url });
-  } catch (error) {
-    console.error('Error uploading course:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-
-
-const getUploadedPost = async (req, res) => {
-  try {
-    const user= req.user.id 
-    // Fetch courses from the database where the creator matches the logged-in user
-    const courses = await Course.find({user });
-    console.log(courses)
-    res.json(courses);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Server Error');
-  }
-}
-
-const deleteContent = async (req, res) => {
-  try {
-    const courseId = req.params.id;
-    await Course.findByIdAndDelete(courseId);
-    res.json({ message: 'Course deleted successfully' });
-  } catch (error) {
-    console.error('Error deleting course:', error);
-    res.status(500).json({ message: 'Server Error' });
-  }
-}
-
-const updateCourse = async (req, res) => {
-  try {
-    const courseId = req.params.updatingCourseId;
-    const { title, category, description, youtubeLink, thumbnail } = req.body;
-    
-    // Find the course by ID
-
-    let course = await Course.findById(courseId);
-
-    // Check if the course exists
-    if (!course) {
-      return res.status(404).json({ message: 'Course not found' });
-    }
-
-    // Update the course fields
-    course.title = title || course.title;
-    course.category = category || course.category;
-    course.description = description || course.description;
-    course.youtubeLink = youtubeLink || course.youtubeLink;
-    course.thumbnail = thumbnail || course.thumbnail;
-
-    // Save the updated course
-    await course.save();
-
-    res.json({ message: 'Course updated successfully', course });
-  } catch (error) {
-    console.error('Error updating course:', error);
-    res.status(500).json({ message: 'Server Error' });
-  }
-}
-
 const logout = asyncHandler(async (req, res) => {
   // res.clearCookie('accessToken');
   res.json({ message: 'User logged out successfully' })
@@ -806,24 +517,14 @@ module.exports = {
   logout: logout,
   getUserProfile: getUserProfile,
   SellersPages: SellersPages,
-  InstructerPage: InstructerPage,
   VehicalOwnerPage: VehicalOwnerPage,
   adminGetUsers: adminGetUsers,
   deleteUsers: deleteUsers,
-  updateUserProfile: updateUserProfile,
-  getUser: getUser,
-  ForgetPassword: ForgetPassword,
-  ResetPassword: ResetPassword,
   Products: Products,
   getProducts: getProducts,
   productdelete: productdelete,
   updateProduct: updateProduct,
   productveiw: productveiw,
-  registerVehicle: registerVehicle,
-  getRegisteredVehicles: getRegisteredVehicles,
-  UpdateVehicaledata: UpdateVehicaledata,
-  deleteVehicle: deleteVehicle,
-  vehicale_owners_vehicle: vehicale_owners_vehicle,
   booking: booking,
   PostRequest: PostRequest,
   getRequestHistory: getRequestHistory,
@@ -836,10 +537,7 @@ module.exports = {
   getUploadPhoto: getUploadPhoto,
   allTransactions: allTransactions,
   deleteReceipt: deleteReceipt,
-  UploadVideoContent:UploadVideoContent,
-  getUploadedPost:getUploadedPost,
-  deleteContent:deleteContent,
-  updateCourse:updateCourse
+  
 }
 
 

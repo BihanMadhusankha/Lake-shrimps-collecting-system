@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import UpdateVehicleModal from './UpdateVehicleModal'; // Import the modal component
 import VehicleNav from './vehicleNav';
@@ -22,7 +21,7 @@ const RegisteredVehicles: React.FC = () => {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const response = await axios.get<Vehicle[]>('http://localhost:5001/SSABS/vehicaleOwn/products', {
+        const response = await axios.get<Vehicle[]>('http://localhost:5001/vehicaleOwn/products', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           },
@@ -43,7 +42,7 @@ const RegisteredVehicles: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       const token = localStorage.getItem('accessToken');
-      await axios.delete(`http://localhost:5001/SSABS/vehicaleOwn/products/${id}`, {
+      await axios.delete(`http://localhost:5001/vehicaleOwn/products/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -55,25 +54,6 @@ const RegisteredVehicles: React.FC = () => {
     }
   };
 
-  // const handleDownloadPDF = () => {
-  //   const doc = new jsPDF();
-  //   const tableColumn = ["License Plate", "Vehicle Type", "Contact Number", "Additional Info"];
-  //   const tableRows = vehicles.map(vehicle => [
-  //     vehicle.licensePlate,
-  //     vehicle.vehicleType,
-  //     vehicle.contactNumber,
-  //     vehicle.additionalInfo,
-  //   ]);
-
-    // doc.autoTable({
-    //   head: [tableColumn],
-    //   body: tableRows,
-    //   startY: 20,
-    // });
-
-  //   doc.text("Registered Vehicles", 14, 15);
-  //   doc.save("registered_vehicles.pdf");
-  // };
 
   const filteredVehicles = vehicles.filter(vehicle =>
     vehicle.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -94,7 +74,6 @@ const RegisteredVehicles: React.FC = () => {
           onChange={e => setSearchTerm(e.target.value)}
           style={{ marginBottom: '20px', padding: '5px' }}
         />
-        {/* <button onClick={handleDownloadPDF} style={{ marginBottom: '20px', padding: '5px 10px', borderRadius: '5px', border: 'none', cursor: 'pointer', color: '#fff', backgroundColor: '#007bff' }}>Download PDF</button> */}
         <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
           <thead>
             <tr>

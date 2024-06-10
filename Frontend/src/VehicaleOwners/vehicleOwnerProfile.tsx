@@ -24,7 +24,7 @@ const VehicleOwnerProfile: React.FC = () => {
           return;
         }
 
-        const response = await axios.get<User>('http://localhost:5001/SSABS/profile', {
+        const response = await axios.get<User>('http://localhost:5001/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -53,7 +53,7 @@ const VehicleOwnerProfile: React.FC = () => {
         return;
       }
 
-      await axios.put('http://localhost:5001/SSABS/profile', editedUser, {
+      await axios.put('http://localhost:5001/profile', editedUser, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -91,6 +91,7 @@ const VehicleOwnerProfile: React.FC = () => {
               <>
                 <div style={{ marginBottom: '10px' }}>
                   <input
+                  placeholder='first name'
                     type="text"
                     name="firstname"
                     value={editedUser.firstname}
@@ -100,6 +101,7 @@ const VehicleOwnerProfile: React.FC = () => {
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                   <input
+                  placeholder='last name'
                     type="text"
                     name="lastname"
                     value={editedUser.lastname}
@@ -109,6 +111,7 @@ const VehicleOwnerProfile: React.FC = () => {
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                   <input
+                  placeholder='email'
                     type="text"
                     name="email"
                     value={editedUser.email}
@@ -118,6 +121,7 @@ const VehicleOwnerProfile: React.FC = () => {
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                   <input
+                  placeholder='phone'
                     type="text"
                     name="phone"
                     value={editedUser.phone}

@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
-import ContentNav from '../ContentCreater/contentNav';
+import ContentNav from './contentNav';
 import { useNavigate } from 'react-router-dom';
 
 const categories = [
@@ -34,7 +34,6 @@ const validationSchema = yup.object({
   thumbnail: yup
     .mixed()
     .required('Thumbnail is required')
-    
 });
 
 const InstructorProfile: React.FC = () => {
@@ -58,7 +57,7 @@ const InstructorProfile: React.FC = () => {
       if (values.thumbnail) formData.append('thumbnail', values.thumbnail);
 
       try {
-        await axios.post('http://localhost:5001/SSABS/instructer/uploadfile', formData, {
+        await axios.post('http://localhost:5001/allInstructer/uploadfile', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // Include the token in the request headers
@@ -133,8 +132,7 @@ const InstructorProfile: React.FC = () => {
             
             <label style={{ marginBottom: '5px' }}>Upload Thumbnail</label>
             <input
-            placeholder="Upload Thumbnail"
-            {...formik.getFieldProps('thumbnail')}
+            placeholder='upload thumbnail'
               type="file"
               accept="image/*"
               onChange={(event) => {

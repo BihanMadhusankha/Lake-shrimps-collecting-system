@@ -17,6 +17,10 @@ app.use(cors({ origin: '*' }));
 
 app.use('/SSABS/', require('./routes/signup.js'));
 app.use('/SSABS/admin/', require('./routes/admin.js'));
+app.use('/forgetpassword/', require('./routes/forgetpassword.js'));
+app.use('/profile', require('./routes/profile.js'));
+app.use('/allInstructer', require('./routes/instructer.js'));
+app.use('/vehicaleOwn', require('./routes/vehicleOwner.js'));
 
 
 app.use(errorHandler);

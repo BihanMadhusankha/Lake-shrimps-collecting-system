@@ -25,7 +25,7 @@ const UpdateVehicleModal: React.FC<Props> = ({ vehicle, closeModal }) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('accessToken');
-      const response = await axios.put(`http://localhost:5001/SSABS/vehicaleOwn/products/${vehicle._id}`, formData, {
+      const response = await axios.put(`http://localhost:5001/vehicaleOwn/products/${vehicle._id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'

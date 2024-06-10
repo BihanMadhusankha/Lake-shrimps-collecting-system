@@ -19,7 +19,7 @@ export default function InstructorsPage() {
     React.useEffect(() => {
         const fetchInstructer = async () => {
             try {
-                const response = await fetch('http://localhost:5001/SSABS/allInstructer');
+                const response = await fetch('http://localhost:5001/allInstructer');
                 console.log(response);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

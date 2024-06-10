@@ -28,7 +28,7 @@ const UploadedContent: React.FC = () => {
         return;
       }
       try {
-        const response = await axios.get<Course[]>('http://localhost:5001/SSABS/contentcreater/uploadedpost', {
+        const response = await axios.get<Course[]>('http://localhost:5001/allInstructer/uploadedpost', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -50,7 +50,7 @@ const UploadedContent: React.FC = () => {
       return;
     }
     try {
-      await axios.delete(`http://localhost:5001/SSABS/contentcreater/uploadedpost/${courseId}`, {
+      await axios.delete(`http://localhost:5001/allInstructer/uploadedpost/${courseId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -83,7 +83,7 @@ const UploadedContent: React.FC = () => {
           setError('No access token found. Please log in.');
           return;
         }
-        await axios.put(`http://localhost:5001/SSABS/contentcreater/uploadedpost/${updatingCourseId}`, updatedCourse, {
+        await axios.put(`http://localhost:5001/allInstructer/uploadedpost/${updatingCourseId}`, updatedCourse, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -177,10 +177,10 @@ const UploadedContent: React.FC = () => {
                   <td style={tableCellStyle} className="actions">
                     {updatingCourseId === course._id ? (
                       <>
-                        <input type="text" name="title" value={updatedCourse?.title} onChange={handleChange} style={inputStyle} />
-                        <input type="text" name="category" value={updatedCourse?.category} onChange={handleChange} style={inputStyle} />
-                        <input type="text" name="description" value={updatedCourse?.description} onChange={handleChange} style={inputStyle} />
-                        <input type="text" name="youtubeLink" value={updatedCourse?.youtubeLink} onChange={handleChange} style={inputStyle} />
+                        <input placeholder='title' type="text" name="title" value={updatedCourse?.title} onChange={handleChange} style={inputStyle} />
+                        <input placeholder='category' type="text" name="category" value={updatedCourse?.category} onChange={handleChange} style={inputStyle} />
+                        <input placeholder='discription' type="text" name="description" value={updatedCourse?.description} onChange={handleChange} style={inputStyle} />
+                        <input placeholder='youtubelink' type="text" name="youtubeLink" value={updatedCourse?.youtubeLink} onChange={handleChange} style={inputStyle} />
                         <button style={submitButtonStyle} onClick={handleSubmit}>Submit</button>
                       </>
                     ) : (

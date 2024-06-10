@@ -29,7 +29,7 @@ const ResetPassword: React.FC = () => {
     }
 
     try {
-      const response = await axios.post<ResetPasswordResponse>('http://localhost:5001/SSABS/user/resetPassword', {
+      const response = await axios.post<ResetPasswordResponse>('http://localhost:5001/forgetpassword/resetPassword', {
         token,
         newPassword,
       });

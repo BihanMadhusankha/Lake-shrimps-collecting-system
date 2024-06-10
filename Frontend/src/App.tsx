@@ -36,10 +36,10 @@ import ShrimpColorMonitoring from './page/byColor'
 import UserProfile from './Users/profile';
 import Contentcraterprofile from './ContentCreater/contentcraterprofile';
 import ConCreatersPage from './page/contentCreaterPage';
-import Instructorspage from './page/InstructorsPage';
+import Instructorspage from './ContentCreater/InstructorsPage';
 import Instructorprofile from './page/InstructorProfile';
 import Instructorvideos from './page/Instructorvideos';
-import Instructoruploaddeatils from './page/InstructoruploadDeatils';
+import Instructoruploaddeatils from './ContentCreater/InstructoruploadDeatils';
 import Classpost from './page/classpost';
 import { Toaster } from 'react-hot-toast';
 import AOS from 'aos';
@@ -51,8 +51,8 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 
 import NotFound from './page/Notfounded';
 import AdminUsers from './Admin/AdminUsers';
-import Forgetpassword from './page/forgetpassword'
-import ResetPassword from './page/ResetPassword'
+import Forgetpassword from './Forgetpassword/forgetpassword'
+import ResetPassword from './Forgetpassword/ResetPassword'
 import SellerProfile from './Sealer/selerProfile';
 import VehicleOwnerProfile from './VehicaleOwners/vehicleOwnerProfile';
 import AdminProfile from './Admin/AdminProfile';
