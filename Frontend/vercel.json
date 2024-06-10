@@ -7,13 +7,9 @@
       }
     ],
     "routes": [
-      {
-        "source": "/feedback/:id",
-        "destination": "/api/feedback/:id"
-      },
-      {
-        "source": "/(.*)",
-        "destination": "index.html"
-      }
+        {
+            "src": "/home",
+            "destination": "/index.html"
+        }
     ]
   }
