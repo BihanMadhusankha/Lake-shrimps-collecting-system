@@ -84,6 +84,7 @@ const ContentCraterProfile: React.FC = () => {
               <>
                 <div style={{ marginBottom: '10px' }}>
                   <input
+                  placeholder='first name'
                     type="text"
                     name="firstname"
                     value={editedUser.firstname}
@@ -93,6 +94,7 @@ const ContentCraterProfile: React.FC = () => {
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                   <input
+                  placeholder='last name'
                     type="text"
                     name="lastname"
                     value={editedUser.lastname}
@@ -102,6 +104,7 @@ const ContentCraterProfile: React.FC = () => {
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                   <input
+                  placeholder='email'
                     type="text"
                     name="email"
                     value={editedUser.email}
@@ -111,6 +114,7 @@ const ContentCraterProfile: React.FC = () => {
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                   <input
+                  placeholder='phone'
                     type="text"
                     name="phone"
                     value={editedUser.phone}
