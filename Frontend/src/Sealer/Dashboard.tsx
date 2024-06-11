@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import EditProductModal from './EditProductModal'; // Import the EditProductModal component
 import SealerNav from './sealerNav';
-// import jsPDF from 'jspdf';
+import jsPDF from 'jspdf';
 
 interface Product {
   _id: string;
@@ -90,14 +90,14 @@ const Dashboard: React.FC = () => {
     return lastMonth.toISOString().split('T')[0];
   };
 
-  // const handleDownloadPDF = () => {
-  //   const doc = new jsPDF();
-  //   doc.autoTable({
-  //     head: [['Name', 'Price', 'Harvest', 'Description']],
-  //     body: filteredProducts.map(product => [product.name, product.price, product.totalHarvest, product.description]),
-  //   });
-  //   doc.save('products.pdf');
-  // };
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    doc.autoTable({
+      head: [['Name', 'Price', 'Harvest', 'Description']],
+      body: filteredProducts.map(product => [product.name, product.price, product.totalHarvest, product.description]),
+    });
+    doc.save('products.pdf');
+  };
 
   return (
     <div>
@@ -137,7 +137,7 @@ const Dashboard: React.FC = () => {
               }}
             />
           </div>
-          {/* <button
+          <button
             onClick={handleDownloadPDF}
             style={{
               marginBottom: '20px',
@@ -151,7 +151,7 @@ const Dashboard: React.FC = () => {
             }}
           >
             Download PDF
-          </button> */}
+          </button>
         </div>
 
         <table className='m-3' style={{ borderCollapse: 'collapse', width: '100%', animation: 'fadeIn 1s ease-in-out' }}>

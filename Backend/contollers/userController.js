@@ -504,6 +504,31 @@ const deleteReceipt = async (req, res) => {
     res.status(500).json({ message: 'Error deleting receipt', error });
   }
 }
+const search =async (req, res) => {
+  const { query } = req.query;
+
+  try {
+      // Search instructors
+      const instructors = await User.find({
+          $or: [
+              { firstname: { $regex: query, $options: 'i' } },
+              { role: { $regex: query, $options: 'i' } }
+          ]
+      });
+
+      // Search products
+      const products = await Product.find({
+          $or: [
+              { title: { $regex: query, $options: 'i' } },
+              { description: { $regex: query, $options: 'i' } }
+          ]
+      });
+      res.json({ instructors, products });
+  } catch (error) {
+      console.error('Error searching:', error);
+      res.status(500).json({ message: 'Server Error' });
+  }
+}
 
 const logout = asyncHandler(async (req, res) => {
   // res.clearCookie('accessToken');
@@ -537,6 +562,7 @@ module.exports = {
   getUploadPhoto: getUploadPhoto,
   allTransactions: allTransactions,
   deleteReceipt: deleteReceipt,
+  search:search
   
 }
 

@@ -70,16 +70,17 @@ const InstructerPage = async (req, res) => {
     }
   }
 
-  const deleteContent = async (req, res) => {
+  const deleteContent =  async (req, res) => {
     try {
-      const courseId = req.params.id;
-      await Course.findByIdAndDelete(courseId);
-      res.json({ message: 'Course deleted successfully' });
+        const courseId = req.params.courseId;
+        console.log(courseId)
+        await Course.findByIdAndDelete(courseId);
+        res.json({ message: 'Course deleted successfully' });
     } catch (error) {
-      console.error('Error deleting course:', error);
-      res.status(500).json({ message: 'Server Error' });
+        console.error('Error deleting course:', error);
+        res.status(500).json({ message: 'Server Error' });
     }
-  }
+}
 
   const updateCourse = async (req, res) => {
     try {
@@ -108,11 +109,26 @@ const InstructerPage = async (req, res) => {
     }
   }
 
+  const getCourse = async (req, res) => {
+    try {
+        console.log(`Fetching courses for instructor ID: ${req.params.instructorId}`);
+        const courses = await Course.find({ user: req.params.instructorId });
+        if (courses.length === 0) {
+            console.log(`No courses found for instructor ID: ${req.params.user}`);
+        }
+        res.json({ data: courses });
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+        res.status(500).json({ message: error.message });
+    }
+}
+
 
   module.exports = {
     InstructerPage: InstructerPage,
     UploadVideoContent:UploadVideoContent,
   getUploadedPost:getUploadedPost,
   deleteContent:deleteContent,
-  updateCourse:updateCourse
+  updateCourse:updateCourse,
+  getCourse:getCourse
   }

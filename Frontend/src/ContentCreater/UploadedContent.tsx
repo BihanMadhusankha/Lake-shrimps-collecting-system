@@ -44,6 +44,7 @@ const UploadedContent: React.FC = () => {
   }, []);
 
   const handleDelete = async (courseId: string) => {
+    console.log(courseId);
     const token = localStorage.getItem('accessToken');
     if (!token) {
       setError('No access token found. Please log in.');
@@ -178,85 +179,86 @@ const UploadedContent: React.FC = () => {
                     {updatingCourseId === course._id ? (
                       <>
                         <input placeholder='title' type="text" name="title" value={updatedCourse?.title} onChange={handleChange} style={inputStyle} />
-                        <input placeholder='category' type="text" name="category" value={updatedCourse?.category} onChange={handleChange} style={inputStyle} />
-                        <input placeholder='discription' type="text" name="description" value={updatedCourse?.description} onChange={handleChange} style={inputStyle} />
-                        <input placeholder='youtubelink' type="text" name="youtubeLink" value={updatedCourse?.youtubeLink} onChange={handleChange} style={inputStyle} />
-                        <button style={submitButtonStyle} onClick={handleSubmit}>Submit</button>
-                      </>
-                    ) : (
-                      <>
-                        <button style={updateButtonStyle} onClick={() => handleUpdate(course._id)}>Update</button>
-                        <button style={deleteButtonStyle} onClick={() => handleDelete(course._id)}>Delete</button>
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
-    </div>
-  );
-};
+                        <input placeholder='category' type="text" name="category" value={updatedCourse?.category}                           onChange={handleChange} style={inputStyle} />
+                           <input placeholder='discription' type="text" name="description" value={updatedCourse?.description} onChange={handleChange} style={inputStyle} />
+                           <input placeholder='youtubelink' type="text" name="youtubeLink" value={updatedCourse?.youtubeLink} onChange={handleChange} style={inputStyle} />
+                           <button style={submitButtonStyle} onClick={handleSubmit}>Submit</button>
+                         </>
+                       ) : (
+                         <>
+                           <button style={updateButtonStyle} onClick={() => handleUpdate(course._id)}>Update</button>
+                           <button style={deleteButtonStyle} onClick={() => handleDelete(course._id)}>Delete</button>
+                         </>
+                       )}
+                     </td>
+                   </tr>
+                 ))}
+               </tbody>
+             </table>
+           )}
+         </div>
+       </div>
+     );
+   };
 
-export default UploadedContent;
+   export default UploadedContent;
 
-const tableHeaderStyle: React.CSSProperties = {
-  padding: '8px',
-  backgroundColor: '#f2f2f2',
-  border: '1px solid #ddd'
-};
+   const tableHeaderStyle: React.CSSProperties = {
+     padding: '8px',
+     backgroundColor: '#f2f2f2',
+     border: '1px solid #ddd'
+   };
 
-const tableCellStyle: React.CSSProperties = {
-  padding: '8px',
-  border: '1px solid #ddd'
-};
+   const tableCellStyle: React.CSSProperties = {
+     padding: '8px',
+     border: '1px solid #ddd'
+   };
 
-const updateButtonStyle: React.CSSProperties = {
-  backgroundColor: '#007bff',
-  color: 'white',
-  padding: '8px 12px',
-  border: 'none',
-  cursor: 'pointer',
-  marginRight: '5px'
-};
+   const updateButtonStyle: React.CSSProperties = {
+     backgroundColor: '#007bff',
+     color: 'white',
+     padding: '8px 12px',
+     border: 'none',
+     cursor: 'pointer',
+     marginRight: '5px'
+   };
 
-const deleteButtonStyle: React.CSSProperties = {
-  backgroundColor: '#dc3545',
-  color: 'white',
-  padding: '8px 12px',
-  border: 'none',
-  cursor: 'pointer'
-};
+   const deleteButtonStyle: React.CSSProperties = {
+     backgroundColor: '#dc3545',
+     color: 'white',
+     padding: '8px 12px',
+     border: 'none',
+     cursor: 'pointer'
+   };
 
-const submitButtonStyle: React.CSSProperties = {
-  backgroundColor: '#28a745',
-  color: 'white',
-  padding: '8px 12px',
-  border: 'none',
-  cursor: 'pointer',
-  marginRight: '5px'
-};
+   const submitButtonStyle: React.CSSProperties = {
+     backgroundColor: '#28a745',
+     color: 'white',
+     padding: '8px 12px',
+     border: 'none',
+     cursor: 'pointer',
+     marginRight: '5px'
+   };
 
-const inputStyle: React.CSSProperties = {
-  padding: '5px',
-  marginBottom: '5px',
-  width: '100%'
-};
+   const inputStyle: React.CSSProperties = {
+     padding: '5px',
+     marginBottom: '5px',
+     width: '100%'
+   };
 
-const downloadButtonStyle: React.CSSProperties = {
-  backgroundColor: '#007bff',
-  color: 'white',
-  padding: '8px 12px',
-  border: 'none',
-  cursor: 'pointer',
-  marginBottom: '20px'
-};
+   const downloadButtonStyle: React.CSSProperties = {
+     backgroundColor: '#007bff',
+     color: 'white',
+     padding: '8px 12px',
+     border: 'none',
+     cursor: 'pointer',
+     marginBottom: '20px'
+   };
 
-const searchInputStyle: React.CSSProperties = {
-  padding: '8px',
-  marginBottom: '20px',
-  width: '100%',
-  boxSizing: 'border-box'
-};
+   const searchInputStyle: React.CSSProperties = {
+     padding: '8px',
+     marginBottom: '20px',
+     width: '100%',
+     boxSizing: 'border-box'
+   };
+

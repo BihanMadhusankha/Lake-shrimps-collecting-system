@@ -45,7 +45,7 @@ const SellerRequests: React.FC = () => {
   useEffect(() => {
     const checkTokenValidity = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/SSABS/profile', {
+        const response = await axios.get('http://localhost:5001/profile', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           },

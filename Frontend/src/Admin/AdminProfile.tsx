@@ -17,7 +17,7 @@ const AdminProfile: React.FC = () => {
           return;
         }
 
-        const response = await axios.get('http://localhost:5001/SSABS/profile', {
+        const response = await axios.get('http://localhost:5001/profile', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -46,7 +46,7 @@ const AdminProfile: React.FC = () => {
         return;
       }
 
-      await axios.put('http://localhost:5001/SSABS/profile', editedAdmin, {
+      await axios.put('http://localhost:5001/profile', editedAdmin, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

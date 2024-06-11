@@ -37,8 +37,8 @@ import UserProfile from './Users/profile';
 import Contentcraterprofile from './ContentCreater/contentcraterprofile';
 import ConCreatersPage from './page/contentCreaterPage';
 import Instructorspage from './page/InstructorsPage';
-import Instructorprofile from './page/InstructorProfile';
-import Instructorvideos from './page/Instructorvideos';
+import InstructorCourses from './ContentCreater/InstructorCourses';
+
 import Instructoruploaddeatils from './ContentCreater/InstructoruploadDeatils';
 import Classpost from './page/classpost';
 import { Toaster } from 'react-hot-toast';
@@ -58,6 +58,10 @@ import VehicleOwnerProfile from './VehicaleOwners/vehicleOwnerProfile';
 import AdminProfile from './Admin/AdminProfile';
 import AllTransaction from './Admin/AllTransaction'
 import UploadedContent from './ContentCreater/UploadedContent'
+
+import AboutUs from './page/AboutUs';
+import ContactUs from './page/ContactUs';
+import ChatAi from './page/ChatAi';
 
 function App() {
   // State to store the logged-in seller ID
@@ -125,8 +129,7 @@ function App() {
         
         <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} />
         <Route path='/SSABS/user/userhome/FindINSTRUCTORS' element={<Instructorspage />} />
-        <Route path='/SSABS/user/userhome/courses' element={<Instructorprofile />} />
-        <Route path='/SSABS/user/userhome/video' element={<Instructorvideos />} />
+    
         <Route path='/SSABS/instructer/uploadfile' element={<Instructoruploaddeatils />} />
         
         <Route path='/SSABS/user/userhome/Classpost' element={<Classpost />} />
@@ -136,7 +139,10 @@ function App() {
         <Route path='/SSABS/contentcreater/profile' element={<Contentcraterprofile />} />
         <Route path='/SSABS/contentcreater/uploadedpost' element={<UploadedContent />} />
 
-
+        <Route path="/SSABS/user/userhome/courses/:instructorId" element={<InstructorCourses />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/chat" element={<ChatAi />} />
       </Routes>
       <Footer />
     </div>

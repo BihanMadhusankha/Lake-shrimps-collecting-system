@@ -21,7 +21,7 @@ const RegisteredVehicles: React.FC = () => {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const response = await axios.get<Vehicle[]>('http://localhost:5001/vehicaleOwn/products', {
+        const response = await axios.get<Vehicle[]>('http://localhost:5001/SSABS/vehicaleOwn/products', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           },
@@ -42,7 +42,7 @@ const RegisteredVehicles: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       const token = localStorage.getItem('accessToken');
-      await axios.delete(`http://localhost:5001/vehicaleOwn/products/${id}`, {
+      await axios.delete(`http://localhost:5001/SSABS/vehicaleOwn/products/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -74,6 +74,7 @@ const RegisteredVehicles: React.FC = () => {
           onChange={e => setSearchTerm(e.target.value)}
           style={{ marginBottom: '20px', padding: '5px' }}
         />
+        {/* <button onClick={handleDownloadPDF} style={{ marginBottom: '20px', padding: '5px 10px', borderRadius: '5px', border: 'none', cursor: 'pointer', color: '#fff', backgroundColor: '#007bff' }}>Download PDF</button> */}
         <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
           <thead>
             <tr>

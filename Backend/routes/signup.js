@@ -2,10 +2,10 @@ const express = require('express');
 const { registerUser, loginUser, getUserProfile,
         SellersPages,VehicalOwnerPage ,    
         Products,getProducts,productdelete,updateProduct,
-        productveiw,registerVehicle,
+        productveiw,
         booking,PostRequest,getRequestHistory,requestAccept
         ,DeleteRequest,viewMessage,deleteMessage
-    ,uploadPaymentReceipt,getUploadPhoto} = require('../contollers/userController');
+    ,uploadPaymentReceipt,getUploadPhoto,search} = require('../contollers/userController');
 const validateToken = require('../midleware/validationTokenHandler');
 const upload = require('../midleware/uploadMiddleware');
 
@@ -14,6 +14,9 @@ const router = express.Router();
 router.post('/user/signup', registerUser) 
 router.post('/user/login',loginUser);
 router.get('/user/userhome',validateToken,getUserProfile);
+
+
+router.get('/search',search);
 
 
 
