@@ -73,7 +73,7 @@ export default function ContentCreatorPage() {
             <div className="bigtitle m-6">
               <h1 className="bigtitle m-6" data-aos="fade-left"  >The best program to Enroll for exchange</h1>
               {/* <button className="btn btn-outline-primary">Find courses →</button> */}
-              <Link to={'/SSABS/user/userhome/Contentadmindashboardss'}> <button className="btn btn-outline-warning">Find INSTRUCTORS →</button></Link>
+              <Link to={'/SSABS/user/userhome/FindINSTRUCTORS'}> <button className="btn btn-outline-warning">Find INSTRUCTORS →</button></Link>
 
              
             </div>
