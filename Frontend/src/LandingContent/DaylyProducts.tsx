@@ -33,6 +33,7 @@ const DaylyProducts: React.FC = () => {
     totalAmount: 0,
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [alert, setAlert] = useState<{ type: string, message: string } | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -125,7 +126,6 @@ const DaylyProducts: React.FC = () => {
         break;
     }
 
-
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: error,
@@ -189,16 +189,183 @@ const DaylyProducts: React.FC = () => {
       });
       console.log('Request sent successfully', response.data);
       setShowRequestForm(false);
+      setAlert({ type: 'success', message: 'Request sent successfully!' });
     } catch (error) {
       console.error('Error sending request:', error);
+      setAlert({ type: 'error', message: 'Error sending request. Please try again.' });
     }
   };
 
+  const styles = {
+    headerContainer: {
+      width: '100%',
+      marginTop: '20px',
+    } as React.CSSProperties,
+    header: {
+      fontSize: '40px',
+      fontWeight: 'bold',
+      color: '#333',
+      textAlign: 'center',
+    } as React.CSSProperties,
+    productsContainer: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      marginTop: '40px',
+      marginBottom: '40px',
+    } as React.CSSProperties,
+    productCard: {
+      width: '280px',
+      padding: '20px',
+      borderRadius: '10px',
+      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)',
+      backgroundColor: '#fff',
+      textAlign: 'center',
+      margin: '10px',
+      transition: 'transform 0.3s ease',
+    } as React.CSSProperties,
+    productName: {
+      fontSize: '20px',
+      fontWeight: 'bold',
+      marginBottom: '10px',
+      color: '#333',
+    } as React.CSSProperties,
+    productPrice: {
+      fontSize: '20px',
+      fontWeight: 'bold',
+      marginBottom: '10px',
+      color: '#333',
+    } as React.CSSProperties,
+    productHarvest: {
+      fontSize: '20px',
+      fontWeight: 'bold',
+      marginBottom: '10px',
+      color: '#333',
+    } as React.CSSProperties,
+    productDescription: {
+      fontSize: '16px',
+      marginBottom: '20px',
+      color: '#666',
+    } as React.CSSProperties,
+    requestButton: {
+      padding: '10px',
+      border: 'none',
+      borderRadius: '5px',
+      backgroundColor: '#007bff',
+      color: 'white',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+      margin: '5px',
+    } as React.CSSProperties,
+    noProductsMessage: {
+      fontSize: '18px',
+      color: '#666',
+    } as React.CSSProperties,
+    formContainerOverlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+      backdropFilter: 'blur(8px)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    } as React.CSSProperties,
+    formContainer: {
+      width: '400px',
+      padding: '20px',
+      borderRadius: '10px',
+      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)',
+      backgroundColor: '#fff',
+      textAlign: 'center',
+      position: 'relative',
+    } as React.CSSProperties,
+    formHeader: {
+      fontSize: '24px',
+      fontWeight: 'bold',
+      marginBottom: '20px',
+      color: '#333',
+    } as React.CSSProperties,
+    formGroup: {
+      marginBottom: '20px',
+    } as React.CSSProperties,
+    formLabel: {
+      display: 'block',
+      marginBottom: '5px',
+      fontSize: '16px',
+      color: '#333',
+    } as React.CSSProperties,
+    formInput: {
+      width: '100%',
+      padding: '10px',
+      borderRadius: '5px',
+      border: '1px solid #ccc',
+      fontSize: '16px',
+    } as React.CSSProperties,
+    formSelect: {
+      width: '100%',
+      padding: '10px',
+      borderRadius: '5px',
+      border: '1px solid #ccc',
+      fontSize: '16px',
+    } as React.CSSProperties,
+    submitButton: {
+      padding: '10px 20px',
+      border: 'none',
+      borderRadius: '5px',
+      backgroundColor: '#007bff',
+      color: 'white',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+      margin: '5px',
+    } as React.CSSProperties,
+    closeButton: {
+      position: 'absolute',
+      top: '10px',
+      right: '10px',
+      padding: '5px 10px',
+      border: 'none',
+      borderRadius: '5px',
+      backgroundColor: '#dc3545',
+      color: 'white',
+      fontWeight: 'bold',
+      cursor: 'pointer',
+    } as React.CSSProperties,
+    errorText: {
+      color: 'red',
+      fontSize: '14px',
+      marginTop: '5px',
+    } as React.CSSProperties,
+    successAlert: {
+      backgroundColor: '#d4edda',
+      color: '#155724',
+      padding: '10px',
+      borderRadius: '5px',
+      marginBottom: '10px',
+      textAlign: 'center',
+    } as React.CSSProperties,
+    errorAlert: {
+      backgroundColor: '#f8d7da',
+      color: '#721c24',
+      padding: '10px',
+      borderRadius: '5px',
+      marginBottom: '10px',
+      textAlign: 'center',
+    } as React.CSSProperties,
+  };
+
   return (
-    <div >
+    <div>
       <UserNavigation />
       <div style={styles.headerContainer}>
         <h1 style={styles.header}>Today's Products</h1>
+        {alert && (
+          <div style={alert.type === 'success' ? styles.successAlert : styles.errorAlert}>
+            {alert.message}
+          </div>
+        )}
         <div style={styles.productsContainer}>
           {todayProducts.length > 0 ? (
             todayProducts.map(product => (
@@ -305,158 +472,4 @@ const DaylyProducts: React.FC = () => {
   );
 };
 
-const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    padding: '20px',
-    backgroundColor: '#f8f9fa',
-  },
-  headerContainer: {
-    width: '100%',
-    marginTop: '20px',
-  },
-  header: {
-    fontSize: '40px',
-    fontWeight: 'bold',
-    color: '#333',
-    textAlign: 'center',
-  },
-  productsContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    marginTop: '40px',
-    marginBottom: '40px',
-  },
-  productCard: {
-    width: '280px',
-    padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)',
-    backgroundColor: '#fff',
-    textAlign: 'center',
-    margin: '10px',
-    transition: 'transform 0.3s ease',
-  },
-  productName: {
-    fontSize: '20px',
-    fontWeight: 'bold',
-    marginBottom: '10px',
-    color: '#333',
-  },
-  productPrice: {
-    fontSize: '20px',
-    fontWeight: 'bold',
-    marginBottom: '10px',
-    color: '#333',
-  },
-  productHarvest: {
-    fontSize: '20px',
-    fontWeight: 'bold',
-    marginBottom: '10px',
-    color: '#333',
-  },
-  productDescription: {
-    fontSize: '16px',
-    marginBottom: '20px',
-    color: '#666',
-  },
-  requestButton: {
-    padding: '10px',
-    border: 'none',
-    borderRadius: '5px',
-    backgroundColor: '#007bff',
-    color: 'white',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    margin: '5px',
-  },
-  noProductsMessage: {
-    fontSize: '18px',
-    color: '#666',
-  },
-  formContainerOverlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    backdropFilter: 'blur(8px)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  formContainer: {
-    width: '400px',
-    padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.3)',
-    backgroundColor: '#fff',
-    textAlign: 'center',
-    position: 'relative',
-  },
-  formHeader: {
-    fontSize: '24px',
-    fontWeight: 'bold',
-    marginBottom: '20px',
-    color: '#333',
-  },
-  formGroup: {
-    marginBottom: '20px',
-  },
-  formLabel: {
-    display: 'block',
-    marginBottom: '5px',
-    fontSize: '16px',
-    color: '#333',
-  },
-  formInput: {
-    width: '100%',
-    padding: '10px',
-    borderRadius: '5px',
-    border: '1px solid #ccc',
-    fontSize: '16px',
-  },
-  formSelect: {
-    width: '100%',
-    padding: '10px',
-    borderRadius: '5px',
-    border: '1px solid #ccc',
-    fontSize: '16px',
-  },
-  submitButton: {
-    padding: '10px 20px',
-    border: 'none',
-    borderRadius: '5px',
-    backgroundColor: '#007bff',
-    color: 'white',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    margin: '5px',
-  },
-  closeButton: {
-    position: 'absolute',
-    top: '10px',
-    right: '10px',
-    padding: '5px 10px',
-    border: 'none',
-    borderRadius: '5px',
-    backgroundColor: '#dc3545',
-    color: 'white',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-  },
-  errorText: {
-    color: 'red',
-    fontSize: '14px',
-    marginTop: '5px',
-  },
-};
-
 export default DaylyProducts;
-
-

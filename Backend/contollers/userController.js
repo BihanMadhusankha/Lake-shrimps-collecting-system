@@ -2,16 +2,17 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
-const mongoose = require('mongoose'); // Assuming Mongoose for MongoDB
+const mongoose = require('mongoose'); 
 const nodemailer = require('nodemailer');
 const Product = require('../models/Products')
 const Vehicle = require('../models/vehicleSchema');
 const cloudinary = require('cloudinary').v2;
 const Booking = require('../models/bookingSchema');
-const VehicalOwner = require('../models/vehicleOwnerSchema')
 const Request = require('../models/Request');
 const Message = require('../models/messageSchema');
 const Receipt = require('../models/uploadRecipt');
+const Course = require('../models/courseSchema');
+
 //@desc Register a user 
 //@route POST /SSABS/user/signup/
 //@access public
@@ -139,15 +140,7 @@ const SellersPages = async (req, res) => {
     res.status(500).send('Error fetching sellers');
   }
 }
-const InstructerPage = async (req, res) => {
-  try {
-    const instructer = await User.find({ role: 'content_creater' });
-    res.json({ data: instructer });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error fetching sellers');
-  }
-}
+
 
 const VehicalOwnerPage = async (req, res) => {
   try {
@@ -186,307 +179,124 @@ const deleteUsers = async (req, res) => {
   }
 }
 
-const getUser = async (req, res) => {
-  const userId = req.user.id; 
+
+
+
+const Products = async (req, res) => {
   try {
-    const user = await User.findById(userId);
+    // Assuming you're using JWT and the user's ID is stored in the token payload
+    const sellerId = req.user.id;
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
+    // Assuming the request body contains the product details
+    const { name, price, totalHarvest, description } = req.body;
 
-    res.json(user);
+    const createdAt = new Date();
+
+    // Create a new product object
+    const newProduct = new Product({
+      name,
+      price,
+      totalHarvest,
+      description,
+      sellerId,
+      createdAt
+    });
+
+    // Save the product to the database
+    await newProduct.save();
+
+    // Respond with a success message
+    res.status(201).json({ message: 'Product added successfully' });
   } catch (error) {
-    console.error('Error fetching user data:', error);
-    res.status(500).json({ message: 'Error fetching user data', error: error.message });
-  }
-};
-
-
-const updateUserProfile = async (req, res) => {
-  try {
-    const { firstname, lastname, email, phone } = req.body;
-    const userId = req.user.id; 
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ message: 'Invalid user ID format' });
-    }
-
-    const updatedUser = await User.findByIdAndUpdate(userId, { firstname, lastname, email, phone }, { new: true });
-
-    if (!updatedUser) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json(updatedUser);
-  } catch (error) {
-    console.error('Error updating user profile:', error);
-    res.status(500).json({ message: 'Error updating user profile', error: error.message });
-  }
-};
-
-
-
-const ForgetPassword = async (req, res) => {
-  const { email } = req.body;
-
-    if (!email) {
-      return res.status(400).json({ status: 'error', error: 'Email is required' });
-    }
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ status: 'error', error: 'Email not found' });
-    }
-
-    const token = generateResetToken(email);
-    // If email exists, send a password reset email
-    const mailOptions = {
-      from: process.env.MY_GMAIL,
-      to: email,
-      subject: 'Password Reset',
-      text: `Please click the link below to reset your password: \n\n${process.env.CLIENT_URL}/resetPassword?token=${token}`
-    };
-
-    try {
-      await transporter.sendMail(mailOptions);
-      res.json({ status: 'success', message: 'Password reset email sent' });
-    } catch (error) {
-      console.error('Error sending email:', error);
-      res.status(500).json({ status: 'error', error: 'Failed to send password reset email' });
-    }
-  }
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.MY_GMAIL,
-      pass: process.env.MY_PASSWORD
-    }
-  });
-
-  const ResetPassword = async (req, res) => {
-    const { token, newPassword } = req.body;
-  
-    try {
-      const decoded = JWT.verify(token, process.env.ACCESS_TOKEN_SECRET);
-      const email = decoded.email;
-  
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(404).json({ status: 'error', error: 'User not found' });
-      }
-  
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
-      user.password = hashedPassword;
-      await user.save();
-  
-      res.json({ status: 'success', message: 'Password reset successfully' });
-    } catch (error) {
-      console.error('Error resetting password:', error);
-      res.status(500).json({ status: 'error', error: 'Failed to reset password' });
-    }
-  };
-  const generateResetToken = (email) => {
-    return JWT.sign({ email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
-  };
-  
-  const Products = async (req, res) => {
-    try {
-      // Assuming you're using JWT and the user's ID is stored in the token payload
-      const sellerId = req.user.id;
-  
-      // Assuming the request body contains the product details
-      const { name, price,totalHarvest, description } = req.body;
-  
-      const createdAt = new Date();
-
-      // Create a new product object
-      const newProduct = new Product({
-        name,
-        price,
-        totalHarvest,
-        description,
-        sellerId,
-        createdAt
-      });
-  
-      // Save the product to the database
-      await newProduct.save();
-  
-      // Respond with a success message
-      res.status(201).json({ message: 'Product added successfully' });
-    } catch (error) {
-      // If an error occurs, respond with an error message
-      console.error('Error adding product:', error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  }
-
-  const getProducts = async (req, res) => {
-    try {
-      const sellerId = req.user.id;
-      const products = await Product.find({ sellerId});
-      res.json(products);
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  }
-    const productdelete = async (req, res) => {
-      try {
-        const { id } = req.params;
-        const sellerId = req.user.id;
-    
-        const product = await Product.findOneAndDelete({ _id: id, sellerId });
-        if (!product) {
-          return res.status(404).json({ message: 'Product not found or not authorized' });
-        }
-        res.json({ message: 'Product deleted successfully' });
-      } catch (error) {
-        console.error('Error deleting product:', error);
-        res.status(500).json({ message: 'Internal server error' });
-      }
-    }
-
-    const updateProduct = async (req, res) => {
-      try {
-        const { id } = req.params;
-        const sellerId = req.user.id;
-        const { name, price,totalHarvest, description } = req.body;
-    
-        const product = await Product.findOneAndUpdate(
-          { _id: id, sellerId },
-          { name, price,totalHarvest, description },
-          { new: true }
-        );
-    
-        if (!product) {
-          return res.status(404).json({ message: 'Product not found or not authorized' });
-        }
-    
-        res.json(product);
-      } catch (error) {
-        console.error('Error updating product:', error);
-        res.status(500).json({ message: 'Internal server error' });
-      }
-    };
-
-    const productveiw = async (req, res) => {
-      try {
-        // Get the current time
-        const now = new Date();
-    
-        // Calculate the start time for the last 24 hours
-        const startOfLast24Hours = new Date(now);
-        startOfLast24Hours.setHours(startOfLast24Hours.getHours() - 24);
-    
-        // Log the start and end time for debugging
-        console.log('Start of Last 24 Hours:', startOfLast24Hours);
-        console.log('Now:', now);
-    
-        // Fetch products created within the last 24 hours
-        const products = await Product.find({
-          createdAt: {
-            $gte: startOfLast24Hours,
-            $lt: now
-          }
-        });
-    
-        // Log the fetched products
-        console.log('Fetched Products:', products);
-    
-        // Send the response
-        res.json(products);
-      } catch (err) {
-        // Log and send an error response if an error occurs
-        console.error('Error fetching products:', err);
-        res.status(500).json({ message: err.message });
-      }
-    };
-
-
-  const registerVehicle = async (req, res) => {
-    // Handle file upload to Cloudinary
-    try {
-      const file = req.file;
-      const cloudinaryResponse = await cloudinary.uploader.upload(file.path, {
-        folder: 'vehicle_photos'
-      });
-  
-      // Save vehicle data to database
-      const vehicleData = {
-        ...req.body,
-        photo: cloudinaryResponse.secure_url,
-        owner: req.user.id // Assuming you have authentication middleware that attaches the user ID to the request object
-      };
-  
-      const vehicle = new Vehicle(vehicleData);
-      await vehicle.save();
-  
-      res.status(201).json({ message: 'Vehicle registered successfully', vehicle });
-    } catch (error) {
-      console.error('Error registering vehicle:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  }
-
-const getRegisteredVehicles = async (req, res) => {
-  try {
-    const vehicles = await Vehicle.find({ owner: req.user.id });
-    res.json(vehicles);
-    console.log(vehicles);
-  } catch (error) {
-    console.error('Error fetching registered vehicles:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-}
-
-const UpdateVehicaledata =async (req, res) => {
-  const id = req.params.id;
-  const updatedVehicleData = req.body;
-
-  try {
-    // Find the vehicle by ID and update it
-    const updatedVehicle = await Vehicle.findByIdAndUpdate(id, updatedVehicleData, { new: true });
-
-    if (!updatedVehicle) {
-      return res.status(404).json({ error: 'Vehicle not found' });
-    }
-
-    res.json(updatedVehicle);
-  } catch (error) {
-    console.error('Error updating vehicle:', error);
+    // If an error occurs, respond with an error message
+    console.error('Error adding product:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 }
 
-const deleteVehicle =async (req, res) => {
-  const { id } = req.params;
-
+const getProducts = async (req, res) => {
   try {
-    const deletedVehicle = await Vehicle.findOneAndDelete({ _id: id });
-    if (!deletedVehicle) {
-      return res.status(404).json({ message: 'Vehicle not found' });
+    const sellerId = req.user.id;
+    const products = await Product.find({ sellerId });
+    res.json(products);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+const productdelete = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sellerId = req.user.id;
+
+    const product = await Product.findOneAndDelete({ _id: id, sellerId });
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found or not authorized' });
     }
-    res.json({ message: 'Vehicle deleted successfully' });
+    res.json({ message: 'Product deleted successfully' });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error('Error deleting product:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 }
 
-const vehicale_owners_vehicle = async (req, res) => {
+const updateProduct = async (req, res) => {
   try {
-    const ownerId = req.params.ownerId;
-    console.log(ownerId);
-    const ownerVehicles = await Vehicle.find({ owner: ownerId }); // Use Mongoose to find vehicles by ownerId
-    console.log(ownerVehicles)
-    res.json({ data: ownerVehicles });
-  } catch (error) {
-    console.error('Error fetching vehicles:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-}
+    const { id } = req.params;
+    const sellerId = req.user.id;
+    const { name, price, totalHarvest, description } = req.body;
 
-const booking =async (req, res) => {
+    const product = await Product.findOneAndUpdate(
+      { _id: id, sellerId },
+      { name, price, totalHarvest, description },
+      { new: true }
+    );
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found or not authorized' });
+    }
+
+    res.json(product);
+  } catch (error) {
+    console.error('Error updating product:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const productveiw = async (req, res) => {
+  try {
+    // Get the current time
+    const now = new Date();
+
+    // Calculate the start time for the last 24 hours
+    const startOfLast24Hours = new Date(now);
+    startOfLast24Hours.setHours(startOfLast24Hours.getHours() - 24);
+
+    // Log the start and end time for debugging
+    console.log('Start of Last 24 Hours:', startOfLast24Hours);
+    console.log('Now:', now);
+
+    // Fetch products created within the last 24 hours
+    const products = await Product.find({
+      createdAt: {
+        $gte: startOfLast24Hours,
+        $lt: now
+      }
+    });
+
+    // Log the fetched products
+    console.log('Fetched Products:', products);
+
+    // Send the response
+    res.json(products);
+  } catch (err) {
+    // Log and send an error response if an error occurs
+    console.error('Error fetching products:', err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const booking = async (req, res) => {
   const { vehicleId, name, date } = req.body;
 
   const newBooking = new Booking({ vehicleId, name, date });
@@ -529,7 +339,7 @@ const PostRequest = async (req, res) => {
   }
 }
 
-const getRequestHistory =  async (req, res) => {
+const getRequestHistory = async (req, res) => {
   const sellerId = req.user.id; // Assuming user ID is available in req.user
   try {
     const requests = await Request.find({ sellerId: sellerId });
@@ -544,39 +354,35 @@ const requestAccept = async (req, res) => {
     const requestId = req.params.requestId;
     const userId = req.params.userId;
     const sellerId = req.params.sellerId;
-    
-      
-      const request = await Request.findById(requestId);
-      if (!request) {
-          return res.status(404).json({ message: 'Request not found' });
-      }
 
-      request.status = 'Accepted';
-      request.userId = userId; 
-      request.sellerId = sellerId; 
-      await request.save();
 
-      // Send a message to the user
-      const message = new Message({
-          userId: userId,
-          sellerId: sellerId,
-          message: 'Your request has been accepted!',
-      });
+    const request = await Request.findById(requestId);
+    if (!request) {
+      return res.status(404).json({ message: 'Request not found' });
+    }
 
-      await message.save();
+    request.status = 'Accepted';
+    request.userId = userId;
+    request.sellerId = sellerId;
+    await request.save();
 
-      res.json({ message: 'Request accepted and message sent to user' });
+    // Send a message to the user
+    const message = new Message({
+      userId: userId,
+      sellerId: sellerId,
+      message: 'Your request has been accepted!',
+    });
+
+    await message.save();
+
+    res.json({ message: 'Request accepted and message sent to user' });
   } catch (error) {
-      console.error('Error accepting request:', error);
-      res.status(500).json({ message: 'Internal server error' });
+    console.error('Error accepting request:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-
-
-
-
-const DeleteRequest =async (req, res) => {
+const DeleteRequest = async (req, res) => {
   try {
     const requestId = req.params.requestId;
 
@@ -588,9 +394,6 @@ const DeleteRequest =async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 }
-
-
-
 
 const viewMessage = async (req, res) => {
   try {
@@ -609,15 +412,14 @@ const deleteMessage = async (req, res) => {
     const message = req.params.messageId
     if (!message) return res.status(404).json({ message: 'Message not found' });
 
-    // Check if the user is authorized to delete the message
-    // Add your authorization logic here...
+    
 
     await Message.findByIdAndDelete(message); // Use remove() method to delete the document
     res.json({ message: 'Message deleted successfully' });
-} catch (error) {
+  } catch (error) {
     console.error('Error deleting message:', error);
     res.status(500).json({ message: 'Internal Server Error' });
-}
+  }
 }
 const getAcceptRequest = async (req, res) => {
   try {
@@ -635,34 +437,34 @@ const getAcceptRequest = async (req, res) => {
 
 const uploadPaymentReceipt = async (req, res) => {
   try {
-      const file = req.file;
-      const { sellerId } = req.body;
-      console.log(sellerId); // Debug log to check if sellerId is received
+    const file = req.file;
+    const { sellerId } = req.body;
+    console.log(sellerId); // Debug log to check if sellerId is received
 
-      if (!file) {
-          return res.status(400).json({ message: 'No file uploaded' });
-      }
+    if (!file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
 
-      if (!sellerId) {
-          return res.status(400).json({ message: 'sellerId is required' });
-      }
+    if (!sellerId) {
+      return res.status(400).json({ message: 'sellerId is required' });
+    }
 
-      const result = await cloudinary.uploader.upload(file.path, {
-          folder: 'payment_receipts',
-      });
+    const result = await cloudinary.uploader.upload(file.path, {
+      folder: 'payment_receipts',
+    });
 
-      const newRicipt = new Receipt({
-          sellerId: sellerId,
-          message: 'Payment receipt uploaded',
-          photoUrl: result.secure_url,
-      });
+    const newRicipt = new Receipt({
+      sellerId: sellerId,
+      message: 'Payment receipt uploaded',
+      photoUrl: result.secure_url,
+    });
 
-      await newRicipt.save();
+    await newRicipt.save();
 
-      res.status(201).json({ message: 'Payment receipt uploaded successfully', imageUrl: result.secure_url });
+    res.status(201).json({ message: 'Payment receipt uploaded successfully', imageUrl: result.secure_url });
   } catch (error) {
-      console.error('Error uploading payment receipt:', error);
-      res.status(500).json({ message: 'Internal server error' });
+    console.error('Error uploading payment receipt:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
 
@@ -682,51 +484,87 @@ const getUploadPhoto = async (req, res) => {
   }
 }
 
-
-
-
-
-  const logout = asyncHandler(async (req, res) => {
-    // res.clearCookie('accessToken');
-    res.json({ message: 'User logged out successfully' })
-  });
-
-
-  module.exports = {
-    loginUser: loginUser,
-    registerUser: registerUser,
-    logout: logout,
-    getUserProfile: getUserProfile,
-    SellersPages: SellersPages,
-    InstructerPage:InstructerPage,
-    VehicalOwnerPage: VehicalOwnerPage,
-    adminGetUsers: adminGetUsers,
-    deleteUsers: deleteUsers,
-    updateUserProfile: updateUserProfile,
-    getUser: getUser,
-    ForgetPassword: ForgetPassword,
-    ResetPassword: ResetPassword,
-    Products: Products,
-    getProducts:getProducts,
-    productdelete: productdelete,
-    updateProduct:updateProduct,
-    productveiw:productveiw,
-    registerVehicle :registerVehicle,
-    getRegisteredVehicles:getRegisteredVehicles,
-    UpdateVehicaledata:UpdateVehicaledata,
-    deleteVehicle:deleteVehicle,
-    vehicale_owners_vehicle:vehicale_owners_vehicle,
-    booking:booking,
-    PostRequest:PostRequest,
-    getRequestHistory:getRequestHistory,
-    requestAccept:requestAccept,
-    DeleteRequest:DeleteRequest,
-    getAcceptRequest:getAcceptRequest,
-    viewMessage:viewMessage,
-    deleteMessage:deleteMessage,
-    uploadPaymentReceipt:uploadPaymentReceipt,
-    getUploadPhoto:getUploadPhoto
+const allTransactions = async (req, res) => {
+  try {
+    const receipts = await Receipt.find();
+    res.json(receipts);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching receipts', error });
   }
+}
+
+const deleteReceipt = async (req, res) => {
+  try {
+    const receipt = await Receipt.findByIdAndDelete(req.params.id);
+    if (!receipt) {
+      return res.status(404).json({ message: 'Receipt not found' });
+    }
+    res.json({ message: 'Receipt deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting receipt', error });
+  }
+}
+const search =async (req, res) => {
+  const { query } = req.query;
+
+  try {
+      // Search instructors
+      const instructors = await User.find({
+          $or: [
+              { firstname: { $regex: query, $options: 'i' } },
+              { role: { $regex: query, $options: 'i' } }
+          ]
+      });
+
+      // Search products
+      const products = await Product.find({
+          $or: [
+              { title: { $regex: query, $options: 'i' } },
+              { description: { $regex: query, $options: 'i' } }
+          ]
+      });
+      res.json({ instructors, products });
+  } catch (error) {
+      console.error('Error searching:', error);
+      res.status(500).json({ message: 'Server Error' });
+  }
+}
+
+const logout = asyncHandler(async (req, res) => {
+  // res.clearCookie('accessToken');
+  res.json({ message: 'User logged out successfully' })
+});
+
+
+module.exports = {
+  loginUser: loginUser,
+  registerUser: registerUser,
+  logout: logout,
+  getUserProfile: getUserProfile,
+  SellersPages: SellersPages,
+  VehicalOwnerPage: VehicalOwnerPage,
+  adminGetUsers: adminGetUsers,
+  deleteUsers: deleteUsers,
+  Products: Products,
+  getProducts: getProducts,
+  productdelete: productdelete,
+  updateProduct: updateProduct,
+  productveiw: productveiw,
+  booking: booking,
+  PostRequest: PostRequest,
+  getRequestHistory: getRequestHistory,
+  requestAccept: requestAccept,
+  DeleteRequest: DeleteRequest,
+  getAcceptRequest: getAcceptRequest,
+  viewMessage: viewMessage,
+  deleteMessage: deleteMessage,
+  uploadPaymentReceipt: uploadPaymentReceipt,
+  getUploadPhoto: getUploadPhoto,
+  allTransactions: allTransactions,
+  deleteReceipt: deleteReceipt,
+  search:search
+  
+}
 
 
 

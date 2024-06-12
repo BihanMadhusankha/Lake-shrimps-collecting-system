@@ -34,7 +34,7 @@ const UpdateVehicleModal: React.FC<Props> = ({ vehicle, closeModal }) => {
 
       if (response.status === 200) {
         console.log('Updated vehicle data:', response.data);
-        closeModal(); // Close the modal after submission
+        closeModal();
       } else {
         console.error('Error updating vehicle:', response.data);
       }

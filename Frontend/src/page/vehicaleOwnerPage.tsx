@@ -74,7 +74,6 @@ const VehicleOwnerPage: React.FC = () => {
   const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert(`Booking details for vehicle ID: ${selectedVehicleId}\nName: ${bookingDetails.name}\nContact: ${bookingDetails.contact}\nDate: ${bookingDetails.date}`);
-    // Here, you would typically send the bookingDetails to your server
     setShowModal(false);
     setBookingDetails({ name: '', contact: '',distance:'', date: '' });
   };

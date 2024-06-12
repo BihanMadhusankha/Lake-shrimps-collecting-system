@@ -1,29 +1,20 @@
 import React from 'react';
-import Sidebar from './Sidebar'; // Import Sidebar component
-import '../CSS/dash.css'; // Assuming your existing CSS for the table
+import Sidebar from './Sidebar';
+import '../CSS/dash.css';
 import AdminNavigation from './AdminNAvigation';
-import Card from './adminCard'; // Import Card component (if created)
-
-
-// Interface for user data (replace with your actual data structure)
-
+import Card from './adminCard';
 
 interface NavigationLink {
-  path: string; // Path for the link
-  label: string; // Text displayed on the link
+  path: string;
+  label: string;
 }
 
 const Dashboard: React.FC = () => {
   const navigationLinks: NavigationLink[] = [
     { path: '/SSABS/admin/allusers', label: 'Users' },
     { path: '/SSABS/admin/profile', label: 'Profile' },
-
+    { path: '/SSABS/admin/alltransaction', label: 'Transaction' },
   ];
-  // Fetch data (replace with your actual API endpoint)
-  
-
-  // Function to handle user deletion (replace with actual API call)
-  
 
   return (
     <div className="dashboard d-flex flex-column">
@@ -33,14 +24,12 @@ const Dashboard: React.FC = () => {
       <div>
         <div className=' d-flex  flex-row'>
           <Sidebar />
-          <div className="cards-container col-3 me-auto "> {/* Wrap cards in a container */}
+          <div className="cards-container col-3 me-auto ">
             {navigationLinks.map((link) => (
-              <Card key={link.path} path={link.path} label={link.label} />
+              <Card key={link.path} path={link.path} label={link.label}  />
             ))}
           </div>
-
         </div>
-        
       </div>
     </div>
   );

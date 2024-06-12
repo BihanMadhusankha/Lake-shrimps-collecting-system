@@ -1,9 +1,8 @@
-// profile.tsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import UserNavigation from '../Navigations/userNav';
+import ContentNav from './contentNav';
 
-const Profile: React.FC = () => {
+const ContentCraterProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editedUser, setEditedUser] = useState<any>({});
@@ -67,8 +66,9 @@ const Profile: React.FC = () => {
 
   return (
     <div>
-      <UserNavigation/>
-      <div style={{ textAlign: 'center', margin: '40px' }}>
+      <ContentNav />
+
+      <div style={{ textAlign: 'center', margin: '50px' }}>
         <h1 style={{ color: '#333', fontSize: '32px', marginBottom: '20px' }}>Profile</h1>
         {user ? (
           <div style={{
@@ -78,12 +78,13 @@ const Profile: React.FC = () => {
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.5)',
             backdropFilter: 'blur(10px)',
             maxWidth: '400px',
-            margin: '10px  auto'
+            margin: '0 auto'
           }}>
             {isEditing ? (
               <>
                 <div style={{ marginBottom: '10px' }}>
                   <input
+                  placeholder='first name'
                     type="text"
                     name="firstname"
                     value={editedUser.firstname}
@@ -93,6 +94,7 @@ const Profile: React.FC = () => {
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                   <input
+                  placeholder='last name'
                     type="text"
                     name="lastname"
                     value={editedUser.lastname}
@@ -102,6 +104,7 @@ const Profile: React.FC = () => {
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                   <input
+                  placeholder='email'
                     type="text"
                     name="email"
                     value={editedUser.email}
@@ -111,6 +114,7 @@ const Profile: React.FC = () => {
                 </div>
                 <div style={{ marginBottom: '10px' }}>
                   <input
+                  placeholder='phone'
                     type="text"
                     name="phone"
                     value={editedUser.phone}
@@ -138,4 +142,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default ContentCraterProfile;

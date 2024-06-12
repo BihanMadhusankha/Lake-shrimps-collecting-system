@@ -34,38 +34,34 @@ import SellerRequestHistory from './Sealer/SellerRequestHistory'
 // import ConCreatersPage from './page/contentCreaterPage';
 import ShrimpColorMonitoring from './page/byColor'
 import UserProfile from './Users/profile';
+import Contentcraterprofile from './ContentCreater/contentcraterprofile';
 import ConCreatersPage from './page/contentCreaterPage';
 import Instructorspage from './page/InstructorsPage';
-import Instructorprofile from './page/InstructorProfile';
-import Instructorvideos from './page/Instructorvideos';
-import Instructoruploaddeatils from './page/InstructoruploadDeatils';
-import Instructorsingup from './page/InstructorSingup';
-import Instructorlogin from './page/InstructorLogin';
-import Classpost from './page/classpost';
-import Contentadmindashboardss from './page/contentadmindashboardss';
+import InstructorCourses from './ContentCreater/InstructorCourses';
 
+import Instructoruploaddeatils from './ContentCreater/InstructoruploadDeatils';
+import Classpost from './page/classpost';
 import { Toaster } from 'react-hot-toast';
 import AOS from 'aos';
 import 'aos/dist/aos.js';
 import 'aos/dist/aos.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import EnvironmentPage from './stock&category/environment';
-import DetailsPage from './stock&category/details';
-import HarvestPage from './stock&category/harvest';
-import HistoryPage from './stock&category/history';
-import PlacesPage from './stock&category/places';
-import VehicaleDetails from './delivery/VehicleDetails'
 // import VehicleList from './delivery/VehicleList'
-import VehicaleUserForm from './delivery/VehicaleUserForm'
-import RegForm from './delivery/RegForm'
+
 import NotFound from './page/Notfounded';
 import AdminUsers from './Admin/AdminUsers';
-import Forgetpassword from './page/forgetpassword'
-import ResetPassword from './page/ResetPassword'
+import Forgetpassword from './Forgetpassword/forgetpassword'
+import ResetPassword from './Forgetpassword/ResetPassword'
 import SellerProfile from './Sealer/selerProfile';
 import VehicleOwnerProfile from './VehicaleOwners/vehicleOwnerProfile';
 import AdminProfile from './Admin/AdminProfile';
+import AllTransaction from './Admin/AllTransaction'
+import UploadedContent from './ContentCreater/UploadedContent'
+
+import AboutUs from './page/AboutUs';
+import ContactUs from './page/ContactUs';
+import ChatAi from './page/ChatAi';
 
 function App() {
   // State to store the logged-in seller ID
@@ -125,14 +121,7 @@ function App() {
 
         <Route path='/SSABS/user/userhome/profile' element={<UserProfile />} />
         <Route path='/SSABS/user/userhome/byColor' element={<ShrimpColorMonitoring />} />
-        <Route path='/SSABS/user/userhome/environment' element={<EnvironmentPage />} />
-        <Route path='/SSABS/user/userhome/details' element={<DetailsPage />} />
-        <Route path='/SSABS/user/userhome/harvest' element={<HarvestPage />} />
-        <Route path='/SSABS/user/userhome/history' element={<HistoryPage />} />
-        <Route path='/SSABS/user/userhome/places' element={<PlacesPage />} />
-        <Route path='/SSABS/user/userhome/VehicaleDetails' element={<VehicaleDetails />} />
-        <Route path='/SSABS/user/userhome/VehicaleUserForm' element={<VehicaleUserForm />} />
-        <Route path='/SSABS/user/userhome/RegForm' element={<RegForm />} />
+       
       </Routes>
       <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
       <Routes>
@@ -140,15 +129,20 @@ function App() {
         
         <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} />
         <Route path='/SSABS/user/userhome/FindINSTRUCTORS' element={<Instructorspage />} />
-        <Route path='/SSABS/user/userhome/courses' element={<Instructorprofile />} />
-        <Route path='/SSABS/user/userhome/video' element={<Instructorvideos />} />
+    
         <Route path='/SSABS/instructer/uploadfile' element={<Instructoruploaddeatils />} />
-        <Route path='/SSABS/user/userhome/Instructorsingup' element={<Instructorsingup />} />
-        <Route path='/SSABS/user/userhome/Instructorlogin' element={<Instructorlogin />} />
+        
         <Route path='/SSABS/user/userhome/Classpost' element={<Classpost />} />
-        <Route path='/SSABS/user/userhome/Contentadmindashboardss' element={<Contentadmindashboardss />} />
 
 
+        <Route path='/SSABS/admin/alltransaction' element={<AllTransaction />} />
+        <Route path='/SSABS/contentcreater/profile' element={<Contentcraterprofile />} />
+        <Route path='/SSABS/contentcreater/uploadedpost' element={<UploadedContent />} />
+
+        <Route path="/SSABS/user/userhome/courses/:instructorId" element={<InstructorCourses />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/chat" element={<ChatAi />} />
       </Routes>
       <Footer />
     </div>

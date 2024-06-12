@@ -3,7 +3,6 @@ import axios from 'axios';
 import EditProductModal from './EditProductModal'; // Import the EditProductModal component
 import SealerNav from './sealerNav';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
 
 interface Product {
   _id: string;
@@ -11,14 +10,16 @@ interface Product {
   price: number;
   description: string;
   totalHarvest: number;
-  dateAdded: string; // Assuming dateAdded is part of the product model
 }
+
+declare module 'jspdf-autotable';
 
 const Dashboard: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(''); // State for the selected date
+  const [searchQuery, setSearchQuery] = useState<string>(''); // State for search query
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -62,8 +63,8 @@ const Dashboard: React.FC = () => {
       const token = localStorage.getItem('accessToken');
       await axios.put(`http://localhost:5001/SSABS/seler/products/${updatedProduct._id}`, updatedProduct, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       setProducts(products.map(product => (product._id === updatedProduct._id ? updatedProduct : product)));
       setIsModalOpen(false);
@@ -72,10 +73,11 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  // Filter products based on selected date
-  const filteredProducts = selectedDate
-    ? products.filter(product => product.dateAdded.startsWith(selectedDate))
-    : products;
+  // Filter products based on selected date and search query
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSearch ;
+  });
 
   const getMaxDate = () => {
     const today = new Date();
@@ -106,6 +108,7 @@ const Dashboard: React.FC = () => {
           <div>
             <label className=' m-4'>Select Date: </label>
             <input
+            placeholder='select date'
               type="date"
               value={selectedDate}
               min={getMinDate()}
@@ -119,8 +122,21 @@ const Dashboard: React.FC = () => {
               }}
             />
           </div>
-
-
+          <div>
+            <label className=' m-4'>Search Product: </label>
+            <input
+            placeholder='search product'
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                padding: '8px',
+                borderRadius: '4px',
+                border: '1px solid #ddd',
+                marginLeft: '10px',
+              }}
+            />
+          </div>
           <button
             onClick={handleDownloadPDF}
             style={{
@@ -197,10 +213,10 @@ const Dashboard: React.FC = () => {
         </table>
         {isModalOpen && selectedProduct && (
           <EditProductModal
-            product={selectedProduct}
-            onClose={() => setIsModalOpen(false)}
-            onSave={handleSave}
-          />
+          product={selectedProduct}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSave}
+        />
         )}
       </div>
     </div>

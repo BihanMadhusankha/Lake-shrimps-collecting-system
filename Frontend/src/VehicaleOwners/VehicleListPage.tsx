@@ -1,6 +1,6 @@
-// VehicleListPage.tsx
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import UserNavigation from '../Navigations/userNav';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -17,12 +17,8 @@ const VehicleListPage: React.FC = () => {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const response = await fetch(`http://localhost:5001/SSABS/vehicaleown/products/${ownerId}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setVehicles(data.data);
+        const response = await axios.get(`http://localhost:5001/SSABS/vehicaleown/products/${ownerId}`);
+        setVehicles(response.data.data);
       } catch (error) {
         console.error('Error fetching vehicles:', error);
       }

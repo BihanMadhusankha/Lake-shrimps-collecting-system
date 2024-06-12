@@ -18,7 +18,7 @@ const ForgetPassword: React.FC = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5001/SSABS/user/forgetpassword', { email });
+      const response = await axios.post('http://localhost:5001/forgetpassword/userforget', { email });
       if (response.data.status === 'success') {
         toast.success('Password reset email sent successfully');
       } else {

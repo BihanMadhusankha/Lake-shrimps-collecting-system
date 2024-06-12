@@ -1,4 +1,3 @@
-// cloudinaryConfig.js
 
 const cloudinary = require('cloudinary').v2;
 const { CLOUDINARY_URL } = process.env;

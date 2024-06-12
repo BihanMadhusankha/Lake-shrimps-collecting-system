@@ -28,7 +28,6 @@ const Footer = () => {
               <li>  <a  style={{color:'white'}}  href='https://web.facebook.com/login/?_rdc=1&_rdr'>Facebook</a></li>
                 <li>  <a  style={{color:'white'}}  href='https://www.whatsapp.com/download'>Whatsapp </a></li>
                 <li>  <a  style={{color:'white'}}  href='https://www.instagram.com/accounts/login/?hl=en'>Instergram </a></li>
-                <li>  <a  style={{color:'white'}}  href='https://web.botim.me/#/'>Botim</a></li>
                 <li>  <a  style={{color:'white'}}  href='https://web.telegram.org/k/'>Teligram </a></li>
               </ul>
               </center> </div>
@@ -40,9 +39,7 @@ const Footer = () => {
               <ul  >
                 <li>  <a  style={{color:'white'}}  href='/aboutus'>About us </a></li>
                 <li>  <a  style={{color:'white'}}  href='/contactus'>Contact us </a></li>
-                <li>  <a  style={{color:'white'}}  href='/join'>Join with Us </a></li>
-                <li>  <a  style={{color:'white'}}  href='/details'>Details</a></li>
-                <li>  <a  style={{color:'white'}}  href='/chat'>chat </a></li>
+                <li>  <a  style={{color:'white'}}  href='/chat'>chat with AI</a></li>
               </ul>
               </center> </div>
             </div>

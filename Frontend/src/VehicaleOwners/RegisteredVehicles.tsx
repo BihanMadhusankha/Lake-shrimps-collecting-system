@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import 'jspdf-autotable';
 import UpdateVehicleModal from './UpdateVehicleModal'; // Import the modal component
 import VehicleNav from './vehicleNav';
 
@@ -15,9 +16,9 @@ interface Vehicle {
 const RegisteredVehicles: React.FC = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   useEffect(() => {
-    // Fetch registered vehicles from the backend
     const fetchVehicles = async () => {
       try {
         const response = await axios.get<Vehicle[]>('http://localhost:5001/SSABS/vehicaleOwn/products', {
@@ -53,114 +54,57 @@ const RegisteredVehicles: React.FC = () => {
     }
   };
 
-  const styles = {
-    container: {
-      padding: '20px',
-      margin: '20px auto', // Adjusted margin for better spacing
-      maxWidth: '90%', // Reduced max width to fit better on the screen
-      backgroundColor: '#f7f9fc',
-      borderRadius: '10px',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
-    },
-    title: {
-      textAlign: 'center' as const,
-      marginBottom: '20px',
-      color: '#333',
-    },
-    table: {
-      width: '100%',
-      borderCollapse: 'collapse' as const,
-      marginTop: '10px',
-    },
-    th: {
-      padding: '10px',
-      textAlign: 'left' as const,
-      borderBottom: '1px solid #ccc',
-      backgroundColor: '#f0f0f0',
-    },
-    td: {
-      padding: '10px',
-      textAlign: 'left' as const,
-      borderBottom: '1px solid #ccc',
-    },
-    evenRow: {
-      backgroundColor: '#fff',
-    },
-    oddRow: {
-      backgroundColor: '#f9f9f9',
-    },
-    photo: {
-      width: '100px',
-      height: 'auto',
-      borderRadius: '5px',
-    },
-    button: {
-      padding: '5px 10px',
-      borderRadius: '5px',
-      border: 'none',
-      cursor: 'pointer',
-      color: '#fff',
-      marginRight: '10px',
-    },
-    updateButton: {
-      backgroundColor: '#007bff',
-    },
-    deleteButton: {
-      backgroundColor: '#dc3545',
-    },
-    updateButtonHover: {
-      backgroundColor: '#0056b3',
-    },
-    deleteButtonHover: {
-      backgroundColor: '#c82333',
-    }
-  };
+
+  const filteredVehicles = vehicles.filter(vehicle =>
+    vehicle.licensePlate.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    vehicle.vehicleType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    vehicle.contactNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    vehicle.additionalInfo.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div>
-      <VehicleNav/>
-      <div style={styles.container}>
-        <h2 style={styles.title}>Registered Vehicles</h2>
-        <table style={styles.table}>
+      <VehicleNav />
+      <div style={{ padding: '20px', margin: '20px auto', maxWidth: '90%' }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '20px', color: '#333' }}>Registered Vehicles</h2>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+          style={{ marginBottom: '20px', padding: '5px' }}
+        />
+        {/* <button onClick={handleDownloadPDF} style={{ marginBottom: '20px', padding: '5px 10px', borderRadius: '5px', border: 'none', cursor: 'pointer', color: '#fff', backgroundColor: '#007bff' }}>Download PDF</button> */}
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
           <thead>
             <tr>
-              <th style={styles.th}>License Plate</th>
-              <th style={styles.th}>Vehicle Type</th>
-              <th style={styles.th}>Contact Number</th>
-              <th style={styles.th}>Additional Info</th>
-              <th style={styles.th}>Photo</th>
-              <th style={styles.th}>Actions</th>
+              <th style={{ padding: '10px', textAlign: 'left', borderBottom: '1px solid #ccc', backgroundColor: '#f0f0f0' }}>License Plate</th>
+              <th style={{ padding: '10px', textAlign: 'left', borderBottom: '1px solid #ccc', backgroundColor: '#f0f0f0' }}>Vehicle Type</th>
+              <th style={{ padding: '10px', textAlign: 'left', borderBottom: '1px solid #ccc', backgroundColor: '#f0f0f0' }}>Contact Number</th>
+              <th style={{ padding: '10px', textAlign: 'left', borderBottom: '1px solid #ccc', backgroundColor: '#f0f0f0' }}>Additional Info</th>
+              <th style={{ padding: '10px', textAlign: 'left', borderBottom: '1px solid #ccc', backgroundColor: '#f0f0f0' }}>Photo</th>
+              <th style={{ padding: '10px', textAlign: 'left', borderBottom: '1px solid #ccc', backgroundColor: '#f0f0f0' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {vehicles.map((vehicle, index) => (
-              <tr key={vehicle._id} style={index % 2 === 0 ? styles.evenRow : styles.oddRow}>
-                <td style={styles.td}>{vehicle.licensePlate}</td>
-                <td style={styles.td}>{vehicle.vehicleType}</td>
-                <td style={styles.td}>{vehicle.contactNumber}</td>
-                <td style={styles.td}>{vehicle.additionalInfo}</td>
-                <td style={styles.td}>
-                  <img src={vehicle.photo} alt="Vehicle" style={styles.photo} />
+            {filteredVehicles.map((vehicle, index) => (
+              <tr key={vehicle._id} style={{ backgroundColor: index % 2 === 0 ? '#fff' : '#f9f9f9' }}>
+                <td style={{ padding: '10px', textAlign: 'left', borderBottom: '1px solid #ccc' }}>{vehicle.licensePlate}</td>
+                <td style={{ padding: '10px', textAlign: 'left', borderBottom: '1px solid #ccc' }}>{vehicle.vehicleType}</td>
+                <td style={{ padding: '10px', textAlign: 'left', borderBottom: '1px solid #ccc' }}>{vehicle.contactNumber}</td>
+                <td style={{ padding: '10px', textAlign: 'left', borderBottom: '1px solid #ccc' }}>{vehicle.additionalInfo}</td>
+                <td style={{ padding: '10px', textAlign: 'left', borderBottom: '1px solid #ccc' }}>
+                  <img src={vehicle.photo} alt="Vehicle" style={{ width: '100px', height: 'auto', borderRadius: '5px' }} />
                 </td>
-                <td style={styles.td}>
-                  <button
-                    onClick={() => handleUpdateClick(vehicle)}
-                    style={{ ...styles.button, ...styles.updateButton }}
-                  >
-                    Update
-                  </button>
-                  <button
-                    onClick={() => handleDelete(vehicle._id)}
-                    style={{ ...styles.button, ...styles.deleteButton }}
-                  >
-                    Delete
-                  </button>
+                <td style={{ padding: '10px', textAlign: 'left', borderBottom: '1px solid #ccc' }}>
+                  <button onClick={() => handleUpdateClick(vehicle)} style={{ padding: '5px 10px', borderRadius: '5px', border: 'none', cursor: 'pointer', color: '#fff', backgroundColor: '#007bff', marginRight: '10px' }}>Update</button>
+                  <button onClick={() => handleDelete(vehicle._id)} style={{ padding: '5px 10px', borderRadius: '5px', border: 'none', cursor: 'pointer', color: '#fff', backgroundColor: '#dc3545' }}>Delete</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        {selectedVehicle && <UpdateVehicleModal vehicle={selectedVehicle} />} {/* Display modal if a vehicle is selected */}
+        {selectedVehicle && <UpdateVehicleModal vehicle={selectedVehicle} closeModal={() => setSelectedVehicle(null)} />} {/* Display modal if a vehicle is selected */}
       </div>
     </div>
   );
