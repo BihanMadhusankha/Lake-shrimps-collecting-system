@@ -45,7 +45,6 @@ function App() {
     });
   }, []);
 
-
   return (
     <div className="App">
       <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
