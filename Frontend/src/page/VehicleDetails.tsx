@@ -1,10 +1,8 @@
 import React from 'react';
 import {
-  MDBContainer,
   MDBCol,
   MDBRow,
 } from 'mdb-react-ui-kit';
-import Button from '@mui/material/Button';
 import UserNavigation from '../Navigations/userNav';
 import DetailsImage from '../assets/bike.jpg';
 
@@ -31,9 +29,9 @@ export default function App(): JSX.Element {
        <br></br>
     <p><b>Do you want to delivery?</b></p>
     <br></br>
-    <Button variant="contained" disableElevation>
+    {/* <Button variant="contained" disableElevation>
      Confirm Delivery
-   </Button>
+   </Button> */}
         </div>
       </MDBCol>
     </MDBRow>

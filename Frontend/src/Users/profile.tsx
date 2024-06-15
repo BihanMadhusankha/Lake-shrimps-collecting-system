@@ -1,224 +1,138 @@
-import React, { useState, useRef, useEffect } from 'react';
-import UserNavigation from '../Navigations/userNav';
-import { FaCamera } from 'react-icons/fa';
+// profile.tsx
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import toast from 'react-hot-toast';
-
-interface User {
-  firstname: string;
-  lastname: string;
-  email: string;
-  phone: string;
-  nic: string;
-  profilePicture?: string;
-  _id: string;
-}
+import UserNavigation from '../Navigations/userNav';
 
 const Profile: React.FC = () => {
-  const { id } = useParams<{ id: string }>(); // Ensure useParams gets the correct id
-  const [user, setUser] = useState<User>({
-    firstname: '',
-    lastname: '',
-    email: '',
-    phone: '',
-    nic: '',
-    _id: '', // Initialize without id
-  });
-  const [isEditing, setIsEditing] = useState(false);
-  const photoInputRef = useRef<HTMLInputElement>(null);
+  const [user, setUser] = useState<any>(null);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editedUser, setEditedUser] = useState<any>({});
 
   useEffect(() => {
-    if (id) {
-      fetchUserData(id);
-    }
-  }, [id]);
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem('accessToken');
 
-  const fetchUserData = async (userId: string) => {
-    try {
-      const response = await axios.get(`http://localhost:5001/SSABS/user/userhome/profile/${userId}`);
-      console.log(response)
-      setUser(response.data);
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-      toast.error('Error fetching user data');
-    }
-  };
+        if (!token) {
+          console.error('Token not found');
+          return;
+        }
 
-  const handleEditClick = () => {
+        const response = await axios.get('http://localhost:5001/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setUser(response.data);
+        setEditedUser(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  const handleEdit = () => {
     setIsEditing(true);
   };
 
-  const handleSaveClick = async () => {
+  const handleSave = async () => {
     try {
-      const formData = new FormData();
-      formData.append('firstname', user.firstname);
-      formData.append('lastname', user.lastname);
-      formData.append('phone', user.phone);
-      formData.append('nic', user.nic);
+      const token = localStorage.getItem('accessToken');
 
-      const photo = photoInputRef.current?.files?.[0];
-      if (photo) {
-        formData.append('profilePicture', photo);
+      if (!token) {
+        console.error('Token not found');
+        return;
       }
 
-      const response = await axios.put(`http://localhost:5001/SSABS/user/userhome/profile/${user._id}`, formData);
+      await axios.put('http://localhost:5001/profile', editedUser, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      if (response.status === 200) {
-        setUser(response.data);
-        setIsEditing(false);
-        toast.success('Profile updated successfully');
-      } else {
-        throw new Error('Failed to save user data');
-      }
+      setUser(editedUser);
+      setIsEditing(false);
     } catch (error) {
-      console.error('Error saving user data:', error);
-      toast.error('Failed to save user data');
+      console.error('Error updating user data:', error);
     }
   };
 
-  const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setUser({ ...user, profilePicture: e.target?.result?.toString() });
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const renderUserDetails = () => (
-    <div className="card-body">
-      <h2 className="d-flex justify-content-center m-3">Your Details</h2>
-      <p>First Name: {user.firstname}</p>
-      <p>Last Name: {user.lastname}</p>
-      <p>Email: {user.email}</p>
-      <p>Phone Number: {user.phone}</p>
-      <p>NIC: {user.nic}</p>
-      <button className="btn btn-primary" onClick={handleEditClick}>
-        Edit
-      </button>
-    </div>
-  );
-
-  const renderEditDetails = () => (
-    <form onSubmit={(e) => e.preventDefault()}>
-      <div className="card-body">
-        <h2>Your Details</h2>
-        <div className="mb-3">
-          <label htmlFor="firstname" className="form-label">
-            First Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="firstname"
-            value={user.firstname}
-            onChange={(e) => setUser({ ...user, firstname: e.target.value })}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="lastname" className="form-label">
-            Last Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="lastname"
-            value={user.lastname}
-            onChange={(e) => setUser({ ...user, lastname: e.target.value })}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            value={user.email}
-            disabled
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="phone" className="form-label">
-            Phone Number
-          </label>
-          <input
-            type="tel"
-            className="form-control"
-            id="phone"
-            value={user.phone}
-            onChange={(e) => setUser({ ...user, phone: e.target.value })}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="nic" className="form-label">
-            NIC
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="nic"
-            value={user.nic}
-            disabled
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="profilePicture" className="form-label">
-            Profile Picture
-          </label>
-          <input
-            type="file"
-            className="form-control"
-            id="profilePicture"
-            ref={photoInputRef}
-            onChange={handlePhotoChange}
-          />
-        </div>
-        <div className="d-flex justify-content-between">
-          <button className="btn btn-secondary" onClick={() => setIsEditing(false)}>
-            Cancel
-          </button>
-          <button type="submit" className="btn btn-primary" onClick={handleSaveClick}>
-            Save
-          </button>
-        </div>
-      </div>
-    </form>
-  );
-
-  const renderProfilePicture = () => {
-    if (user.profilePicture) {
-      return (
-        <img
-          src={user.profilePicture}
-          alt="Profile Picture"
-          className="rounded-circle mx-auto d-block mb-3"
-          style={{ width: '150px', height: '150px' }}
-        />
-      );
-    }
-    return (
-      <div className="text-center">
-        <FaCamera size={50} className="text-muted" />
-        <p className="text-muted">Upload Profile Picture</p>
-      </div>
-    );
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setEditedUser({ ...editedUser, [name]: value });
   };
 
   return (
-    <div className="container">
-      <UserNavigation />
-      <div className="row justify-content-center">
-        <div className="col-md-8">
-          <div className="card">
-            {renderProfilePicture()}
-            {isEditing ? renderEditDetails() : renderUserDetails()}
+    <div>
+      <UserNavigation/>
+      <div style={{ textAlign: 'center', margin: '40px' }}>
+        <h1 style={{ color: '#333', fontSize: '32px', marginBottom: '20px' }}>Profile</h1>
+        {user ? (
+          <div style={{
+            background: 'rgba(255, 255, 255, 0.8)',
+            padding: '20px',
+            borderRadius: '10px',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.5)',
+            backdropFilter: 'blur(10px)',
+            maxWidth: '400px',
+            margin: '10px  auto'
+          }}>
+            {isEditing ? (
+              <>
+                <div style={{ marginBottom: '10px' }}>
+                  <input
+                    type="text"
+                    name="firstname"
+                    value={editedUser.firstname}
+                    onChange={handleInputChange}
+                    style={{ marginBottom: '10px', padding: '5px', width: '100%', borderRadius: '4px' }}
+                  />
+                </div>
+                <div style={{ marginBottom: '10px' }}>
+                  <input
+                    type="text"
+                    name="lastname"
+                    value={editedUser.lastname}
+                    onChange={handleInputChange}
+                    style={{ marginBottom: '10px', padding: '5px', width: '100%', borderRadius: '4px' }}
+                  />
+                </div>
+                <div style={{ marginBottom: '10px' }}>
+                  <input
+                    type="text"
+                    name="email"
+                    value={editedUser.email}
+                    onChange={handleInputChange}
+                    style={{ marginBottom: '10px', padding: '5px', width: '100%', borderRadius: '4px' }}
+                  />
+                </div>
+                <div style={{ marginBottom: '10px' }}>
+                  <input
+                    type="text"
+                    name="phone"
+                    value={editedUser.phone}
+                    onChange={handleInputChange}
+                    style={{ marginBottom: '10px', padding: '5px', width: '100%', borderRadius: '4px' }}
+                  />
+                </div>
+                <button onClick={handleSave} style={{ padding: '8px 16px', borderRadius: '4px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: 'pointer' }}>Save</button>
+              </>
+            ) : (
+              <>
+                <p style={{ marginBottom: '10px' }}><strong>First Name:</strong> {user.firstname}</p>
+                <p style={{ marginBottom: '10px' }}><strong>Last Name:</strong> {user.lastname}</p>
+                <p style={{ marginBottom: '10px' }}><strong>Email:</strong> {user.email}</p>
+                <p style={{ marginBottom: '10px' }}><strong>Phone:</strong> {user.phone}</p>
+                <button onClick={handleEdit} style={{ padding: '8px 16px', borderRadius: '4px', backgroundColor: '#28a', color: 'white', border: 'none', cursor: 'pointer' }}>Edit</button>
+              </>
+            )}
           </div>
-        </div>
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
     </div>
   );

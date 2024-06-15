@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const multer = require('multer'); // for file upload
 
 const userSchema = new mongoose.Schema({
     firstname: {

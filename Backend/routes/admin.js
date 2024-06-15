@@ -1,11 +1,14 @@
 const express = require('express');
-const {getUsers,deleteUsers} = require('../contollers/userController');
-// const validateToken = require('../midleware/validationTokenHandler');
+const {adminGetUsers,deleteUsers,allTransactions,deleteReceipt} = require('../contollers/userController');
+const validateToken = require('../midleware/validationTokenHandler');
 
 const router = express.Router();
 
-router.get('/dashboard',getUsers );
+router.get('/dashboard',adminGetUsers );
 
-router.delete('/dashboard/:id',deleteUsers );	
+router.delete('/dashboard/:id',deleteUsers );
+
+router.get('/alltransaction',allTransactions);
+router.delete('/receipt/:id',deleteReceipt);
 
 module.exports = router;

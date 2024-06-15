@@ -1,23 +1,23 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Card, Flex, Form, Input, Typography } from 'antd';
+import { Button, Card, Form, Input, Typography } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import loginImage from '../assets/cartoon-t-shirt-drawing-photography-shrimps-png-clipart.jpg';
 import toast from 'react-hot-toast';
-import { AuthContext } from './AuthenticationContext';
+import { useAuth } from './AuthContext';
 
 interface LoginData {
   email: string;
   password: string;
 }
 
-function Login() {
+const Login: React.FC = () => {
   const [data, setData] = useState<LoginData>({ email: '', password: '' });
   const navigate = useNavigate();
-  const { setToken } = useContext(AuthContext);
+  const { setToken, setUser } = useAuth();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,12 +32,20 @@ function Login() {
 
       if (response.data.status === 'success') {
         localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('id', response.data.user._id);
         setToken(response.data.accessToken);
-        setData(response.data);
+        setUser(response.data.user); // Set the user data in the context
         toast.success('Login successful');
 
-        if (response.data.user.role === 'admin') {
+        const role = response.data.user.role;
+        if (role === 'admin') {
           navigate('/SSABS/admin/dashboard');
+        } else if (role === 'content_creater') {
+          navigate('/SSABS/content_creater/dashboard');
+        } else if (role === 'vehicale_owner') {
+          navigate('/SSABS/vehicale_owner/dashboard');
+        } else if (role === 'seler') {
+          navigate('/SSABS/seler/dashboard');
         } else {
           navigate('/SSABS/user/userhome');
         }
@@ -49,67 +57,71 @@ function Login() {
     }
   };
 
-
   return (
-    <Card className='form-container col-12 ' align-items-center >
-      <Flex gap="large">
-        <Flex vertical flex={1}>
-          <Typography.Title level={3} className='title'>Sign In</Typography.Title>
-          <Typography.Text type='secondary' strong className='slogan'>Unlock your account!</Typography.Text>
+    <Card className="form-container col-12 " align-items-center>
+      <div style={{ display: 'flex', gap: '20px' }}>
+        <div style={{ flex: 1 }}>
+          <Typography.Title level={3} className="title">Sign In</Typography.Title>
+          <Typography.Text type="secondary" strong className="slogan">Unlock your account!</Typography.Text>
 
-          <Form layout='vertical' onSubmitCapture={handleLogin}>
-
+          <Form layout="vertical" onSubmitCapture={handleLogin}>
             <FormItem
-              label='Email'
-              name='email'
-              rules={[{ required: true, message: 'Please input your email!' }
-                , {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              }
+              label="Email"
+              name="email"
+              rules={[
+                { required: true, message: 'Please input your email!' },
+                { type: 'email', message: 'The input is not valid E-mail!' }
               ]}
             >
-              <Input placeholder='Enter your Email' size='large' value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })}></Input>
+              <Input
+                placeholder="Enter your Email"
+                size="large"
+                value={data.email}
+                onChange={(e) => setData({ ...data, email: e.target.value })}
+              />
             </FormItem>
 
             <FormItem
-              label='Password'
-              name='password'
+              label="Password"
+              name="password"
               rules={[{ required: true, message: 'Please input your password!' }]}
             >
-              <Input.Password placeholder='Enter your Password' size='large' value={data.password} onChange={(e) => setData({ ...data, password: e.target.value })}></Input.Password>
+              <Input.Password
+                placeholder="Enter your Password"
+                size="large"
+                value={data.password}
+                onChange={(e) => setData({ ...data, password: e.target.value })}
+              />
             </FormItem>
 
             <FormItem>
               <Button
                 type="primary"
-                htmlType='submit' size='large' className='btn'>
+                htmlType="submit"
+                size="large"
+                className="btn"
+              >
                 Sign In
-
               </Button>
             </FormItem>
             <FormItem>
               <Link to="/SSABS/user/signup">
-                <Button className='btn' size='large'>Create an Account</Button>
+                <Button className="btn" size="large">Create an Account</Button>
               </Link>
             </FormItem>
-
             <FormItem>
               <Link to={'/SSABS/user/forgetpassword'}>
-              <Button  className='btn' size='large'>Forgot Password</Button>
+                <Button className="btn" size="large">Forgot Password</Button>
               </Link>
             </FormItem>
           </Form>
-        </Flex>
-        <Flex flex={1.5}>
-          <img src={loginImage} alt="Register Img" className='auth-img' />
-        </Flex>
-      </Flex>
+        </div>
+        <div style={{ flex: 1.5 }}>
+          <img src={loginImage} alt="Register Img" className="auth-img" />
+        </div>
+      </div>
     </Card>
   );
-}
+};
 
 export default Login;
-
-
-

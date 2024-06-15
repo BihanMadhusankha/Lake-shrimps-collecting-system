@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import UsersLAnding from '../LandingContent.tsx/UsersLAnding';
+import UsersLAnding from '../LandingContent/UsersLAnding';
 import UserNavigation from '../Navigations/userNav';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';

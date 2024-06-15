@@ -1,10 +1,10 @@
 import React from 'react';
-import { FaUsers, FaCog, FaSignOutAlt  } from 'react-icons/fa'; // Import FaBars icon from react-icons
+import { FaUsers, FaCog, FaSignOutAlt  } from 'react-icons/fa'; 
 import '../CSS/dash.css'
 interface SidebarLink {
-    path: string; // Path for the link
-    label: string; // Text displayed on the link
-    icon?: React.ComponentType<any>; // Optional icon component for the link
+    path: string; 
+    label: string; 
+    icon?: React.ComponentType<any>;
 }
 
 const Sidebar: React.FC = () => {

@@ -1,5 +1,6 @@
 import React from "react";
 import "./footer.css";
+import logoweb from '../assets/logoweb.png'
 
 const Footer = () => {
   return (
@@ -8,7 +9,7 @@ const Footer = () => {
         <div className='container'>
           <div  className='box bigest'>
             <div className='logo'>
-              <img src='https://files.eventleadershipinstitute.com/2018/12/ELI-Logo-Square-Black-1024x344.png' alt='' style={{ maxWidth: '100%' }} />
+              <img src =  {logoweb} alt='' style={{ maxWidth: '70%' }} />
               <h2>Do You Need Help With Anything?</h2>
               <p>Receive updates, hot deals, discounts sent straight to your inbox every month</p>
 
@@ -27,7 +28,6 @@ const Footer = () => {
               <li>  <a  style={{color:'white'}}  href='https://web.facebook.com/login/?_rdc=1&_rdr'>Facebook</a></li>
                 <li>  <a  style={{color:'white'}}  href='https://www.whatsapp.com/download'>Whatsapp </a></li>
                 <li>  <a  style={{color:'white'}}  href='https://www.instagram.com/accounts/login/?hl=en'>Instergram </a></li>
-                <li>  <a  style={{color:'white'}}  href='https://web.botim.me/#/'>Botim</a></li>
                 <li>  <a  style={{color:'white'}}  href='https://web.telegram.org/k/'>Teligram </a></li>
               </ul>
               </center> </div>
@@ -39,9 +39,7 @@ const Footer = () => {
               <ul  >
                 <li>  <a  style={{color:'white'}}  href='/aboutus'>About us </a></li>
                 <li>  <a  style={{color:'white'}}  href='/contactus'>Contact us </a></li>
-                <li>  <a  style={{color:'white'}}  href='/join'>Join with Us </a></li>
-                <li>  <a  style={{color:'white'}}  href='/details'>Details</a></li>
-                <li>  <a  style={{color:'white'}}  href='/chat'>chat </a></li>
+                <li>  <a  style={{color:'white'}}  href='/chat'>chat with AI</a></li>
               </ul>
               </center> </div>
             </div>

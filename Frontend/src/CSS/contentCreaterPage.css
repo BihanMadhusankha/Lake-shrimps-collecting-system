@@ -1,0 +1,332 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+  }
+  
+  .app {
+    text-align: center;
+  }
+  
+  .heropageconten {
+    background-color: #fff;
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .bigtitle {
+    max-width: 900px;
+  }
+  
+  .bigtitle h1a {
+    font-size: 3.5em;
+    font-family: inherit;
+    padding-top: 160px;
+    margin-bottom: 20px;
+    
+  }
+  
+  /* .find-courses {
+    background-color: #6a1b9a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: transform 0.3s, background-color 0.3s;
+  }
+   */
+  /* .find-courses:hover {
+    background-color: #54a9ea;
+    transform: scale(1.05);
+    
+  } */
+
+
+  .btn-outline-primary {
+    width: 200px;
+  }
+  
+  .contact {
+    margin-top: 20px;
+    font-size: 1em;
+  }
+  
+  .contact a {
+    color: #6a1b9a;
+    text-decoration: none;
+  }
+  
+  .intro-images {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .intro-images img {
+    width: 200px;
+    
+    padding-top: 45px;
+    height: auto;
+    margin: 0 10px;
+    border-top-left-radius: 110px;
+    border-bottom-right-radius: 110px;
+  }
+
+  .intro-images2 img{
+    height: 200px;
+    width: 200px;
+    margin: 0 10px;
+    border-top-right-radius: 70px;
+    border-bottom-left-radius: 70px;
+  }
+
+  .intro-images3{
+    position:relative;
+    padding-left: 690px;
+    
+    
+    
+    
+  }
+
+  .heroimg{
+    
+    display: flex;
+    background-image: url('../assets//contentpgbgimg.png');
+   padding: 50px;
+   
+   align-items: center;
+  }
+
+  .heropageconten{
+    display: flex;
+  }
+  
+  .features {
+    background-color: #e0f7fa;
+    padding: 50px 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .feature1 {
+    background-color: #fcc2fc;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 300px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .feature2 {
+    background-color: #f9f39f;
+    margin: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feature3 {
+    background-color: #b3fcb9;
+    margin: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .feature1 p, .feature2 p, .feature3 p {
+    font-size: 1em;
+    color: #555;
+    transition: color 0.3s ease;
+} 
+
+.feature1:hover, .feature2:hover, .feature3:hover {
+  transform: scale(2.05);
+  width: 310px;
+  height: 230px;
+  cursor: pointer;
+  background-color: #81d4fa;
+  color: #000;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.feature1:hover h2, .feature2:hover h2, .feature3:hover h2 {
+  color: #fdfefe;
+}
+
+.feature1:hover p, .feature2:hover p, .feature3:hover p {
+  color: #060606;
+}
+
+.feature1::before, .feature2::before, .feature3::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 10px;
+}
+
+.feature1:hover::before, .feature2:hover::before, .feature3:hover::before {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .features {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .feature1, .feature2, .feature3 {
+      width: 90%;
+  }
+}
+
+  
+  /* .instructors {
+    background-color: #fff;
+    padding: 50px 20px;
+  }
+  
+  .instructor-card {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 0 auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  } */
+  
+  .instructors {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .allinstructorsimgandword {
+    display: flex;
+    align-items: center;
+  }
+  
+  .instructor-card {
+    margin-right: 20px;
+  }
+  
+  .instructor-card img {
+    width: 200px;
+    height: auto;
+  }
+  
+  .instructorcwords {
+    max-width: 500px;
+  }
+
+  .btn-outline-warning{
+    width: 200px;
+  }
+  
+
+
+  /* finish instrutors  */
+  .courses {
+    background-color: #fff;
+    padding: 50px 20px;
+  }
+
+  .catagorypoost{
+    font-size: 42px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  
+  .course-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .course-card {
+    background-color: #070707;
+    
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 200px;
+    box-shadow: 0px 0px 10px rgba(13, 161, 224, 0.959);
+  }
+
+  .course-card:hover {
+    box-shadow: 0px 0px 10px rgb(245, 16, 8);
+
+  }
+
+  .topicwordscard{
+    font-size: 29px;
+    color: #1a1592;
+    
+    
+  }
+
+  .dipwordpost{
+    color: #09090a; /* Green color */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Shadow effect */
+  padding: 10px; /* Padding for the box */
+  background-color: #f0f0f0; /* Background color for the box */
+  }
+  
+  .browse-more-courses {
+    background-color: #388e3c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: transform 0.3s, background-color 0.3s;
+  }
+  
+  .browse-more-courses:hover {
+    background-color: blue;
+    color:rgb(251, 250, 250);
+    transform: scale(1.05);
+  }
+  
+
+
+  /* slidimgs */
+
+  .slidimgs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+   
+  }
+  
+  .description {
+    width: 50%;
+    display: flex;
+    margin-left: 50px;
+    justify-content: center;
+  }
+  
+  #carouselExampleAutoplaying {
+    width: 50%;
+    margin-left: 90px;
+    align-self: flex-end; 
+  }
+  
