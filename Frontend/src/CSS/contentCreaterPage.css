@@ -212,20 +212,22 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   } */
   
-  .instructors {
+  .instructorsq {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
   }
   
-  .allinstructorsimgandword {
+  .allinstructorsimgandwordh {
     display: flex;
     align-items: center;
   }
   
-  .instructor-card {
+  .instructor-cardh {
     margin-right: 20px;
+    border-top-left-radius: 70px;
+    border-bottom-right-radius: 70px;
   }
   
   .instructor-card img {
@@ -235,6 +237,21 @@ body {
   
   .instructorcwords {
     max-width: 500px;
+    margin:10px;
+    padding: 20px;
+    font: 1em sans-serif;
+    font-size: 23px;
+    /* border-radius: 10px; */
+    /* background-color: #f5f5f5; */
+    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+    /* width: 300px; */
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+ 
+  }
+
+  .inh2eka{
+    font-size: 54px;
+    font-family: 'Times New Roman', Times, serif;
   }
 
   .btn-outline-warning{
@@ -244,52 +261,57 @@ body {
 
 
   /* finish instrutors  */
-  .courses {
+  .coursesbox {
     background-color: #fff;
     padding: 50px 20px;
   }
 
-  .catagorypoost{
+  .catagorypooost{
     font-size: 42px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
   
-  .course-list {
+  .course-list1 {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
   }
   
-  .course-card {
-    background-color: #070707;
+  .course-card2 {
+    background-color: #07070744;
     
     margin: 10px;
     padding: 20px;
     border-radius: 10px;
-    width: 200px;
-    box-shadow: 0px 0px 10px rgba(13, 161, 224, 0.959);
+    width:400px;
+    height:auto;
+    box-shadow: 0px 0px 10px rgba(13, 161, 224, 0.785);
   }
 
-  .course-card:hover {
+  .course-card2:hover {
     box-shadow: 0px 0px 10px rgb(245, 16, 8);
+    cursor: pointer;
+    transform: scale(1.05);
+  
 
   }
 
-  .topicwordscard{
+  .topicwordscard1{
     font-size: 29px;
     color: #1a1592;
     
     
   }
 
-  .dipwordpost{
+  .dipwordpost1{
     color: #09090a; /* Green color */
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Shadow effect */
   padding: 10px; /* Padding for the box */
-  background-color: #f0f0f0; /* Background color for the box */
+  border-radius: 10px;
+  background-color: #f0f0f05d; /* Background color for the box */
   }
   
-  .browse-more-courses {
+  /* .browse-more-courses {
     background-color: #388e3c;
     color: white;
     padding: 10px 20px;
@@ -304,7 +326,7 @@ body {
     background-color: blue;
     color:rgb(251, 250, 250);
     transform: scale(1.05);
-  }
+  } */
   
 
 

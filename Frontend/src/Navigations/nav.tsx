@@ -18,8 +18,8 @@ function Navigation() {
                                 <a href="#" className="nav-link px-2 text-white">Home</a>
                             </li></Link>
                             <Link to={'/Notfounded'}><li><a href="#" className="nav-link px-2 text-white">Sellers</a></li></Link>
-                            <Link to={'/Notfounded'}><li><a href="#" className="nav-link px-2 text-white">Vehi.Owner</a></li></Link>
-                            <Link to={'/Notfounded'}><li><a href="#" className="nav-link px-2 text-white">Con.Creaters</a></li></Link>
+                            <Link to={'/Notfounded'}><li><a href="#" className="nav-link px-2 text-white">Vehicle Owner</a></li></Link>
+                            <Link to={'/Notfounded'}><li><a href="#" className="nav-link px-2 text-white">Instructors</a></li></Link>
                         </ul>
 
                         <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-4" role="search">

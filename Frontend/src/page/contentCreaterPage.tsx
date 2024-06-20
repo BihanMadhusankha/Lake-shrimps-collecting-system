@@ -73,7 +73,7 @@ export default function ContentCreatorPage() {
             <div className="bigtitle m-6">
               <h1 className="bigtitle m-6" data-aos="fade-left"  >The best program to Enroll for exchange</h1>
               {/* <button className="btn btn-outline-primary">Find courses →</button> */}
-              <Link to={'#'}> <button className="btn btn-outline-warning">Find INSTRUCTORS →</button></Link>
+              {/* <Link to={'#'}> <button className="btn btn-outline-warning">Find INSTRUCTORS →</button></Link> */}
 
              
             </div>
@@ -124,20 +124,20 @@ export default function ContentCreatorPage() {
 
 
 
-        <section className="instructors">
+        <section className="instructorsq">
 
-          <div className="allinstructorsimgandword">
+          <div className="allinstructorsimgandwordh">
 
-            <div className="instructor-card ">
-              <img src={Contentimge2} alt="hero banner" />
+            <div className="instructor-cardh ">
+              <img data-aos="zoom-in" className="instructor-cardh" src={Contentimge2} alt="hero banner" />
             </div>
 
-            <div className="instructorcwords">
-              <h2>INSTRUCTORS</h2>
-              <h3>Ray Sanchez</h3>
+            <div data-aos="fade-left" className="instructorcwords">
+              <h2 className= "inh2eka">INSTRUCTORS</h2>
+              <h3>Learn with us</h3>
               <p>Minim veniam nostrud exer citation.</p>
               <p>20K+ Enrolled learners</p>
-              <Link to={'/SSABS/user/userhome/FindINSTRUCTORS'}> <button className="btn btn-outline-warning">Find INSTRUCTORS →</button></Link>
+              <Link to={'/SSABS/user/userhome/FindINSTRUCTORS'}> <button className="btn btn-primary">Find INSTRUCTORS →</button></Link>
             </div>
 
           </div>
@@ -177,21 +177,21 @@ export default function ContentCreatorPage() {
 
 
 
-        <section className="courses">
-          <h2 className='catagorypoost'>categories to explore when learning about shrimp</h2>
-          <div className="course-list">
-            <div className="course-card">
-              <h3 className='topicwordscard'>Aquaculture and Farming Techniques:</h3>
+        <section className="coursesbox">
+          <h2 className='catagorypooost'>categories to explore when learning about shrimp</h2>
+          <div className="course-list1">
+            <div className="course-card2">
+              <h3 className='topicwordscard1'>Aquaculture and Farming Techniques:</h3>
              
-              <p className='dipwordpost'>Explore the various methods and technologies used in shrimp farming, such as pond culture, recirculating aquaculture systems (RAS), and biofloc technology.</p>
+              <p className='dipwordpost1'>Explore the various methods and technologies used in shrimp farming, such as pond culture, recirculating aquaculture systems (RAS), and biofloc technology.</p>
             </div>
-            <div className="course-card">
-              <h3 className='topicwordscard'>Shrimp Species and Biology:</h3>
-              <p className='dipwordpost'>Study the different species of shrimp commonly farmed around the world, such as Pacific white shrimp (Litopenaeus vannamei), black tiger shrimp (Penaeus monodon), and freshwater prawns (Macrobrachium spp.).</p>
+            <div className="course-card2">
+              <h3 className='topicwordscard1'>Shrimp Species and Biology:</h3>
+              <p className='dipwordpost1'>Study the different species of shrimp commonly farmed around the world, such as Pacific white shrimp (Litopenaeus vannamei), black tiger shrimp (Penaeus monodon), and freshwater prawns (Macrobrachium spp.).</p>
             </div>
-            <div className="course-card">
-              <h3 className='topicwordscard'>Market Trends and Economics:</h3>
-              <p className='dipwordpost'>Investigate global trends in shrimp consumption, production, and trade, including key importing and exporting countries. Analyze market dynamics, pricing factors, and demand drivers influencing the shrimp industry, such as consumer preferences, dietary trends, and health considerations.</p>
+            <div className="course-card2">
+              <h3 className='topicwordscard1'>Market Trends and Economics:</h3>
+              <p className='dipwordpost1'>Investigate global trends in shrimp consumption, production, and trade, including key importing and exporting countries. Analyze market dynamics, pricing factors, and demand drivers influencing the shrimp industry, such as consumer preferences, dietary trends, and health considerations.</p>
             </div>
           </div>
           {/* <button className="browse-more-courses">Browse more courses →</button> */}

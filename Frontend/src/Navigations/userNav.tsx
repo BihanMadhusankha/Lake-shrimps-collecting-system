@@ -41,7 +41,7 @@ const UserNavigation: React.FC = () => {
                                 <li><a href="#" className="nav-link px-2 text-white">Sellers</a></li>
                             </Link>
                             <Link to={'/SSABS/user/userhome/con.creaters'}>
-                                <li><a href="#" className="nav-link px-2 text-white">Con.Creaters</a></li>
+                                <li><a href="#" className="nav-link px-2 text-white">Instructors</a></li>
                             </Link><Link to={'/chat'}>
                                 <li><a href="#" className="nav-link px-2 text-white">Chat AI</a></li>
                             </Link>

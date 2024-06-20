@@ -12,10 +12,25 @@ interface CardProps {
   image?: string;
 }
 
+const cardStyle: React.CSSProperties = {
+  margin: '10px',
+  padding: '15px',
+  textAlign: 'center',
+  boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+  borderRadius: '8px',
+  backgroundColor: '#ffffff',
+};
+
+const imgStyle: React.CSSProperties = {
+  maxHeight: '100%',
+  maxWidth: '100%',
+  objectFit: 'cover',
+};
+
 const Card: React.FC<CardProps> = ({ title, linkTo, image }) => {
   return (
-    <div className="card m-2 text-center">
-      {image && <img src={image} alt={title} className="card-img-top" style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'cover' }} />}
+    <div className="card m-2 text-center" style={cardStyle}>
+      {image && <img src={image} alt={title} className="card-img-top" style={imgStyle} />}
       <div className="card-body">
         <Link to={linkTo} className="card-title">{title}</Link>
       </div>
@@ -29,17 +44,34 @@ interface ShrimpCategoryProps {
   animation: string;
 }
 
+const shrimpCategoryStyle: React.CSSProperties = {
+  margin: '20px',
+  padding: '20px',
+  textAlign: 'center',
+  boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+  borderRadius: '8px',
+  backgroundColor: '#ffffff',
+  transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+};
+
 const ShrimpCategory: React.FC<ShrimpCategoryProps> = ({ title, description, animation }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
 
+  const categoryStyle: React.CSSProperties = {
+    ...shrimpCategoryStyle,
+    transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+    boxShadow: isHovered ? '0 4px 20px rgba(0, 0, 0, 0.2)' : '0 0 10px rgba(0,0,0,0.1)',
+  };
+
   return (
     <div
       className={`shrimp-category ${isHovered ? animation : ''}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      style={categoryStyle}
     >
       <h3>{title}</h3>
       <p>{description}</p>
@@ -89,51 +121,51 @@ const UsersLanding: React.FC = () => {
     <div className="shrimp-market-landing kerala-theme">
       {/* Hero section with carousel or video */}
       <section className="hero">
-        <div id="carouselExampleSlidesOnly" className="carousel " data-ride="carousel">
-          <div className="carousel-inner  ">
+        <div id="carouselExampleSlidesOnly" className="carousel" data-ride="carousel">
+          <div className="carousel-inner">
             <div className="carousel-item active vh-100">
-              <img className="vh-100   w-100" src={landingImg} alt="First slide" />
-              <h1 className='h-tag-container vh-100 opacity-0.7' data-aos="zoom-in-up">Welcome to the Sustainable Shrimp Revolution</h1>
+              <img className="vh-100 w-100" src={landingImg} alt="First slide" />
+              <h1 className="h-tag-container vh-100 opacity-0.7" >Welcome to the Sustainable Shrimp Revolution</h1>
             </div>
           </div>
         </div>
       </section>
 
-      <div className='m-4 d-flex flex-row ' data-aos="fade-right">
-        <div className='col-6'>
+      <div className="m-4 d-flex flex-row" data-aos="fade-right">
+        <div className="col-6">
           <section className="about-company">
             <h1>About Shrimps</h1>
             <h4>Welcome to Shrimp Haven</h4>
-            <p className=' opacity-0.7'>{aboutShrimps}</p>
+            <p style={{ opacity: 0.7 }}>{aboutShrimps}</p>
 
             <h4>Our Story</h4>
-            <p className=' opacity-0.7'>{ourStory}</p>
+            <p style={{ opacity: 0.7 }}>{ourStory}</p>
           </section>
         </div>
 
-        <div className='col-6  ' data-aos="fade-left">
-          <img className='w-100' src={landingImg} alt="About" />
+        <div className="col-6" data-aos="fade-left">
+          <img className="w-100" src={landingImg} alt="About" />
         </div>
       </div>
 
-      <div className='m-4 d-flex flex-row ' data-aos="fade-right">
-        <div className='col-6  ' data-aos="fade-left">
-          <img className='w-100' src={landingImg} alt="About" />
+      <div className="m-4 d-flex flex-row" data-aos="fade-right">
+        <div className="col-6" data-aos="fade-left">
+          <img className="w-100" src={landingImg} alt="About" />
         </div>
-        <div className='col-6 '>
-          <section className="about-company ">
+        <div className="col-6">
+          <section className="about-company">
             <Link to={'/SSABS/user/daylyproducts'}>
-              <div className='card w-100 '>
-                <h2>Today Products</h2>
+              <div className="card w-100">
+                <h2>Today's Products</h2>
               </div>
             </Link>
           </section>
         </div>
       </div>
 
-      <section className="user-categories m-4 ">
-        <h2 className=' m-3' >Who is the person you want ?</h2>
-        <div className="mt-3 d-flex flex-row justify-content-center mt-2" data-aos="fade-up">
+      <section className="user-categories m-4">
+        <h2 className="m-3">Who is the person you want?</h2>
+        <div className="mt-3 d-flex flex-row justify-content-center" data-aos="fade-up">
           {titles.map((item, index) => (
             <Card key={index} title={item.title} linkTo={item.linkTo} />
           ))}
@@ -141,9 +173,9 @@ const UsersLanding: React.FC = () => {
       </section>
 
       <section className="shrimp-categories">
-        <h2 className='m-4 d-flex justify-content-center '>Explore Shrimp Categories</h2>
-        <div className="row  " data-aos="zoom-in">
-          <div className=' d-flex flex-row justify-content-center'>
+        <h2 className="m-4 d-flex justify-content-center">Explore Shrimp Categories</h2>
+        <div className="row" data-aos="zoom-in">
+          <div className="d-flex flex-row justify-content-center">
             {shrimpCategories.map((category, index) => (
               <ShrimpCategory key={index} {...category} />
             ))}
@@ -152,6 +184,6 @@ const UsersLanding: React.FC = () => {
       </section>
     </div>
   );
-}
+};
 
 export default UsersLanding;
