@@ -13,8 +13,6 @@ import UserHome from './Users/userhome';
 import SelerDashboard from './Sealer/SealerDashboard';
 
 import DaylyProducts from './LandingContent/DaylyProducts'
-
-// import Sealerhome from './Sealer/sealerhome';
 import AddProductFormSealer from './Sealer/AddProductFormSealer';
 import SealerAllProducts from './Sealer/Dashboard'
 
@@ -31,7 +29,6 @@ import VehicleListPage from './VehicaleOwners/VehicleListPage';
 import BookingForm from './VehicaleOwners/BookingForm';
 
 import SellerRequestHistory from './Sealer/SellerRequestHistory'
-// import ConCreatersPage from './page/contentCreaterPage';
 import ShrimpColorMonitoring from './page/byColor'
 import UserProfile from './Users/profile';
 import Contentcraterprofile from './ContentCreater/contentcraterprofile';
@@ -47,7 +44,6 @@ import 'aos/dist/aos.js';
 import 'aos/dist/aos.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-// import VehicleList from './delivery/VehicleList'
 
 import NotFound from './page/Notfounded';
 import AdminUsers from './Admin/AdminUsers';
@@ -64,7 +60,6 @@ import ContactUs from './page/ContactUs';
 import ChatAi from './page/ChatAi';
 
 function App() {
-  // State to store the logged-in seller ID
 
   useEffect(() => {
     AOS.init({
@@ -91,7 +86,6 @@ function App() {
         <Route path="/SSABS/user/forgetpassword" element={<Forgetpassword />} />
         <Route path="/SSABS/user/resetPassword" element={<ResetPassword />} />
 
-        {/* Dashboard */}
         <Route path="/SSABS/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/SSABS/content_creater/dashboard" element={<ContentCreaterDashoard />} />
         <Route path="/SSABS/vehicale_owner/dashboard" element={<VehicaleOwnerDashboard />} />
@@ -122,9 +116,8 @@ function App() {
         <Route path='/SSABS/user/userhome/profile' element={<UserProfile />} />
         <Route path='/SSABS/user/userhome/byColor' element={<ShrimpColorMonitoring />} />
        
-      </Routes>
+     
       <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
-      <Routes>
         
         
         <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} />

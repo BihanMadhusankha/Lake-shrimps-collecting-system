@@ -35,7 +35,7 @@ const Carousel: React.FC = () => {
           carouselRef.current.appendChild(firstChild);
         }
       }
-    }, 120000); // Change image every 2 seconds
+    }, 120000); 
 
     return () => clearInterval(interval);
   }, []);

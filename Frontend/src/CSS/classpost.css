@@ -8,12 +8,12 @@
   
   .onebyoneimgs {
     display: flex;
-    width: calc(100% * 2); /* Adjust based on the number of images */
+    width: calc(100% * 2);
     animation: slide 220s infinite linear;
   }
   
   .onebyoneimgs img {
-    width: 90%; /* Adjust based on the number of images */
+    width: 90%; 
     transition: transform 0.9s ease;
   }
   

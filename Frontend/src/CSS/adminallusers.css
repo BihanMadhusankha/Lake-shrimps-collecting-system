@@ -86,7 +86,7 @@
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    font-size: 14px; /* Smaller font size */
+    font-size: 14px;
   }
   
   .generate-pdf {
@@ -115,7 +115,7 @@
   }
   
   .delete-button {
-    background-color: #dc3545; /* Red background for delete button */
+    background-color: #dc3545; 
     color: white;
   }
   
@@ -143,12 +143,12 @@
   /* searchbar */
 
 
-  /* adminallusers.css */
+ 
 
 /* Search container */
 .search-container {
   position: relative;
-  margin: 0 auto; /* Add this line to center the search container */
+  margin: 0 auto; 
 }
 
 /* Search input */

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import AdminNavigation from './AdminNAvigation'; // Fixed the typo in the component name
+import AdminNavigation from './AdminNAvigation'; 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import jsPDF from 'jspdf';

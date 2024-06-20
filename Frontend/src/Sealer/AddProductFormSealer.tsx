@@ -151,7 +151,6 @@ const AddProductFormSealer: React.FC = () => {
             <option value="Cocktail shrimp">Cocktail shrimp</option>
             <option value="Large shrimp">Large shrimp</option>
             <option value="Jumbo shrimp">Jumbo shrimp</option>
-            {/* Add more options as needed */}
           </select>
           {errors.name && <div className="error">{errors.name}</div>}
         </div>

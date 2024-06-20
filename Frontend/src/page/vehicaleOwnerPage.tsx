@@ -18,7 +18,7 @@ interface Vehicle {
   licensePlate: string;
   vehicleType: string;
   photo: string;
-  _id: string; // Assuming vehicle has an ID
+  _id: string; 
 }
 
 const VehicleOwnerPage: React.FC = () => {

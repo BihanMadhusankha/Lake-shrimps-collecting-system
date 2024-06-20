@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
-import VehicleOwnerNav from './vehicleNav'; // Assuming you have a component named VehicleOwnerNav
+import VehicleOwnerNav from './vehicleNav'; 
 
 interface User {
   firstname: string;

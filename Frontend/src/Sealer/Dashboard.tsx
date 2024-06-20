@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import EditProductModal from './EditProductModal'; // Import the EditProductModal component
+import EditProductModal from './EditProductModal'; 
 import SealerNav from './sealerNav';
 import jsPDF from 'jspdf';
 
@@ -18,16 +18,16 @@ const Dashboard: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<string>(''); // State for the selected date
-  const [searchQuery, setSearchQuery] = useState<string>(''); // State for search query
+  const [selectedDate, setSelectedDate] = useState<string>(''); 
+  const [searchQuery, setSearchQuery] = useState<string>(''); 
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const token = localStorage.getItem('accessToken'); // Retrieve token from localStorage
+        const token = localStorage.getItem('accessToken'); 
         const response = await axios.get<Product[]>('http://localhost:5001/SSABS/seler/products', {
           headers: {
-            Authorization: `Bearer ${token}` // Attach token to request headers
+            Authorization: `Bearer ${token}`
           }
         });
         setProducts(response.data);
@@ -41,10 +41,10 @@ const Dashboard: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      const token = localStorage.getItem('accessToken'); // Retrieve token from localStorage
+      const token = localStorage.getItem('accessToken'); 
       await axios.delete(`http://localhost:5001/SSABS/seler/products/${id}`, {
         headers: {
-          Authorization: `Bearer ${token}` // Attach token to request headers
+          Authorization: `Bearer ${token}` 
         }
       });
       setProducts(products.filter(product => product._id !== id));
@@ -73,7 +73,6 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  // Filter products based on selected date and search query
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesSearch ;
@@ -223,7 +222,6 @@ const Dashboard: React.FC = () => {
   );
 };
 
-// Adding global CSS for animations
 const style = document.createElement('style');
 style.innerHTML = `
   @keyframes fadeIn {
