@@ -44,7 +44,7 @@ const UpdateVehicleModal: React.FC<Props> = ({ vehicle, closeModal }) => {
   };
 
   const handleCancelClick = () => {
-    closeModal(); // Close the modal when cancel button is clicked
+    closeModal(); 
   };
 
   return (

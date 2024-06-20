@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import AdminNav from './AdminNAvigation'; // Import your AdminNav component
+import AdminNav from './AdminNAvigation'; 
 
 const AdminProfile: React.FC = () => {
   const [admin, setAdmin] = useState<any>(null);

@@ -3,7 +3,7 @@ import landingImg from '../assets/landing.jpg';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import Aos from 'aos'; // Animation library
+import Aos from 'aos'; 
 import 'aos/dist/aos.css';
 
 interface CardProps {
@@ -98,28 +98,27 @@ const UsersLanding: React.FC = () => {
     {
       title: 'By Color',
       description: 'Explore shrimp varieties based on their distinctive colors and flavors.',
-      animation: 'animate__fadeInLeft', // Add your desired animation class
+      animation: 'animate__fadeInLeft', 
     },
     {
       title: 'By Size',
       description: 'Find the perfect shrimp size for your culinary creations, from jumbo to small.',
-      animation: 'animate__fadeInUp', // Add your desired animation class
+      animation: 'animate__fadeInUp', 
     },
     {
       title: 'By Species',
       description: 'Discover the unique characteristics and tastes of different shrimp species.',
-      animation: 'animate__fadeInRight', // Add your desired animation class
+      animation: 'animate__fadeInRight',
     },
     {
       title: 'By Preparation',
       description: 'Choose from head-on, peeled & deveined, frozen, or fresh shrimp for convenience.',
-      animation: 'animate__bounce', // Add your desired animation class
+      animation: 'animate__bounce', 
     },
   ];
 
   return (
     <div className="shrimp-market-landing kerala-theme">
-      {/* Hero section with carousel or video */}
       <section className="hero">
         <div id="carouselExampleSlidesOnly" className="carousel" data-ride="carousel">
           <div className="carousel-inner">

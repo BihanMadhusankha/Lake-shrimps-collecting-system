@@ -25,7 +25,7 @@ const ChatAi: React.FC = () => {
             });
 
             setAnswer(response.data.candidates[0].content.parts[0].text);
-            setQuestion(""); // Clearing the input field
+            setQuestion("");
         } catch (error) {
             console.error("Error generating answer:", error);
             setAnswer("Error generating answer. Please try again.");

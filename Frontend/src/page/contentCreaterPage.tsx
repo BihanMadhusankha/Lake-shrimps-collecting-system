@@ -6,15 +6,9 @@ import Contentimge2 from '../assets/contendpgstudent2.jpg';
 import slidimd1 from '../assets/slidimg1.jpeg';
 import slidimd2 from '../assets/slidimg2.jpg';
 import slidimd3 from '../assets/slidimg3.jpg';
-
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import Advertisment from '../page/classpost'
-
-
-
-
 
 
 export default function ContentCreatorPage() {
@@ -72,8 +66,7 @@ export default function ContentCreatorPage() {
 
             <div className="bigtitle m-6">
               <h1 className="bigtitle m-6" data-aos="fade-left"  >The best program to Enroll for exchange</h1>
-              {/* <button className="btn btn-outline-primary">Find courses →</button> */}
-              {/* <Link to={'#'}> <button className="btn btn-outline-warning">Find INSTRUCTORS →</button></Link> */}
+              <Link to={'#'}> <button className="btn btn-outline-warning">Find INSTRUCTORS →</button></Link>
 
              
             </div>
@@ -98,14 +91,7 @@ export default function ContentCreatorPage() {
 
 
           </div>
-
-
-        {/* class post here to play */}
         <Advertisment />
-
-        {/* class post here to play */}
-
-
 
         <section className="features">
           <div className="feature1" data-aos="zoom-in">
@@ -144,7 +130,6 @@ export default function ContentCreatorPage() {
 
         </section>
 
-        {/* new slids  */}
 
         <div className="slidimgs">
           <div className="description">
@@ -173,9 +158,6 @@ export default function ContentCreatorPage() {
           </div>
         </div>
 
-        {/* new slids  */}
-
-
 
         <section className="coursesbox">
           <h2 className='catagorypooost'>categories to explore when learning about shrimp</h2>
@@ -194,13 +176,9 @@ export default function ContentCreatorPage() {
               <p className='dipwordpost1'>Investigate global trends in shrimp consumption, production, and trade, including key importing and exporting countries. Analyze market dynamics, pricing factors, and demand drivers influencing the shrimp industry, such as consumer preferences, dietary trends, and health considerations.</p>
             </div>
           </div>
-          {/* <button className="browse-more-courses">Browse more courses →</button> */}
         </section>
 
 
-
-
-        {/* youtube video here */}
 
         <div className="blog-container">
 
@@ -224,11 +202,6 @@ export default function ContentCreatorPage() {
           </div>
 
         </div>
-
-
-        {/* youtube video here */}
-
-
 
 
 

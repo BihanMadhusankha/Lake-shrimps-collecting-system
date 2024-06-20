@@ -3,11 +3,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Center form vertically */
+    justify-content: center; 
     padding: 20px;
     border-radius: 5px;
-    background-color: #fff; /* Light background */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #fff; 
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
     transition: transform 0.2s ease-in-out;
     max-width: 80%;
     margin: 100px;
@@ -53,8 +53,8 @@
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    background-color: #007bff; /* Blue primary button */
-    color: #fff; /* White text for primary button */
+    background-color: #007bff; 
+    color: #fff; 
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     text-transform: uppercase;
     transition: transform 0.2s ease-in-out;
@@ -62,8 +62,8 @@
   }
   
   .btn.primary {
-    background-color: #007bff; /* Blue primary button */
-    color: #fff; /* White text for primary button */
+    background-color: #007bff; 
+    color: #fff; 
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     text-transform: uppercase;
     transition: transform 0.2s ease-in-out;
@@ -86,36 +86,34 @@
     cursor: pointer;
     font-weight: bold;
     transition: transform 0.3s ease-in-out;
-    background-color: #007bff; /* Blue primary button */
-    color: #fff; /* White text for primary button */
+    background-color: #007bff; 
+    color: #fff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     text-transform: uppercase;
 
   }
   
-  /* Responsive styles */
   @media (max-width: 768px) {
     .form-container {
-      flex-direction: column-reverse; /* Stack form on top of image on small screens */
+      flex-direction: column-reverse; 
       
     }
   
     .title, .slogan {
-      margin-top: 10px; /* Adjust spacing on smaller screens */
+      margin-top: 10px;
     }
   
     .btn {
-      margin: 5px auto; /* Center buttons horizontally on small screens */
+      margin: 5px auto;
     }
   
     .auth-img {
-      width: 100%; /* Ensure image fills container width on small screens */
+      width: 100%; 
     }
   }
   
-  /* UI Enhancements (optional) */
   .form-container {
-    animation: fadeIn 0.5s ease-in-out forwards; /* Basic fade-in animation */
+    animation: fadeIn 0.5s ease-in-out forwards; 
   }
   
   @keyframes fadeIn {
@@ -132,8 +130,8 @@
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    background-color: #007bff; /* Blue primary button */
-    color: #fff; /* White text for primary button */
+    background-color: #007bff; 
+    color: #fff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     text-transform: uppercase;
     transition: transform 0.2s ease-in-out;
@@ -144,7 +142,7 @@
   .form-item label {
     display: block;
     margin-bottom: 5px;
-    font-weight: bold; /* Emphasize labels */
+    font-weight: bold; 
   }
   
   .input {

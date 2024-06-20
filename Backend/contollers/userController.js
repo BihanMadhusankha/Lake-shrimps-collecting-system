@@ -126,8 +126,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
 })
 
 const getUserProfile = async (req, res) => {
-  // Access protected user data or perform actions (replace with your logic)
-  console.log('User accessed protected resource:', req.user); // User data from decoded token
+  console.log('User accessed protected resource:', req.user); 
   res.json({ message: 'Welcome, authorized user!' });
 }
 
@@ -155,7 +154,7 @@ const VehicalOwnerPage = async (req, res) => {
 
 const adminGetUsers = async (req, res) => {
   try {
-    const users = await User.find(); // Find all users in the collection
+    const users = await User.find(); 
     res.json(users);
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -184,15 +183,11 @@ const deleteUsers = async (req, res) => {
 
 const Products = async (req, res) => {
   try {
-    // Assuming you're using JWT and the user's ID is stored in the token payload
     const sellerId = req.user.id;
-
-    // Assuming the request body contains the product details
     const { name, price, totalHarvest, description } = req.body;
 
     const createdAt = new Date();
 
-    // Create a new product object
     const newProduct = new Product({
       name,
       price,
@@ -202,13 +197,10 @@ const Products = async (req, res) => {
       createdAt
     });
 
-    // Save the product to the database
     await newProduct.save();
 
-    // Respond with a success message
     res.status(201).json({ message: 'Product added successfully' });
   } catch (error) {
-    // If an error occurs, respond with an error message
     console.error('Error adding product:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -272,7 +264,6 @@ const productveiw = async (req, res) => {
     const startOfLast24Hours = new Date(now);
     startOfLast24Hours.setHours(startOfLast24Hours.getHours() - 24);
 
-    // Log the start and end time for debugging
     console.log('Start of Last 24 Hours:', startOfLast24Hours);
     console.log('Now:', now);
 
@@ -284,13 +275,11 @@ const productveiw = async (req, res) => {
       }
     });
 
-    // Log the fetched products
     console.log('Fetched Products:', products);
 
     // Send the response
     res.json(products);
   } catch (err) {
-    // Log and send an error response if an error occurs
     console.error('Error fetching products:', err);
     res.status(500).json({ message: err.message });
   }
@@ -328,7 +317,7 @@ const PostRequest = async (req, res) => {
       quantity,
       totalAmount,
       sellerId,
-      userId,  // Include userId in the new request
+      userId,  
     });
 
     const savedRequest = await newRequest.save();
@@ -340,7 +329,7 @@ const PostRequest = async (req, res) => {
 }
 
 const getRequestHistory = async (req, res) => {
-  const sellerId = req.user.id; // Assuming user ID is available in req.user
+  const sellerId = req.user.id; 
   try {
     const requests = await Request.find({ sellerId: sellerId });
     res.json(requests);
@@ -366,7 +355,6 @@ const requestAccept = async (req, res) => {
     request.sellerId = sellerId;
     await request.save();
 
-    // Send a message to the user
     const message = new Message({
       userId: userId,
       sellerId: sellerId,
@@ -414,7 +402,7 @@ const deleteMessage = async (req, res) => {
 
     
 
-    await Message.findByIdAndDelete(message); // Use remove() method to delete the document
+    await Message.findByIdAndDelete(message); 
     res.json({ message: 'Message deleted successfully' });
   } catch (error) {
     console.error('Error deleting message:', error);
@@ -439,7 +427,7 @@ const uploadPaymentReceipt = async (req, res) => {
   try {
     const file = req.file;
     const { sellerId } = req.body;
-    console.log(sellerId); // Debug log to check if sellerId is received
+    console.log(sellerId); 
 
     if (!file) {
       return res.status(400).json({ message: 'No file uploaded' });
@@ -470,7 +458,7 @@ const uploadPaymentReceipt = async (req, res) => {
 
 const getUploadPhoto = async (req, res) => {
   try {
-    const sellerId = req.user.id; // Assuming req.user contains authenticated seller info
+    const sellerId = req.user.id; 
     const receipts = await Receipt.find({ sellerId });
 
     if (!receipts) {
@@ -508,7 +496,6 @@ const search =async (req, res) => {
   const { query } = req.query;
 
   try {
-      // Search instructors
       const instructors = await User.find({
           $or: [
               { firstname: { $regex: query, $options: 'i' } },
@@ -516,7 +503,6 @@ const search =async (req, res) => {
           ]
       });
 
-      // Search products
       const products = await Product.find({
           $or: [
               { title: { $regex: query, $options: 'i' } },
@@ -531,7 +517,6 @@ const search =async (req, res) => {
 }
 
 const logout = asyncHandler(async (req, res) => {
-  // res.clearCookie('accessToken');
   res.json({ message: 'User logged out successfully' })
 });
 

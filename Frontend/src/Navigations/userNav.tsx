@@ -4,13 +4,13 @@ import axios from 'axios';
 import '../CSS/navCSS.css';
 import { Button } from 'antd';
 import CartPopup from '../page/CartPopup';
-import SearchResults from './SearchResults'; // Import the new SearchResults component
+import SearchResults from './SearchResults'; 
 
 const UserNavigation: React.FC = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState<string>('');
-    const [searchResults, setSearchResults] = useState<any>(null); // State to store search results
-    const userId = localStorage.getItem('id'); // Replace with actual user ID logic
+    const [searchResults, setSearchResults] = useState<any>(null); 
+    const userId = localStorage.getItem('id'); 
 
     const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

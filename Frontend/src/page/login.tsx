@@ -34,7 +34,7 @@ const Login: React.FC = () => {
         localStorage.setItem('accessToken', response.data.accessToken);
         localStorage.setItem('id', response.data.user._id);
         setToken(response.data.accessToken);
-        setUser(response.data.user); // Set the user data in the context
+        setUser(response.data.user); 
         toast.success('Login successful');
 
         const role = response.data.user.role;

@@ -2,9 +2,47 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import VehicleNav from './vehicleNav';
+import { Pie, Bar } from 'react-chartjs-2';
+import AOS from 'aos';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'aos/dist/aos.css';
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  PointElement,
+  LineElement,
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  PointElement,
+  LineElement
+);
+
+interface Vehicles {
+  contactNumber: string;
+  vehicleType: string;
+  licensePlate: string;
+  additionalInfo: string;
+  photo: string;
+}
 
 const VehicaleOwnerDashboard: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [contentData, setContentData] = useState<Vehicles[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +75,78 @@ const VehicaleOwnerDashboard: React.FC = () => {
       navigate('/SSABS/user/login');
     }
   }, [isLoggedIn, navigate]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5001/SSABS/vehicaleOwn/products', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+        });
+        setContentData(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
+  const groupedByCategory = contentData.reduce((acc, item) => {
+    if (!acc[item.vehicleType]) {
+      acc[item.vehicleType] = 0;
+    }
+    acc[item.vehicleType] += 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  const vehicleTypes = Object.keys(groupedByCategory);
+  const totals = vehicleTypes.map(vehicleType => groupedByCategory[vehicleType]);
+
+  const pieData = {
+    labels: vehicleTypes,
+    datasets: [
+      {
+        data: totals,
+        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#7a56ff', '#56ff7a'], 
+        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#7a56ff', '#56ff7a'],
+      },
+    ],
+  };
+
+  const barData = {
+    labels: vehicleTypes,
+    datasets: [
+      {
+        label: 'Number of Posts',
+        data: totals,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(122, 86, 255, 0.2)',
+          'rgba(86, 255, 122, 0.2)',
+          
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(122, 86, 255, 1)',
+          'rgba(86, 255, 122, 1)',
+          
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  
 
   return (
     <div>
@@ -184,46 +294,20 @@ const VehicaleOwnerDashboard: React.FC = () => {
           <Link to={'/SSABS/vehicaleOwn/products'}>
             <button className="top-box top-box-3">Register Vehicle</button>
           </Link>
-          {/* <Link to={'/SSABS/sellers/requests'}>
-          <button className="top-box top-box-4">History</button>
-        </Link> */}
+          
         </div>
         <div className="middle-section">
-          <div className="middle-box">
-            <h2>Daily Sales</h2>
-            <div className="chart-placeholder">Pie Chart</div>
+          <div className="middle-box" data-aos="fade-up">
+            <h3>Total Content by Vehicles</h3>
+            <Pie data={pieData} />
           </div>
-          <div className="middle-box">
-            <h2>Statistics</h2>
-            <div className="chart-placeholder">Bar Chart</div>
+          <div className="middle-box" data-aos="fade-up">
+            <h3>Number of Posts by Vehicles</h3>
+            <Bar data={barData} />
           </div>
-          <div className="middle-box">
-            <h2>Total Revenue</h2>
-            <div className="chart-placeholder">Line Chart</div>
-          </div>
+          
         </div>
-        {/* <div className="bottom-section">
-        <div className="bottom-box">
-          <h3>Chadengle</h3>
-          <p>Admin</p>
-          <p>coderthemes@gmail.com</p>
-        </div>
-        <div className="bottom-box">
-          <h3>Michael Zenaty</h3>
-          <p>Support Lead</p>
-          <p>coderthemes@gmail.com</p>
-        </div>
-        <div className="bottom-box">
-          <h3>Stillnotdavid</h3>
-          <p>Designer</p>
-          <p>coderthemes@gmail.com</p>
-        </div>
-        <div className="bottom-box">
-          <h3>Tomaslau</h3>
-          <p>Developer</p>
-          <p>coderthemes@gmail.com</p>
-        </div>
-      </div> */}
+       
 
       </div>
       </div>

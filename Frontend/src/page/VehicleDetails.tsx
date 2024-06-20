@@ -18,7 +18,7 @@ export default function App(): JSX.Element {
       <MDBCol lg={8} md={12} className='mb-4 mb-lg-0 d-flex justify-content-between align-items-start'>
         <img src={DetailsImage} alt="Image"
           className="Image-container"
-          style={{ width: '75%', height: 'auto' }} // Adjust the width as needed
+          style={{ width: '75%', height: 'auto' }} 
         />
         <div className="ml-3">
         <ul>
@@ -29,9 +29,7 @@ export default function App(): JSX.Element {
        <br></br>
     <p><b>Do you want to delivery?</b></p>
     <br></br>
-    {/* <Button variant="contained" disableElevation>
-     Confirm Delivery
-   </Button> */}
+    
         </div>
       </MDBCol>
     </MDBRow>

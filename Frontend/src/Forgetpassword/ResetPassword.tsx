@@ -42,7 +42,6 @@ const ResetPassword: React.FC = () => {
       }
     } catch (error) {
       if (isAxiosError(error)) {
-        // console.error('Error:', error.response?.data?.error || error.message);
         toast.error( 'An error occurred. Please try again later.');
       } else {
         console.error('Error:', error);

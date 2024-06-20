@@ -60,7 +60,7 @@ const InstructorProfile: React.FC = () => {
         await axios.post('http://localhost:5001/allInstructer/uploadfile', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // Include the token in the request headers
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`, 
           },
         });
         alert('Course uploaded successfully!');

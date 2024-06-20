@@ -2,17 +2,6 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
 const mongoose = require('mongoose'); 
 
-// const bcrypt = require('bcrypt');
-// const JWT = require('jsonwebtoken');
-// const nodemailer = require('nodemailer');
-// const Product = require('../models/Products')
-// const Vehicle = require('../models/vehicleSchema');
-// const cloudinary = require('cloudinary').v2;
-// const Booking = require('../models/bookingSchema');
-// const Request = require('../models/Request');
-// const Message = require('../models/messageSchema');
-// const Receipt = require('../models/uploadRecipt');
-// const Course = require('../models/courseSchema');
 
 const getUser = async (req, res) => {
     const userId = req.user.id;

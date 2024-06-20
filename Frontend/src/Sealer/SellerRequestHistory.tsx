@@ -119,12 +119,6 @@ const SellerRequests: React.FC = () => {
       errors.bankName = 'Bank name should only contain letters and should not be empty.';
       isValid = false;
     }
-
-    // if (!/^[A-Z]{4}\d{7}$/.test(accountDetails.ifscCode)) {
-    //   errors.ifscCode = 'IFSC code should be 4 letters followed by 7 digits.';
-    //   isValid = false;
-    // }
-
     setFormErrors(errors);
     return isValid;
   };
@@ -207,7 +201,6 @@ const SellerRequests: React.FC = () => {
 
   const handleAcceptReceipt = async (payment: Payment) => {
     try {
-      // Logic to accept the payment receipt
       console.log('Accepted payment receipt:', payment);
     } catch (error) {
       console.error('Error accepting payment receipt:', error);

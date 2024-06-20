@@ -1,5 +1,5 @@
 import React from 'react';
-import '../CSS/adminCard.css'; // Import styles for the card
+import '../CSS/adminCard.css'; 
 
 interface CardProps {
   path: string;
