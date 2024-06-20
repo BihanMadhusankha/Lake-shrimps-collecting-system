@@ -116,8 +116,9 @@ function App() {
         <Route path='/SSABS/user/userhome/profile' element={<UserProfile />} />
         <Route path='/SSABS/user/userhome/byColor' element={<ShrimpColorMonitoring />} />
        
-     
+      </Routes>
       <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
+      <Routes>
         
         
         <Route path='/SSABS/user/userhome/con.creaters' element={<ConCreatersPage />} />
