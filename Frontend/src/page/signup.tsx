@@ -24,7 +24,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const handleRegister = async (e: { preventDefault: () => void; }) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault(); 
 
     const { firstname, lastname, role, email, phone, nic, password, cpassword } = data;
 

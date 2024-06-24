@@ -123,19 +123,22 @@ const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose, userId }) => {
     };
 
     return (
-        <div>
-            {isOpen && (
-                <div>
-                    <h1 className="d-flex justify-content-center">Messages</h1>
-                    {alertMessage && (
-                        <div style={alertStyle(alertType)}>
-                            {alertMessage}
-                        </div>
-                    )}
-                    <ul>
-                        {messages.map((message) => (
-                            <li className="d-flex justify-content-center" key={message._id}>
-                                {message.message}
+        <div style={modalStyles(isOpen)}>
+            <div style={modalContentStyles}>
+                <div style={headerStyles}>
+                    <h2>My Cart</h2>
+                    <button style={closeButtonStyles} onClick={onClose}>Cancel</button>
+                </div>
+                {alertMessage && (
+                    <div style={alertStyle(alertType)}>
+                        {alertMessage}
+                    </div>
+                )}
+                <ul>
+                    {messages.map((message) => (
+                        <li key={message._id} style={listItemStyles}>
+                            <p>{message.message}</p>
+                            <div style={buttonContainerStyles}>
                                 <button
                                     style={buttonStyle('#007bff')}
                                     onClick={() => handlePayment(message.sellerId)}
@@ -148,48 +151,95 @@ const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose, userId }) => {
                                 >
                                     Delete
                                 </button>
-                            </li>
-                        ))}
-                    </ul>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+                <form
+                    id="paymentForm"
+                    style={formStyle}
+                    onSubmit={handleSubmitPayment}
+                >
+                    <div style={{ margin: '10px' }}>
+                        <label htmlFor="payment-photo">Add payment receipt</label>
+                        <input
+                            id="payment-photo"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            style={inputStyle}
+                        />
+                    </div>
                     <button
-                        style={buttonStyle('#28a745')}
-                        onClick={onClose}
+                        type="submit"
+                        style={buttonStyle('#007bff')}
                     >
-                        Close
+                        Submit Payment
                     </button>
-                    <form
-                        id="paymentForm"
-                        style={formStyle}
-                        onSubmit={handleSubmitPayment}
-                        className="d-flex justify-content-center"
-                    >
-                        <div style={{ margin: '10px' }}>
-                            <label htmlFor="payment-photo">Add payment receipt</label>
-                            <input
-                                id="payment-photo"
-                                type="file"
-                                accept="image/*"
-                                onChange={handleFileChange}
-                                style={inputStyle}
-                            />
-                        </div>
-                        <button
-                            type="submit"
-                            style={buttonStyle('#007bff')}
-                        >
-                            Submit Payment
-                        </button>
-                    </form>
-                </div>
-            )}
+                </form>
+            </div>
         </div>
     );
 };
 
-const buttonStyle = (bgColor: string) => ({
-    padding: '5px',
-    margin: '5px',
+const modalStyles = (isOpen: boolean) => ({
+    display: isOpen ? 'block' : 'none',
+    position: 'fixed' as const,
+    zIndex: 1000,
+    left: 0,
+    top: 0,
+    width: '100%',
+    height: '100%',
+    overflow: 'auto' as const,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+});
+
+const modalContentStyles = {
+    backgroundColor: '#fefefe',
+    margin: '10% auto',
+    padding: '20px',
+    border: '1px solid #888',
+    width: '60%',
     borderRadius: '10px',
+    boxShadow: '0 5px 15px rgba(0, 0, 0, 0.3)',
+};
+
+const headerStyles = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottom: '1px solid #ddd',
+    paddingBottom: '10px',
+    marginBottom: '20px',
+};
+
+const closeButtonStyles = {
+    backgroundColor: '#f44336',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    padding: '10px',
+    cursor: 'pointer',
+};
+
+const listItemStyles = {
+    marginBottom: '10px',
+    padding: '10px',
+    backgroundColor: '#f9f9f9',
+    borderRadius: '5px',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+};
+
+const buttonContainerStyles = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: '10px',
+};
+
+const buttonStyle = (bgColor: string) => ({
+    padding: '10px 20px',
+    margin: '5px',
+    borderRadius: '5px',
     backgroundColor: bgColor,
     color: 'white',
     border: 'none',

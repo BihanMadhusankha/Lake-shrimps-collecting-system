@@ -4,13 +4,13 @@ import axios from 'axios';
 import '../CSS/navCSS.css';
 import { Button } from 'antd';
 import CartPopup from '../page/CartPopup';
-import SearchResults from './SearchResults'; // Import the new SearchResults component
+import SearchResults from './SearchResults'; 
 
 const UserNavigation: React.FC = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState<string>('');
-    const [searchResults, setSearchResults] = useState<any>(null); // State to store search results
-    const userId = localStorage.getItem('id'); // Replace with actual user ID logic
+    const [searchResults, setSearchResults] = useState<any>(null); 
+    const userId = localStorage.getItem('id'); 
 
     const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -41,7 +41,7 @@ const UserNavigation: React.FC = () => {
                                 <li><a href="#" className="nav-link px-2 text-white">Sellers</a></li>
                             </Link>
                             <Link to={'/SSABS/user/userhome/con.creaters'}>
-                                <li><a href="#" className="nav-link px-2 text-white">Con.Creaters</a></li>
+                                <li><a href="#" className="nav-link px-2 text-white">Instructors</a></li>
                             </Link><Link to={'/chat'}>
                                 <li><a href="#" className="nav-link px-2 text-white">Chat AI</a></li>
                             </Link>

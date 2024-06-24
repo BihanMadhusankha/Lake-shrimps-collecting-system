@@ -1,10 +1,8 @@
 .login-buttons {
     display: flex;
-  align-items: center; /* Optional: Center buttons vertically */
-  /* Calculate width based on button width and margin */
-  width: calc(2 * (100px + 1rem) - 1rem); /* Assuming button width: 100px, margin: 1rem */
-  /* Calculate height based on button height and padding */
-  height: calc(1.5rem + 2 * 0.5rem); /* Height based on content size */
+  align-items: center; 
+  width: calc(2 * (100px + 1rem) - 1rem); 
+  height: calc(1.5rem + 2 * 0.5rem); 
   }
 header{
   background-color:#5356FF;
@@ -65,7 +63,7 @@ header{
     font-size: 2rem;
 
     transition: transform 0.3s ease-in-out;
-    background-color: #DFF5FF;
+    background-color: #f7ffdf;
     color: #000;
   }
   
@@ -75,24 +73,21 @@ header{
     font-weight: bold;
   }
   
-/* Kerala-inspired design elements */
 .kerala-theme {
-  background-color: #f5f7f9; /* Light yellow background */
-  color: #333; /* Dark text for better contrast */
+  background-color: #f5f7f9; 
+  color: #333; 
 }
 
 .hero-content h1 {
-  color: #041552; /* Deep red for a vibrant touch */
+  color: #041552; 
 }
 
-/* User Categories section styles */
 .user-categories h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
-  color: #041552; /* Deep red for headings */
+  color: #041552; 
 }
 
-/* Shrimp category styles */
 .shrimp-categories {
   margin-top: 5rem;
 }
@@ -100,18 +95,18 @@ header{
 .shrimp-categories h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
-  color: #041552; /* Deep red for headings */
+  color: #041552; 
 }
 
 .shrimp-category {
-  width: 28%; /* Adjust width as needed */
+  width: 28%; 
   margin: 1rem;
   padding: 2rem;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease-in-out;
-  background-color: #fff; /* White background */
+  background-color: #fff; 
   text-align: center;
   cursor: pointer;
 }
@@ -119,26 +114,24 @@ header{
 .shrimp-category h3 {
   font-size: 1.4rem;
   margin-bottom: 1rem;
-  color: #333; /* Darker text for readability */
+  color: #333; 
 }
 
 .shrimp-category p {
   font-size: 1rem;
   line-height: 1.5;
-  color: #666; /* Lighter text for descriptions */
+  color: #666;
 }
 
 .shrimp-category:hover {
   transform: scale(1.02);
 }
 
-/* Animate.css integration (replace with your preferred animation library) */
 .animate__animated {
   animation-duration: 1s;
   animation-fill-mode: both;
 }
 
-/* Specific animations for shrimp categories (replace with desired classes) */
 .animate__fadeInLeft {
   animation-name: fadeInLeft;
 }
@@ -159,68 +152,68 @@ header{
 
 
 .footer-20192 {
-  background-color: #5356FF; /* Dark background for contrast */
-  color: #fff; /* Light text for readability */
-  padding: 5rem 0; /* Adjust padding as needed */
-  text-align: center; /* Center content by default (optional) */
+  background-color: #5356FF; 
+  color: #fff;
+  padding: 5rem 0; 
+  text-align: center; 
 }
 
 .site-section {
-  max-width: 1170px; /* Set a maximum width for responsiveness */
-  margin: 0 auto; /* Center the section horizontally */
+  max-width: 1170px; 
+  margin: 0 auto;
 }
 
 .container {
-  padding: 0 15px; /* Add some horizontal padding for content */
+  padding: 0 15px; 
 }
 
 .row {
-  display: flex; /* Use flexbox for responsive layout */
-  flex-wrap: wrap; /* Allow items to wrap onto multiple lines */
-  justify-content: space-between; /* Distribute items evenly */
-  margin-bottom: 3rem; /* Add some spacing between rows */
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  margin-bottom: 3rem; 
 }
 
 .col-sm {
-  flex: 1 0 auto; /* Allow columns to grow/shrink proportionally */
-  padding: 1rem; /* Add some padding within columns */
+  flex: 1 0 auto; 
+  padding: 1rem;
 }
 
 .footer-logo {
-  font-size: 2rem; /* Adjust logo size as needed */
-  font-weight: bold; /* Make logo text bold */
-  color: #fff; /* Light color for logo */
+  font-size: 2rem; 
+  font-weight: bold; 
+  color: #fff;
 }
 
 .copyright {
-  margin-top: 1rem; /* Add some margin above copyright text */
-  font-size: 0.8rem; /* Adjust copyright text size */
+  margin-top: 1rem; 
+  font-size: 0.8rem;
 }
 
 .list-unstyled {
-  list-style: none; /* Remove default list styling */
-  padding: 0; /* Reset default padding */
-  margin: 0; /* Reset default margin */
+  list-style: none;
+  padding: 0; 
+  margin: 0;
 }
 
 .links {
-  line-height: 1.5; /* Add some line-height for better spacing */
+  line-height: 1.5;
 }
 
 .links a {
-  color: inherit; /* Inherit text color from footer */
-  text-decoration: none; /* Remove default underline */
-  transition: color 0.3s ease-in-out; /* Add smooth color transition on hover */
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out; 
 }
 
 .links a:hover {
-  color: #000000; /* Use a light pink color for hover */
+  color: #000000; 
 }
 
 h2, h3 {
-  margin-bottom: 1rem; /* Add some margin below headings */
-  font-weight: bold; /* Make headings bold */
-  color: inherit; /* Inherit text color from footer */
+  margin-bottom: 1rem; 
+  font-weight: bold; 
+  color: inherit; 
 }
 
 .search-results {

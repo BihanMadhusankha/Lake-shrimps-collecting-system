@@ -20,8 +20,7 @@ const ContactUs: React.FC = () => {
     .then(response => {
       if (response.ok) {
         console.log('Form submitted successfully!');
-        // Optionally, reset the form after successful submission
-        // form.resetFields();
+        
       } else {
         console.error('Failed to submit form:', response.statusText);
       }

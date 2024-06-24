@@ -34,7 +34,7 @@ const Login: React.FC = () => {
         localStorage.setItem('accessToken', response.data.accessToken);
         localStorage.setItem('id', response.data.user._id);
         setToken(response.data.accessToken);
-        setUser(response.data.user); // Set the user data in the context
+        setUser(response.data.user); 
         toast.success('Login successful');
 
         const role = response.data.user.role;
@@ -58,9 +58,9 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Card className="form-container col-12 " align-items-center>
-      <div style={{ display: 'flex', gap: '20px' }}>
-        <div style={{ flex: 1 }}>
+    <Card className="form-container container" align="center">
+      <div className="row">
+        <div className="col-md-6">
           <Typography.Title level={3} className="title">Sign In</Typography.Title>
           <Typography.Text type="secondary" strong className="slogan">Unlock your account!</Typography.Text>
 
@@ -100,23 +100,24 @@ const Login: React.FC = () => {
                 htmlType="submit"
                 size="large"
                 className="btn"
+                block
               >
                 Sign In
               </Button>
             </FormItem>
             <FormItem>
               <Link to="/SSABS/user/signup">
-                <Button className="btn" size="large">Create an Account</Button>
+                <Button className="btn" size="large" block>Create an Account</Button>
               </Link>
             </FormItem>
             <FormItem>
               <Link to={'/SSABS/user/forgetpassword'}>
-                <Button className="btn" size="large">Forgot Password</Button>
+                <Button className="btn" size="large" block>Forgot Password</Button>
               </Link>
             </FormItem>
           </Form>
         </div>
-        <div style={{ flex: 1.5 }}>
+        <div className="col-md-6">
           <img src={loginImage} alt="Register Img" className="auth-img" />
         </div>
       </div>

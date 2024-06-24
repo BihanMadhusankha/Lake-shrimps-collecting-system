@@ -5,14 +5,13 @@ import 'aos/dist/aos.css';
 import AOS from 'aos';
 import UserNavigation from '../Navigations/userNav';
 
-// Initialize AOS
 AOS.init();
 
 const AboutUs: React.FC = () => {
   useEffect(() => {
     AOS.init({
-      duration: 1000, // animation duration
-      once: true, // only once animation
+      duration: 1000, 
+      once: true, 
     });
   }, []);
 
@@ -49,17 +48,7 @@ const AboutUs: React.FC = () => {
             </p>
           </Card>
         </Col>
-        {/* <Col xs={24} md={12} data-aos="fade-left">
-          <Card title="Contact Us" bordered={false} style={{ backgroundColor: '#fff', border: 'none', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-            <p style={{ fontSize: '16px' }}>
-              Have questions or need support? Reach out to us at:
-              <br />
-              <strong>Email:</strong> support@shrimphub.com
-              <br />
-              <strong>Phone:</strong> +1 (800) 123-4567
-            </p>
-          </Card>
-        </Col> */}
+       
       </Row>
     </div>
     </div>

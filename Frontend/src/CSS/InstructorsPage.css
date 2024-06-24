@@ -1,37 +1,94 @@
 .alldetails {
-  margin: 20px;
+  padding: 20px;
 }
 
-.instructorPhoto img {
+.cardoi {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  
+}
+
+.cardoi:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cardoi-body {
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px 10px 0 0;
+}
+
+.cardoi-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.cardoi-avatar img {
   width: 100%;
   height: auto;
-  margin-bottom: 20px;
 }
 
-.card {
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card-title {
-  font-size: 1.25rem;
+.cardoi-title {
   font-weight: bold;
+  color: #333;
+  margin-top: 10px;
 }
 
-.card-text {
-  font-size: 1rem;
+.cardoi-text {
+  color: #666;
+  margin-bottom: 0;
 }
 
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
+.cardoi-footer {
+  background-color: #f8f9fa;
+  border-radius: 0 0 10px 10px;
+  padding: 15px;
 }
 
-.text-center {
-  text-align: center;
+.btn {
+  font-size: 0.9rem;
+  padding: 10px 20px;
+  border-radius: 5px;
 }
 
-.mb-4 {
-  margin-bottom: 1.5rem;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 576px) {
+  .card-title {
+      font-size: 1.2rem;
+  }
+
+  .card-text {
+      font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .card-title {
+      font-size: 1.3rem;
+  }
+
+  .card-text {
+      font-size: 1rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .card-title {
+      font-size: 1.5rem;
+  }
+
+  .card-text {
+      font-size: 1.1rem;
+  }
 }

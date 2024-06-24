@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import 'jspdf-autotable';
-import UpdateVehicleModal from './UpdateVehicleModal'; // Import the modal component
+import UpdateVehicleModal from './UpdateVehicleModal';
 import VehicleNav from './vehicleNav';
 
 interface Vehicle {
-  _id: string; // Add _id field for identifying the vehicle
+  _id: string; 
   licensePlate: string;
   vehicleType: string;
   contactNumber: string;
@@ -47,7 +47,6 @@ const RegisteredVehicles: React.FC = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      // Remove the deleted vehicle from the state
       setVehicles(prevVehicles => prevVehicles.filter(vehicle => vehicle._id !== id));
     } catch (error) {
       console.error('Error deleting vehicle:', error);
@@ -74,7 +73,6 @@ const RegisteredVehicles: React.FC = () => {
           onChange={e => setSearchTerm(e.target.value)}
           style={{ marginBottom: '20px', padding: '5px' }}
         />
-        {/* <button onClick={handleDownloadPDF} style={{ marginBottom: '20px', padding: '5px 10px', borderRadius: '5px', border: 'none', cursor: 'pointer', color: '#fff', backgroundColor: '#007bff' }}>Download PDF</button> */}
         <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
           <thead>
             <tr>

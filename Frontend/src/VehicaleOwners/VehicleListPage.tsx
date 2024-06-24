@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 interface Vehicle {
   licensePlate: string;
   vehicleType: string;
-  // Add more properties as needed
 }
 
 const VehicleListPage: React.FC = () => {
@@ -38,7 +37,6 @@ const VehicleListPage: React.FC = () => {
               <div className="card-body">
                 <h5>License Plate: {vehicle.licensePlate}</h5>
                 <h5>Vehicle Type: {vehicle.vehicleType}</h5>
-                {/* Render other vehicle details as needed */}
               </div>
             </div>
           ))}

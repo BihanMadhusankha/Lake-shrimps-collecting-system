@@ -10,7 +10,6 @@ export default function contentNav() {
                 <div className="container">
                     <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                         <a href="/" className="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-                            {/* <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap" /></svg> */}
                         </a>
 
                         <div className="dropdown text-end">
@@ -19,8 +18,9 @@ export default function contentNav() {
                             </a>
                             <ul className="dropdown-menu text-small">
                                 <Link to={'/SSABS/contentcreater/profile'}><li><a className="dropdown-item" href="#">Profile</a></li></Link>
-                                <Link to={'/SSABS/vehicaleOwn/products'}><li><a className="dropdown-item" href="#">Setting</a></li></Link>
-                                <Link to={'/SSABS/vehicaleOwn/allpost'}><li><a className="dropdown-item" href="#">Dashboard</a></li></Link>
+                                <Link to={'/SSABS/contentcreater/uploadedpost'}><li><a className="dropdown-item" href="#">Setting</a></li></Link>
+                                <Link to={'/SSABS/instructer/uploadfile'}><li><a className="dropdown-item" href="#">Add Post</a></li></Link>
+                                <Link to={'/SSABS/content_creater/dashboard'}><li><a className="dropdown-item" href="#">Dashboard</a></li></Link>
                                 <li><hr className="dropdown-divider"/></li>
                                 <Link to={'/SSABS/user/login'}><li><Button onClick={()=>{
                                     localStorage.removeItem('accessToken')

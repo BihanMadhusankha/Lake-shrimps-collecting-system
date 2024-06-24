@@ -4,14 +4,7 @@ const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
-// const Product = require('../models/Products')
-// const Vehicle = require('../models/vehicleSchema');
-// const cloudinary = require('cloudinary').v2;
-// const Booking = require('../models/bookingSchema');
-// const Request = require('../models/Request');
-// const Message = require('../models/messageSchema');
-// const Receipt = require('../models/uploadRecipt');
-// const Course = require('../models/courseSchema');
+
 
 
 const ForgetPassword = async (req, res) => {
@@ -26,7 +19,6 @@ const ForgetPassword = async (req, res) => {
     }
 
     const token = generateResetToken(email);
-    // If email exists, send a password reset email
     const mailOptions = {
         from: process.env.MY_GMAIL,
         to: email,

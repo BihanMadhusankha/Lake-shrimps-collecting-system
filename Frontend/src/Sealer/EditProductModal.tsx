@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-// Define the Product interface
 interface Product {
   _id: string;
   name: string;
@@ -9,18 +8,15 @@ interface Product {
   totalHarvest: number;
 }
 
-// Define the EditProductModalProps interface
 interface EditProductModalProps {
   product: Product;
   onClose: () => void;
   onSave: (updatedProduct: Product) => void;
 }
 
-// Define the possible values for position and resize properties
 type Position = 'static' | 'relative' | 'absolute' | 'sticky' | 'fixed';
 type Resize = 'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline';
 
-// Define the EditProductModal component
 const EditProductModal: React.FC<EditProductModalProps> = ({ product, onClose, onSave }) => {
   const [name, setName] = useState(product.name);
   const [price, setPrice] = useState(product.price);

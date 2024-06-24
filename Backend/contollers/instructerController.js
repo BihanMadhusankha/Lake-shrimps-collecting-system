@@ -3,15 +3,7 @@ const User = require('../models/userModel');
 const Course = require('../models/courseSchema');
 const cloudinary = require('cloudinary').v2;
 const mongoose = require('mongoose'); 
-// const nodemailer = require('nodemailer');
-// const Product = require('../models/Products')
-// const Vehicle = require('../models/vehicleSchema');
-// const Booking = require('../models/bookingSchema');
-// const Request = require('../models/Request');
-// const Message = require('../models/messageSchema');
-// const Receipt = require('../models/uploadRecipt');
-// const bcrypt = require('bcrypt');
-// const JWT = require('jsonwebtoken');
+
 
 
 const InstructerPage = async (req, res) => {

@@ -1,9 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
-const bcrypt = require('bcrypt');
-const JWT = require('jsonwebtoken');
 const mongoose = require('mongoose'); 
-const nodemailer = require('nodemailer');
 const Product = require('../models/Products')
 const Vehicle = require('../models/vehicleSchema');
 const cloudinary = require('cloudinary').v2;
@@ -60,7 +57,7 @@ const getRegisteredVehicles = async (req, res) => {
     try {
       const ownerId = req.params.ownerId;
       console.log(ownerId);
-      const ownerVehicles = await Vehicle.find({ owner: ownerId }); // Use Mongoose to find vehicles by ownerId
+      const ownerVehicles = await Vehicle.find({ owner: ownerId }); 
       console.log(ownerVehicles)
       res.json({ data: ownerVehicles });
     } catch (error) {

@@ -18,7 +18,7 @@ const CourseSchema = new mongoose.Schema({
     required: true
   },
   thumbnail: {
-    type: String, // Ensure this matches the field name used in your code
+    type: String, 
     required: true
   },
   user: {
