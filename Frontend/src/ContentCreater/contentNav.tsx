@@ -18,8 +18,9 @@ export default function contentNav() {
                             </a>
                             <ul className="dropdown-menu text-small">
                                 <Link to={'/SSABS/contentcreater/profile'}><li><a className="dropdown-item" href="#">Profile</a></li></Link>
-                                <Link to={'/SSABS/vehicaleOwn/products'}><li><a className="dropdown-item" href="#">Setting</a></li></Link>
-                                <Link to={'/SSABS/vehicaleOwn/allpost'}><li><a className="dropdown-item" href="#">Dashboard</a></li></Link>
+                                <Link to={'/SSABS/contentcreater/uploadedpost'}><li><a className="dropdown-item" href="#">Setting</a></li></Link>
+                                <Link to={'/SSABS/instructer/uploadfile'}><li><a className="dropdown-item" href="#">Add Post</a></li></Link>
+                                <Link to={'/SSABS/content_creater/dashboard'}><li><a className="dropdown-item" href="#">Dashboard</a></li></Link>
                                 <li><hr className="dropdown-divider"/></li>
                                 <Link to={'/SSABS/user/login'}><li><Button onClick={()=>{
                                     localStorage.removeItem('accessToken')
