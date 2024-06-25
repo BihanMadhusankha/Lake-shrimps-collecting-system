@@ -103,11 +103,11 @@ const ContentCreaterDashboard: React.FC = () => {
         label: 'Number of Posts',
         data: totals,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(122, 86, 255, 0.2)',
-          'rgba(86, 255, 122, 0.2)',
+          'rgba(255, 99, 132, 0.6)',
+          'rgba(54, 162, 235, 0.6)',
+          'rgba(255, 206, 86, 0.6)',
+          'rgba(122, 86, 255, 0.6)',
+          'rgba(86, 255, 122, 0.6)',
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
@@ -119,6 +119,47 @@ const ContentCreaterDashboard: React.FC = () => {
         borderWidth: 1,
       },
     ],
+  };
+
+  const pieOptions = {
+    plugins: {
+      legend: {
+        position: 'right',
+        labels: {
+          font: {
+            size: 14,
+          },
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function(tooltipItem: any) {
+            return `${tooltipItem.label}: ${tooltipItem.raw}`;
+          },
+        },
+      },
+    },
+  };
+
+  const barOptions = {
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+        },
+      },
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
   };
 
   return (
@@ -268,22 +309,24 @@ const ContentCreaterDashboard: React.FC = () => {
             <button className="top-box top-box-3">Upload Content</button>
           </Link>
          
-        </div>
+          </div>
 
-        <div className="middle-section">
-          <div className="middle-box" data-aos="fade-up">
-            <h3>Total Content by Category</h3>
-            <Pie data={pieData} />
-          </div>
-          <div className="middle-box" data-aos="fade-up">
-            <h3>Number of Posts by Category</h3>
-            <Bar data={barData} />
-          </div>
-          
-        </div>
-      </div>
-    </div>
-  );
+<div className="middle-section">
+  <div className="middle-box" data-aos="fade-up">
+    <h3>Total Content by Category</h3>
+    <Pie data={pieData} options={pieOptions} />
+  </div>
+  <div className="middle-box" data-aos="fade-up">
+    <h3>Number of Posts by Category</h3>
+    <Bar data={barData} options={barOptions} />
+  </div>
+</div>
+
+{/* Add your bottom-section content here */}
+
+</div>
+</div>
+);
 };
 
 export default ContentCreaterDashboard;
