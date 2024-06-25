@@ -209,8 +209,22 @@ const SellerRequests: React.FC = () => {
 
   const handleRejectReceipt = async (paymentId: string) => {
     try {
-      console.log('Rejected payment receipt with ID:', paymentId);
-    } catch (error) {
+      const response = await axios.delete(
+        `http://localhost:5001/SSABS/seller/requests/${paymentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          },
+        }
+      );
+
+      setRequests(prevRequests =>
+        prevRequests.filter(payment => payment._id !== paymentId)
+      );
+
+      console.log('Request rejected:', response.data);
+      setAlert({ message: 'Request rejected successfully!', type: 'success' });
+    }catch (error) {
       console.error('Error rejecting payment receipt:', error);
     }
   };
@@ -388,38 +402,7 @@ const SellerRequests: React.FC = () => {
                   <p><strong>Payment Receipt:</strong></p>
                   <img src={payment.photoUrl} alt="Payment Receipt" style={{ maxWidth: '200px', maxHeight: '200px' }} />
                 </div>
-                <div>
-                  <button
-                    style={{
-                      padding: '10px',
-                      border: 'none',
-                      borderRadius: '5px',
-                      backgroundColor: '#28a745',
-                      color: 'white',
-                      fontWeight: 'bold',
-                      cursor: 'pointer',
-                      margin: '5px',
-                    }}
-                    onClick={() => handleAcceptReceipt(payment)}
-                  >
-                    Accept
-                  </button>
-                  <button
-                    style={{
-                      padding: '10px',
-                      border: 'none',
-                      borderRadius: '5px',
-                      backgroundColor: '#dc3545',
-                      color: 'white',
-                      fontWeight: 'bold',
-                      cursor: 'pointer',
-                      margin: '5px',
-                    }}
-                    onClick={() => handleRejectReceipt(payment._id)}
-                  >
-                    Reject
-                  </button>
-                </div>
+                
               </div>
             ))
           ) : (
