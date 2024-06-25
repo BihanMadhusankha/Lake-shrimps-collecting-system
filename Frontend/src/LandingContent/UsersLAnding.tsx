@@ -119,12 +119,26 @@ const UsersLanding: React.FC = () => {
 
   return (
     <div className="shrimp-market-landing kerala-theme">
-      <section className="hero">
+      <section className="hero" style={{ position: 'relative', textAlign: 'center', color: 'white' }}>
         <div id="carouselExampleSlidesOnly" className="carousel" data-ride="carousel">
           <div className="carousel-inner">
             <div className="carousel-item active vh-100">
-              <img className="vh-100 w-100" src={landingImg} alt="First slide" />
-              <h1 className="h-tag-container vh-100 opacity-0.7" >Welcome to the Sustainable Shrimp Revolution</h1>
+              <img className="vh-100 w-100" src={landingImg} alt="First slide" style={{ objectFit: 'cover', filter: 'brightness(70%)' }} />
+              <h1 className="h-tag-container vh-100" style={{
+                position: 'absolute',
+                fontSize:'90px',
+                // transform: 'translate(-50%, -50%)',
+                textAlign: 'center',
+                padding: '20px',
+                marginTop: '180px',
+               
+                
+                color: 'white',
+                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.4)',
+                opacity: 0.9
+              }}>Welcome to the Sustainable <span>Shrimp Revolution</span></h1>
+
+              
             </div>
           </div>
         </div>
