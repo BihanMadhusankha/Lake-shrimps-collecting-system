@@ -118,7 +118,27 @@ const CartPopup: React.FC<CartPopupProps> = ({ isOpen, onClose, userId }) => {
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
         if (file) {
+            const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            const maxSizeInMB = 5; // Maximum file size in MB
+            const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+
+            if (!validImageTypes.includes(file.type)) {
+                setAlertMessage('Invalid file type. Only JPEG, PNG, and GIF are allowed.');
+                setAlertType('error');
+                setPaymentReceipt(null);
+                return;
+            }
+
+            if (file.size > maxSizeInBytes) {
+                setAlertMessage(`File size exceeds ${maxSizeInMB} MB.`);
+                setAlertType('error');
+                setPaymentReceipt(null);
+                return;
+            }
+
             setPaymentReceipt(file);
+            setAlertMessage(null); // Clear any previous alert messages
+            setAlertType(null);
         }
     };
 

@@ -7,31 +7,6 @@ import AOS from 'aos';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'aos/dist/aos.css';
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-  PointElement,
-  LineElement,
-} from 'chart.js';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-  PointElement,
-  LineElement
-);
-
 interface Course {
   _id: string;
   title: string;
@@ -133,7 +108,6 @@ const ContentCreaterDashboard: React.FC = () => {
           'rgba(255, 206, 86, 0.2)',
           'rgba(122, 86, 255, 0.2)',
           'rgba(86, 255, 122, 0.2)',
-          
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
@@ -141,14 +115,11 @@ const ContentCreaterDashboard: React.FC = () => {
           'rgba(255, 206, 86, 1)',
           'rgba(122, 86, 255, 1)',
           'rgba(86, 255, 122, 1)',
-          
         ],
         borderWidth: 1,
       },
     ],
   };
-
-  
 
   return (
     <div>
